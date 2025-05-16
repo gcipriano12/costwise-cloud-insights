@@ -83,8 +83,9 @@ export function RegionHeatmapCard({ data, currency }: RegionHeatmapCardProps) {
               stroke="#fff"
               fill="#8884d8"
               content={<CustomizedContent />}
-              tooltip={<CustomTooltip />}
-            />
+            >
+              <Tooltip content={<CustomTooltip />} />
+            </Treemap>
           </ResponsiveContainer>
         </div>
       </CardContent>
