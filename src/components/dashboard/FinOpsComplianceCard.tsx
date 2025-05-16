@@ -1,8 +1,7 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
-import { CheckCircle, XCircle } from 'lucide-react';
+import { CheckCircle, XCircle, ShieldCheck } from 'lucide-react';
 import { 
   Accordion,
   AccordionContent,
@@ -26,13 +25,16 @@ export function FinOpsComplianceCard({ items }: FinOpsComplianceCardProps) {
   const compliancePercentage = Math.round((compliantCount / items.length) * 100);
 
   return (
-    <Card>
-      <CardHeader className="pb-2">
-        <CardTitle className="text-lg font-medium">Conformidade FinOps</CardTitle>
+    <Card className="h-full flex flex-col">
+      <CardHeader className="pb-2 flex-shrink-0">
+        <CardTitle className="flex items-center text-lg font-medium">
+          <ShieldCheck className="mr-2 h-5 w-5 text-cloudcostx-green" />
+          Conformidade FinOps
+        </CardTitle>
       </CardHeader>
-      <CardContent>
-        <div className="space-y-4">
-          <div className="text-center">
+      <CardContent className="flex-grow pb-3 flex flex-col">
+        <div className="flex-grow space-y-4">
+          <div className="text-center mb-4">
             <div className="text-3xl font-bold">{compliancePercentage}%</div>
             <div className="text-sm text-muted-foreground">
               {compliantCount} de {items.length} práticas em conformidade

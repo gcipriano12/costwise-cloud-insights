@@ -1,7 +1,8 @@
-
 import React from 'react';
 import { EfficiencyKPIsCard } from '../EfficiencyKPIsCard';
 import { CostEventCalendarCard } from '../CostEventCalendarCard';
+
+type KPICategory = 'eficiencia' | 'tarifacao' | 'planejamento' | 'governanca';
 
 interface KpiSectionProps {
   kpiData: {
@@ -11,6 +12,9 @@ interface KpiSectionProps {
     trend?: number;
     target?: number;
     isGoodWhenHigher?: boolean;
+    description?: string;
+    formula?: string;
+    category: KPICategory;
   }[];
   costEventsData: {
     id: string;
@@ -35,7 +39,6 @@ export function KpiSection({ kpiData, costEventsData, currentMonth }: KpiSection
       <div className="col-span-12 lg:col-span-6">
         <CostEventCalendarCard 
           events={costEventsData}
-          currentMonth={currentMonth}
         />
       </div>
     </div>

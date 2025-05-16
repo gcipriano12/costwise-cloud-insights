@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { SpendSummaryCard } from '../SpendSummaryCard';
 import { ProviderDistributionCard } from '../ProviderDistributionCard';
@@ -44,8 +43,9 @@ export function SummarySection({
   savingsOpportunitiesData 
 }: SummarySectionProps) {
   return (
-    <div className="grid grid-cols-12 gap-4 mb-4">
-      <div className="col-span-12 md:col-span-3">
+    <div className="space-y-4 mb-4">
+      {/* Resumo de Gastos ocupa toda a largura */}
+      <div className="w-full">
         <SpendSummaryCard 
           totalSpend={spendSummaryData.totalSpend}
           currency={spendSummaryData.currency}
@@ -54,26 +54,29 @@ export function SummarySection({
         />
       </div>
       
-      <div className="col-span-12 md:col-span-3">
-        <ProviderDistributionCard 
-          data={providerDistributionData}
-          currency="R$"
-        />
-      </div>
-      
-      <div className="col-span-12 md:col-span-3">
-        <AnomaliesCard 
-          anomalies={anomaliesData}
-          currency="R$"
-        />
-      </div>
+      {/* Os outros três cards ficam lado a lado abaixo */}
+      <div className="grid grid-cols-12 gap-4">
+        <div className="col-span-12 md:col-span-4">
+          <ProviderDistributionCard 
+            data={providerDistributionData}
+            currency="R$"
+          />
+        </div>
+        
+        <div className="col-span-12 md:col-span-4">
+          <AnomaliesCard 
+            anomalies={anomaliesData}
+            currency="R$"
+          />
+        </div>
 
-      <div className="col-span-12 md:col-span-3">
-        <SavingsOpportunitiesCard 
-          opportunities={savingsOpportunitiesData.opportunities}
-          totalPotentialSavings={savingsOpportunitiesData.totalPotentialSavings}
-          currency={savingsOpportunitiesData.currency}
-        />
+        <div className="col-span-12 md:col-span-4">
+          <SavingsOpportunitiesCard 
+            opportunities={savingsOpportunitiesData.opportunities}
+            totalPotentialSavings={savingsOpportunitiesData.totalPotentialSavings}
+            currency={savingsOpportunitiesData.currency}
+          />
+        </div>
       </div>
     </div>
   );

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { SpendingTrendsCard } from '../SpendingTrendsCard';
 import { ResourceUtilizationCard } from '../ResourceUtilizationCard';
@@ -33,23 +32,29 @@ export function TrendsSection({
 }: TrendsSectionProps) {
   return (
     <div className="grid grid-cols-12 gap-4 mb-4">
-      <div className="col-span-12 lg:col-span-6">
-        <SpendingTrendsCard 
-          categories={spendingCategoriesData}
-          currency={currency}
-        />
+      <div className="col-span-12 lg:col-span-6 h-[400px]">
+        <div className="h-full">
+          <SpendingTrendsCard 
+            categories={spendingCategoriesData}
+            currency={currency}
+          />
+        </div>
       </div>
       
-      <div className="col-span-12 md:col-span-6 lg:col-span-3">
-        <ResourceUtilizationCard 
-          resources={resourcesData}
-        />
+      <div className="col-span-12 md:col-span-6 lg:col-span-3 h-[400px]">
+        <div className="h-full">
+          <ResourceUtilizationCard 
+            resources={resourcesData}
+          />
+        </div>
       </div>
       
-      <div className="col-span-12 md:col-span-6 lg:col-span-3">
-        <FinOpsComplianceCard 
-          items={complianceData}
-        />
+      <div className="col-span-12 md:col-span-6 lg:col-span-3 h-[400px]">
+        <div className="h-full">
+          <FinOpsComplianceCard 
+            items={complianceData}
+          />
+        </div>
       </div>
     </div>
   );

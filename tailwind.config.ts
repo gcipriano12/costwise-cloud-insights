@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -66,7 +65,8 @@ export default {
         // CloudCostX custom colors
         cloudcostx: {
           blue: {
-            DEFAULT: "#1A2B3C",
+            DEFAULT: "#3b82f6",
+            dark: "#1A2B3C",
             light: "#60A5FA",
           },
           green: "#34D399",
