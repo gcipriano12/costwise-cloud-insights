@@ -88,10 +88,12 @@ export function ProviderDistributionCard({ data, currency }: ProviderDistributio
               textAnchor="middle"
               dominantBaseline="middle"
               style={{
-                fill: '#fff',
+                fill: '#000',
+                stroke: '#000',
+                strokeWidth: 0.5,
                 fontSize: 12,
                 fontWeight: 'bold',
-                textShadow: '1px 1px 1px rgba(0,0,0,0.5)',
+                paintOrder: 'stroke',
               }}
             >
               {name}
@@ -102,9 +104,11 @@ export function ProviderDistributionCard({ data, currency }: ProviderDistributio
               textAnchor="middle"
               dominantBaseline="middle"
               style={{
-                fill: '#fff',
+                fill: '#000',
+                stroke: '#000',
+                strokeWidth: 0.5,
                 fontSize: 10,
-                textShadow: '1px 1px 1px rgba(0,0,0,0.5)',
+                paintOrder: 'stroke',
               }}
             >
               {formatPercentage(value)}%
