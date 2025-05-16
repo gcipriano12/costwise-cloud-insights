@@ -18,7 +18,17 @@ export default function Dashboard() {
     totalSpend: 1245678.90,
     currency: 'R$',
     previousPeriodChange: -12.5,
-    sparklineData: [45000, 48000, 52000, 49000, 54000, 59000, 58000]
+    sparklineData: [45000, 48000, 52000, 49000, 54000, 59000, 58000],
+    categoryBreakdown: [
+      { name: 'Computação', value: 58, color: '#60A5FA' },
+      { name: 'Armazenamento', value: 22, color: '#F97316' },
+      { name: 'Rede', value: 12, color: '#10B981' },
+      { name: 'Outros', value: 8, color: '#8B5CF6' }
+    ],
+    wastedSpend: 186851.83,
+    budgetLimit: 1500000,
+    budgetConsumed: 83,
+    savingsRealized: 99654.31
   };
   
   const providerDistributionData = [

@@ -10,6 +10,15 @@ interface SummarySectionProps {
     currency: string;
     previousPeriodChange: number;
     sparklineData: number[];
+    categoryBreakdown?: Array<{
+      name: string;
+      value: number;
+      color: string;
+    }>;
+    wastedSpend?: number;
+    budgetLimit?: number;
+    budgetConsumed?: number;
+    savingsRealized?: number;
   };
   providerDistributionData: {
     name: string;
@@ -51,6 +60,11 @@ export function SummarySection({
           currency={spendSummaryData.currency}
           previousPeriodChange={spendSummaryData.previousPeriodChange}
           sparklineData={spendSummaryData.sparklineData}
+          categoryBreakdown={spendSummaryData.categoryBreakdown}
+          wastedSpend={spendSummaryData.wastedSpend}
+          budgetLimit={spendSummaryData.budgetLimit}
+          budgetConsumed={spendSummaryData.budgetConsumed}
+          savingsRealized={spendSummaryData.savingsRealized}
         />
       </div>
       

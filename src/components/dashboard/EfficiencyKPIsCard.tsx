@@ -163,7 +163,7 @@ export function EfficiencyKPIsCard({ kpis }: EfficiencyKPIsCardProps) {
                       <div className="text-sm text-muted-foreground">{kpi.name}</div>
                       {kpi.description && (
                         <TooltipProvider>
-                          <Tooltip>
+                          <Tooltip delayDuration={0}>
                             <TooltipTrigger asChild>
                               <Button variant="ghost" size="icon" className="h-5 w-5 p-0 hover:bg-transparent">
                                 <HelpCircle className={`h-4 w-4 ${activeColor.text}`} />
