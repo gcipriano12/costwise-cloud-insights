@@ -30,6 +30,45 @@ export function RegionHeatmapCard({ data, currency }: RegionHeatmapCardProps) {
     return null;
   };
 
+  // Custom content component for the treemap rectangles
+  const CustomizedContent: React.FC<any> = (props) => {
+    const { x, y, width, height, depth, name, value } = props;
+    const color = `hsl(220, 70%, ${80 - (depth * 10 + Math.floor(value / 10000) * 20)}%)`;
+    
+    return (
+      <g>
+        <rect
+          x={x}
+          y={y}
+          width={width}
+          height={height}
+          style={{
+            fill: color,
+            stroke: '#fff',
+            strokeWidth: 2 / (depth + 1e-10),
+            strokeOpacity: 1 / (depth + 1e-10),
+          }}
+        />
+        {width > 30 && height > 20 && (
+          <text
+            x={x + width / 2}
+            y={y + height / 2}
+            textAnchor="middle"
+            dominantBaseline="middle"
+            style={{
+              fill: '#fff',
+              fontSize: 12,
+              fontWeight: 'bold',
+              textShadow: '1px 1px 1px rgba(0,0,0,0.5)',
+            }}
+          >
+            {name}
+          </text>
+        )}
+      </g>
+    );
+  };
+
   return (
     <Card>
       <CardHeader className="pb-2">
@@ -43,41 +82,7 @@ export function RegionHeatmapCard({ data, currency }: RegionHeatmapCardProps) {
               dataKey="value"
               stroke="#fff"
               fill="#8884d8"
-              content={({ x, y, width, height, index, payload, colors, depth, name, value }) => {
-                const color = `hsl(220, 70%, ${80 - (depth * 10 + Math.floor(value / 10000) * 20)}%)`;
-                return (
-                  <g>
-                    <rect
-                      x={x}
-                      y={y}
-                      width={width}
-                      height={height}
-                      style={{
-                        fill: color,
-                        stroke: '#fff',
-                        strokeWidth: 2 / (depth + 1e-10),
-                        strokeOpacity: 1 / (depth + 1e-10),
-                      }}
-                    />
-                    {width > 30 && height > 20 && (
-                      <text
-                        x={x + width / 2}
-                        y={y + height / 2}
-                        textAnchor="middle"
-                        dominantBaseline="middle"
-                        style={{
-                          fill: '#fff',
-                          fontSize: 12,
-                          fontWeight: 'bold',
-                          textShadow: '1px 1px 1px rgba(0,0,0,0.5)',
-                        }}
-                      >
-                        {name}
-                      </text>
-                    )}
-                  </g>
-                );
-              }}
+              content={<CustomizedContent />}
               tooltip={<CustomTooltip />}
             />
           </ResponsiveContainer>

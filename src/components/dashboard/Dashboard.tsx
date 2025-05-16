@@ -50,21 +50,21 @@ export default function Dashboard() {
   const anomaliesData = [
     {
       id: 'a1',
-      severity: 'high',
+      severity: 'high' as const, // type assertion to specific literals
       title: 'Aumento súbito em custos de VM',
       description: 'Detectamos um aumento de 350% nos custos de VMs no projeto "data-pipeline"',
       impact: 23450.60
     },
     {
       id: 'a2',
-      severity: 'medium',
+      severity: 'medium' as const,
       title: 'Recursos ociosos',
       description: 'Mais de 15 instâncias com utilização abaixo de 10% no último mês',
       impact: 12300.80
     },
     {
       id: 'a3',
-      severity: 'low',
+      severity: 'low' as const,
       title: 'Snapshots expirados',
       description: 'Detectamos 27 snapshots mais antigos que 90 dias',
       impact: 3450.20
@@ -78,21 +78,21 @@ export default function Dashboard() {
         title: 'Reserved Instances',
         description: 'Convertendo 74 instâncias on-demand para RIs',
         savings: 67890.50,
-        effort: 'low'
+        effort: 'low' as const
       },
       {
         id: 'op2',
         title: 'Rightsizing',
         description: 'Redimensionar 32 instâncias para tamanhos mais adequados',
         savings: 23456.70,
-        effort: 'medium'
+        effort: 'medium' as const
       },
       {
         id: 'op3',
         title: 'Storage Lifecycle',
         description: 'Configurar regras de ciclo de vida para buckets S3',
         savings: 12345.60,
-        effort: 'low'
+        effort: 'low' as const
       },
     ],
     totalPotentialSavings: 103692.80,
@@ -125,11 +125,11 @@ export default function Dashboard() {
   ];
 
   const complianceData = [
-    { id: 'c1', name: 'Instâncias com tags', status: 'compliant', description: 'Todas as instâncias devem ter tags de projeto e ambiente.' },
-    { id: 'c2', name: 'Volumes encriptados', status: 'compliant', description: 'Todos os volumes de armazenamento devem ser encriptados.' },
-    { id: 'c3', name: 'Relatórios de custos', status: 'compliant', description: 'Relatórios detalhados de custos devem ser gerados mensalmente.' },
-    { id: 'c4', name: 'Políticas de retenção', status: 'non-compliant', description: 'Políticas de retenção de dados devem ser definidas para todos os buckets de armazenamento.' },
-    { id: 'c5', name: 'Alocação de custos', status: 'non-compliant', description: 'Todos os custos devem ser alocados a um centro de custo.' },
+    { id: 'c1', name: 'Instâncias com tags', status: 'compliant' as const, description: 'Todas as instâncias devem ter tags de projeto e ambiente.' },
+    { id: 'c2', name: 'Volumes encriptados', status: 'compliant' as const, description: 'Todos os volumes de armazenamento devem ser encriptados.' },
+    { id: 'c3', name: 'Relatórios de custos', status: 'compliant' as const, description: 'Relatórios detalhados de custos devem ser gerados mensalmente.' },
+    { id: 'c4', name: 'Políticas de retenção', status: 'non-compliant' as const, description: 'Políticas de retenção de dados devem ser definidas para todos os buckets de armazenamento.' },
+    { id: 'c5', name: 'Alocação de custos', status: 'non-compliant' as const, description: 'Todos os custos devem ser alocados a um centro de custo.' },
   ];
 
   const kpiData = [
@@ -140,10 +140,10 @@ export default function Dashboard() {
   ];
 
   const costEventsData = [
-    { id: 'e1', date: '2025-05-20', title: 'Faturamento AWS', type: 'billing', impact: 543210.50, currency: 'R$' },
-    { id: 'e2', date: '2025-05-25', title: 'Renovação contrato Azure', type: 'contract', impact: 120000.00, currency: 'R$' },
-    { id: 'e3', date: '2025-05-28', title: 'Revisão de orçamento', type: 'budget' },
-    { id: 'e4', date: '2025-06-05', title: 'Faturamento GCP', type: 'billing', impact: 234567.40, currency: 'R$' },
+    { id: 'e1', date: '2025-05-20', title: 'Faturamento AWS', type: 'billing' as const, impact: 543210.50, currency: 'R$' },
+    { id: 'e2', date: '2025-05-25', title: 'Renovação contrato Azure', type: 'contract' as const, impact: 120000.00, currency: 'R$' },
+    { id: 'e3', date: '2025-05-28', title: 'Revisão de orçamento', type: 'budget' as const },
+    { id: 'e4', date: '2025-06-05', title: 'Faturamento GCP', type: 'billing' as const, impact: 234567.40, currency: 'R$' },
   ];
 
   const environmentsData = [
