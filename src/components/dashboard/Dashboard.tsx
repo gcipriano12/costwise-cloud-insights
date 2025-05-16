@@ -1,5 +1,4 @@
-
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Header from '../layout/Header';
 import { SpendSummaryCard } from './SpendSummaryCard';
 import { ProviderDistributionCard } from './ProviderDistributionCard';
@@ -7,6 +6,7 @@ import { TopServicesCard } from './TopServicesCard';
 import { AnomaliesCard } from './AnomaliesCard';
 import { SavingsOpportunitiesCard } from './SavingsOpportunitiesCard';
 import { TimeFilter } from './TimeFilter';
+import { ChatBot } from '../chat/ChatBot';
 
 export default function Dashboard() {
   const [timeFilter, setTimeFilter] = useState('30d');
@@ -136,6 +136,8 @@ export default function Dashboard() {
           </div>
         </div>
       </main>
+      
+      <ChatBot />
     </div>
   );
-}
+} 
