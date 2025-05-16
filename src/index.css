@@ -1,3 +1,6 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -35,19 +38,12 @@
     --radius: 0.5rem;
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
@@ -96,6 +92,31 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-inter;
   }
+}
+
+/* Custom CloudCostX styles */
+.card {
+  @apply bg-white rounded-lg shadow-md border border-cloudcostx-gray-200 overflow-hidden;
+}
+
+.card-header {
+  @apply p-4 border-b border-cloudcostx-gray-200 font-medium text-lg;
+}
+
+.card-body {
+  @apply p-4;
+}
+
+.trend-up {
+  @apply text-cloudcostx-red;
+}
+
+.trend-down {
+  @apply text-cloudcostx-green;
+}
+
+.sparkline {
+  @apply h-8 w-24 inline-block;
 }

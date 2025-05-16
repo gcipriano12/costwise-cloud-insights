@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,7 +62,27 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+        // CloudCostX custom colors
+        cloudcostx: {
+          blue: {
+            DEFAULT: "#1A2B3C",
+            light: "#60A5FA",
+          },
+          green: "#34D399",
+          red: "#F87171",
+          gray: {
+            50: "#F9FAFB",
+            100: "#F3F4F6",
+            200: "#E5E7EB",
+            300: "#D1D5DB",
+            400: "#9CA3AF",
+          }
+        }
+			},
+			fontFamily: {
+				inter: ['Inter', 'sans-serif'],
+				mono: ['Roboto Mono', 'monospace'],
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -70,20 +91,12 @@ export default {
 			},
 			keyframes: {
 				'accordion-down': {
-					from: {
-						height: '0'
-					},
-					to: {
-						height: 'var(--radix-accordion-content-height)'
-					}
+					from: { height: '0' },
+					to: { height: 'var(--radix-accordion-content-height)' }
 				},
 				'accordion-up': {
-					from: {
-						height: 'var(--radix-accordion-content-height)'
-					},
-					to: {
-						height: '0'
-					}
+					from: { height: 'var(--radix-accordion-content-height)' },
+					to: { height: '0' }
 				}
 			},
 			animation: {
