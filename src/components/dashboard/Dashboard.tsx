@@ -50,7 +50,7 @@ export default function Dashboard() {
   const anomaliesData = [
     {
       id: 'a1',
-      severity: 'high' as const, // type assertion to specific literals
+      severity: 'high' as const,
       title: 'Aumento súbito em custos de VM',
       description: 'Detectamos um aumento de 350% nos custos de VMs no projeto "data-pipeline"',
       impact: 23450.60
@@ -237,7 +237,7 @@ export default function Dashboard() {
   ];
   
   return (
-    <div className="min-h-screen bg-cloudcostx-gray-50">
+    <div className="min-h-screen bg-gray-50">
       <Header />
       
       <main className="container mx-auto px-4 py-6">
@@ -246,9 +246,10 @@ export default function Dashboard() {
           <TimeFilter value={timeFilter} onChange={setTimeFilter} />
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {/* Primeira linha */}
-          <div className="col-span-1 lg:col-span-1">
+        {/* Grid com layout melhorado */}
+        <div className="grid grid-cols-12 gap-4">
+          {/* Primeira linha - Cards importantes de resumo */}
+          <div className="col-span-12 md:col-span-3">
             <SpendSummaryCard 
               totalSpend={spendSummaryData.totalSpend}
               currency={spendSummaryData.currency}
@@ -257,21 +258,21 @@ export default function Dashboard() {
             />
           </div>
           
-          <div className="col-span-1 lg:col-span-1">
+          <div className="col-span-12 md:col-span-3">
             <ProviderDistributionCard 
               data={providerDistributionData}
               currency="R$"
             />
           </div>
           
-          <div className="col-span-1 lg:col-span-1">
+          <div className="col-span-12 md:col-span-3">
             <AnomaliesCard 
               anomalies={anomaliesData}
               currency="R$"
             />
           </div>
 
-          <div className="col-span-1 lg:col-span-1">
+          <div className="col-span-12 md:col-span-3">
             <SavingsOpportunitiesCard 
               opportunities={savingsOpportunitiesData.opportunities}
               totalPotentialSavings={savingsOpportunitiesData.totalPotentialSavings}
@@ -279,81 +280,89 @@ export default function Dashboard() {
             />
           </div>
           
-          {/* Segunda linha */}
-          <div className="col-span-1 md:col-span-2">
+          {/* Segunda linha - Gráficos de serviços e tendências */}
+          <div className="col-span-12 lg:col-span-8">
             <TopServicesCard 
               services={topServicesData}
               currency="R$"
             />
           </div>
 
-          <div className="col-span-1 lg:col-span-2">
+          <div className="col-span-12 lg:col-span-4">
             <SpendingForecastCard 
               data={forecastData}
               currency="R$"
             />
           </div>
           
-          {/* Terceira linha */}
-          <div className="col-span-1 lg:col-span-2">
+          {/* Terceira linha - Tendências e métricas de recursos */}
+          <div className="col-span-12 lg:col-span-6">
             <SpendingTrendsCard 
               categories={spendingCategoriesData}
               currency="R$"
             />
           </div>
           
-          <div className="col-span-1">
+          <div className="col-span-12 md:col-span-6 lg:col-span-3">
             <ResourceUtilizationCard 
               resources={resourcesData}
             />
           </div>
           
-          <div className="col-span-1">
+          <div className="col-span-12 md:col-span-6 lg:col-span-3">
             <FinOpsComplianceCard 
               items={complianceData}
             />
           </div>
           
-          {/* Quarta linha */}
-          <div className="col-span-1 md:col-span-2">
+          {/* Quarta linha - KPIs e eventos */}
+          <div className="col-span-12 lg:col-span-6">
             <EfficiencyKPIsCard 
               kpis={kpiData}
             />
           </div>
           
-          <div className="col-span-1 md:col-span-2">
+          <div className="col-span-12 lg:col-span-6">
             <CostEventCalendarCard 
               events={costEventsData}
               currentMonth="Maio 2025"
             />
           </div>
           
-          {/* Quinta linha */}
-          <div className="col-span-1 lg:col-span-1">
-            <EnvironmentComparisonCard 
-              environments={environmentsData}
-              currency="R$"
-            />
+          {/* Quinta linha - Comparações, benchmarks e novos serviços */}
+          <div className="col-span-12 md:col-span-6 lg:col-span-3">
+            <div className="h-full">
+              <EnvironmentComparisonCard 
+                environments={environmentsData}
+                currency="R$"
+              />
+            </div>
           </div>
           
-          <div className="col-span-1 lg:col-span-1">
-            <CostBenchmarksCard 
-              benchmarks={benchmarksData}
-              currency="R$"
-            />
+          <div className="col-span-12 md:col-span-6 lg:col-span-3">
+            <div className="h-full">
+              <CostBenchmarksCard 
+                benchmarks={benchmarksData}
+                currency="R$"
+              />
+            </div>
           </div>
           
-          <div className="col-span-1 lg:col-span-1">
-            <NewServicesCard 
-              services={newServicesData}
-            />
+          <div className="col-span-12 md:col-span-6 lg:col-span-3">
+            <div className="h-full">
+              <NewServicesCard 
+                services={newServicesData}
+              />
+            </div>
           </div>
           
-          <div className="col-span-1 md:col-span-2 lg:col-span-1">
-            <RegionHeatmapCard 
-              data={regionHeatmapData}
-              currency="R$"
-            />
+          <div className="col-span-12 md:col-span-6 lg:col-span-3">
+            <div className="h-full">
+              <RegionHeatmapCard 
+                data={regionHeatmapData}
+                currency="R$"
+              />
+            </div>
           </div>
         </div>
       </main>

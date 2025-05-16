@@ -31,8 +31,10 @@ export function RegionHeatmapCard({ data, currency }: RegionHeatmapCardProps) {
   };
 
   // Custom content component for the treemap rectangles
-  const CustomizedContent: React.FC<any> = (props) => {
+  const CustomizedContent = (props: any) => {
     const { x, y, width, height, depth, name, value } = props;
+    
+    // Adjust color based on depth for better visual hierarchy
     const color = `hsl(220, 70%, ${80 - (depth * 10 + Math.floor(value / 10000) * 20)}%)`;
     
     return (
@@ -49,7 +51,8 @@ export function RegionHeatmapCard({ data, currency }: RegionHeatmapCardProps) {
             strokeOpacity: 1 / (depth + 1e-10),
           }}
         />
-        {width > 30 && height > 20 && (
+        {/* Only render text if there's enough space */}
+        {width > 50 && height > 30 && (
           <text
             x={x + width / 2}
             y={y + height / 2}
@@ -57,7 +60,7 @@ export function RegionHeatmapCard({ data, currency }: RegionHeatmapCardProps) {
             dominantBaseline="middle"
             style={{
               fill: '#fff',
-              fontSize: 12,
+              fontSize: 10,
               fontWeight: 'bold',
               textShadow: '1px 1px 1px rgba(0,0,0,0.5)',
             }}
@@ -70,12 +73,12 @@ export function RegionHeatmapCard({ data, currency }: RegionHeatmapCardProps) {
   };
 
   return (
-    <Card>
+    <Card className="h-full">
       <CardHeader className="pb-2">
         <CardTitle className="text-lg font-medium">Heatmap de Custos por Região</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="h-64">
+        <div className="h-[180px]">
           <ResponsiveContainer width="100%" height="100%">
             <Treemap
               data={data}
