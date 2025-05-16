@@ -13,7 +13,7 @@ interface Anomaly {
 }
 
 interface AnomaliesCardProps {
-  anomalies: Anomaly[];
+  anomalies: ReadonlyArray<Anomaly> | Anomaly[];
   currency: string;
 }
 

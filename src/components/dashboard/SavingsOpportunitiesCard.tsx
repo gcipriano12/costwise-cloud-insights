@@ -14,7 +14,7 @@ interface Opportunity {
 }
 
 interface SavingsOpportunitiesProps {
-  opportunities: Opportunity[];
+  opportunities: ReadonlyArray<Opportunity> | Opportunity[];
   totalPotentialSavings: number;
   currency: string;
 }
