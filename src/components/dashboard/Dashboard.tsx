@@ -1,30 +1,20 @@
 
 import { useState } from 'react';
 import Header from '../layout/Header';
-import { SpendSummaryCard } from './SpendSummaryCard';
-import { ProviderDistributionCard } from './ProviderDistributionCard';
-import { TopServicesCard } from './TopServicesCard';
-import { AnomaliesCard } from './AnomaliesCard';
-import { SavingsOpportunitiesCard } from './SavingsOpportunitiesCard';
 import { TimeFilter } from './TimeFilter';
 import { ChatBot } from '../chat/ChatBot';
 
-// Importando os novos componentes
-import { SpendingTrendsCard } from './SpendingTrendsCard';
-import { SpendingForecastCard } from './SpendingForecastCard';
-import { ResourceUtilizationCard } from './ResourceUtilizationCard';
-import { FinOpsComplianceCard } from './FinOpsComplianceCard';
-import { EfficiencyKPIsCard } from './EfficiencyKPIsCard';
-import { CostEventCalendarCard } from './CostEventCalendarCard';
-import { EnvironmentComparisonCard } from './EnvironmentComparisonCard';
-import { RegionHeatmapCard } from './RegionHeatmapCard';
-import { NewServicesCard } from './NewServicesCard';
-import { CostBenchmarksCard } from './CostBenchmarksCard';
+// Importando os componentes de seção
+import { SummarySection } from './sections/SummarySection';
+import { ServicesSection } from './sections/ServicesSection';
+import { TrendsSection } from './sections/TrendsSection';
+import { KpiSection } from './sections/KpiSection';
+import { ComparisonSection } from './sections/ComparisonSection';
 
 export default function Dashboard() {
   const [timeFilter, setTimeFilter] = useState('30d');
   
-  // Mock data for demonstration
+  // Dados para a seção de resumo
   const spendSummaryData = {
     totalSpend: 1245678.90,
     currency: 'R$',
@@ -99,7 +89,7 @@ export default function Dashboard() {
     currency: 'R$'
   };
 
-  // Mock data for new components
+  // Dados para a seção de categorias e tendências
   const spendingCategoriesData = [
     { name: 'Computação', value: 543210.50, color: '#FF9900' },
     { name: 'Armazenamento', value: 324567.80, color: '#0078D4' },
@@ -182,6 +172,30 @@ export default function Dashboard() {
     },
   ];
 
+  const benchmarksData = [
+    { 
+      serviceType: 'Instâncias Compute',
+      yourCost: 12.50,
+      industryAverage: 18.75,
+      bestInClass: 8.25,
+      percentile: 35
+    },
+    { 
+      serviceType: 'Storage (por GB)',
+      yourCost: 0.085,
+      industryAverage: 0.095,
+      bestInClass: 0.065,
+      percentile: 25
+    },
+    { 
+      serviceType: 'Banco de Dados',
+      yourCost: 52.30,
+      industryAverage: 45.20,
+      bestInClass: 39.10,
+      percentile: 85
+    },
+  ];
+
   const newServicesData = [
     { 
       id: 'ns1',
@@ -211,30 +225,6 @@ export default function Dashboard() {
       tags: ['analytics', 'big-data'] 
     },
   ];
-
-  const benchmarksData = [
-    { 
-      serviceType: 'Instâncias Compute',
-      yourCost: 12.50,
-      industryAverage: 18.75,
-      bestInClass: 8.25,
-      percentile: 35
-    },
-    { 
-      serviceType: 'Storage (por GB)',
-      yourCost: 0.085,
-      industryAverage: 0.095,
-      bestInClass: 0.065,
-      percentile: 25
-    },
-    { 
-      serviceType: 'Banco de Dados',
-      yourCost: 52.30,
-      industryAverage: 45.20,
-      bestInClass: 39.10,
-      percentile: 85
-    },
-  ];
   
   return (
     <div className="min-h-screen bg-gray-50">
@@ -246,125 +236,40 @@ export default function Dashboard() {
           <TimeFilter value={timeFilter} onChange={setTimeFilter} />
         </div>
         
-        {/* Grid com layout melhorado */}
-        <div className="grid grid-cols-12 gap-4">
-          {/* Primeira linha - Cards importantes de resumo */}
-          <div className="col-span-12 md:col-span-3">
-            <SpendSummaryCard 
-              totalSpend={spendSummaryData.totalSpend}
-              currency={spendSummaryData.currency}
-              previousPeriodChange={spendSummaryData.previousPeriodChange}
-              sparklineData={spendSummaryData.sparklineData}
-            />
-          </div>
-          
-          <div className="col-span-12 md:col-span-3">
-            <ProviderDistributionCard 
-              data={providerDistributionData}
-              currency="R$"
-            />
-          </div>
-          
-          <div className="col-span-12 md:col-span-3">
-            <AnomaliesCard 
-              anomalies={anomaliesData}
-              currency="R$"
-            />
-          </div>
-
-          <div className="col-span-12 md:col-span-3">
-            <SavingsOpportunitiesCard 
-              opportunities={savingsOpportunitiesData.opportunities}
-              totalPotentialSavings={savingsOpportunitiesData.totalPotentialSavings}
-              currency={savingsOpportunitiesData.currency}
-            />
-          </div>
-          
-          {/* Segunda linha - Gráficos de serviços e tendências */}
-          <div className="col-span-12 lg:col-span-8">
-            <TopServicesCard 
-              services={topServicesData}
-              currency="R$"
-            />
-          </div>
-
-          <div className="col-span-12 lg:col-span-4">
-            <SpendingForecastCard 
-              data={forecastData}
-              currency="R$"
-            />
-          </div>
-          
-          {/* Terceira linha - Tendências e métricas de recursos */}
-          <div className="col-span-12 lg:col-span-6">
-            <SpendingTrendsCard 
-              categories={spendingCategoriesData}
-              currency="R$"
-            />
-          </div>
-          
-          <div className="col-span-12 md:col-span-6 lg:col-span-3">
-            <ResourceUtilizationCard 
-              resources={resourcesData}
-            />
-          </div>
-          
-          <div className="col-span-12 md:col-span-6 lg:col-span-3">
-            <FinOpsComplianceCard 
-              items={complianceData}
-            />
-          </div>
-          
-          {/* Quarta linha - KPIs e eventos */}
-          <div className="col-span-12 lg:col-span-6">
-            <EfficiencyKPIsCard 
-              kpis={kpiData}
-            />
-          </div>
-          
-          <div className="col-span-12 lg:col-span-6">
-            <CostEventCalendarCard 
-              events={costEventsData}
-              currentMonth="Maio 2025"
-            />
-          </div>
-          
-          {/* Quinta linha - Comparações, benchmarks e novos serviços */}
-          <div className="col-span-12 md:col-span-6 lg:col-span-3">
-            <div className="h-full">
-              <EnvironmentComparisonCard 
-                environments={environmentsData}
-                currency="R$"
-              />
-            </div>
-          </div>
-          
-          <div className="col-span-12 md:col-span-6 lg:col-span-3">
-            <div className="h-full">
-              <CostBenchmarksCard 
-                benchmarks={benchmarksData}
-                currency="R$"
-              />
-            </div>
-          </div>
-          
-          <div className="col-span-12 md:col-span-6 lg:col-span-3">
-            <div className="h-full">
-              <NewServicesCard 
-                services={newServicesData}
-              />
-            </div>
-          </div>
-          
-          <div className="col-span-12 md:col-span-6 lg:col-span-3">
-            <div className="h-full">
-              <RegionHeatmapCard 
-                data={regionHeatmapData}
-                currency="R$"
-              />
-            </div>
-          </div>
-        </div>
+        {/* Seções do Dashboard refatoradas */}
+        <SummarySection 
+          spendSummaryData={spendSummaryData}
+          providerDistributionData={providerDistributionData}
+          anomaliesData={anomaliesData}
+          savingsOpportunitiesData={savingsOpportunitiesData}
+        />
+        
+        <ServicesSection 
+          topServicesData={topServicesData}
+          forecastData={forecastData}
+          currency="R$"
+        />
+        
+        <TrendsSection 
+          spendingCategoriesData={spendingCategoriesData}
+          resourcesData={resourcesData}
+          complianceData={complianceData}
+          currency="R$"
+        />
+        
+        <KpiSection 
+          kpiData={kpiData}
+          costEventsData={costEventsData}
+          currentMonth="Maio 2025"
+        />
+        
+        <ComparisonSection 
+          environmentsData={environmentsData}
+          benchmarksData={benchmarksData}
+          newServicesData={newServicesData}
+          regionHeatmapData={regionHeatmapData}
+          currency="R$"
+        />
       </main>
       
       <ChatBot />
