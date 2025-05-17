@@ -35,30 +35,32 @@ export function SpendingTrendsCard({ categories, currency }: SpendingTrendsCardP
           Gastos por Categoria
         </CardTitle>
       </CardHeader>
-      <CardContent className="flex-grow pb-3 flex flex-col">
-        <div className="flex-grow">
+      <CardContent className="flex-grow p-1 pb-2 flex flex-col">
+        <div className="flex-grow h-[360px]">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
               data={categories}
-              margin={{ top: 25, right: 30, left: 20, bottom: 120 }}
-              barGap={8}
-              barCategoryGap={30}
+              margin={{ top: 5, right: 30, left: 5, bottom: 5 }}
+              barGap={5}
+              barCategoryGap={15}
+              layout="vertical"
             >
-              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
+              <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={false} stroke="#f0f0f0" />
               <XAxis 
-                dataKey="name" 
-                tick={{ fontSize: 12 }} 
+                type="number"
+                tickFormatter={formatCurrency}
+                tick={{ fontSize: 11 }}
                 tickLine={false}
                 axisLine={{ stroke: '#e0e0e0' }}
-                dy={10}
+                tickCount={5}
               />
               <YAxis 
-                tickFormatter={formatCurrency}
-                width={80}
-                tick={{ fontSize: 12 }}
+                dataKey="name"
+                type="category" 
+                width={120}
+                tick={{ fontSize: 12, fontWeight: 500 }}
                 tickLine={false}
                 axisLine={{ stroke: '#e0e0e0' }}
-                tickCount={6}
               />
               <Tooltip 
                 formatter={(value: number) => [`${currency} ${value.toLocaleString()}`, 'Valor']}
@@ -72,8 +74,8 @@ export function SpendingTrendsCard({ categories, currency }: SpendingTrendsCardP
               />
               <Bar 
                 dataKey="value" 
-                radius={[4, 4, 0, 0]}
-                barSize={55}
+                radius={[0, 4, 4, 0]}
+                barSize={30}
                 animationDuration={500}
               >
                 {categories.map((entry, index) => (
