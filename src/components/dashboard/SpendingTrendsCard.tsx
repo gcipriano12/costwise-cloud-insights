@@ -36,7 +36,7 @@ export function SpendingTrendsCard({ categories, currency }: SpendingTrendsCardP
         </CardTitle>
       </CardHeader>
       <CardContent className="flex-grow p-1 pb-2 flex flex-col">
-        <div className="flex-grow h-[360px]">
+        <div className="flex-grow h-[320px]">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
               data={categories}
