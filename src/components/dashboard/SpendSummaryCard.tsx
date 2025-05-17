@@ -1,10 +1,10 @@
 import React from 'react';
-import { TrendingUp, TrendingDown, DollarSign, Calendar, AlertCircle, BarChart3, ArrowRight, Disc, Target, AlertTriangle, Coins } from 'lucide-react';
+import { TrendingUp, TrendingDown, DollarSign, Calendar, AlertCircle, BarChart3, ArrowRight, Disc, Target, AlertTriangle, Coins, PieChart as PieChartIcon, Sparkles } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { SparkAreaChart } from '@/components/dashboard/SparkAreaChart';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
+import { PieChart, Pie, Cell, ResponsiveContainer, Legend } from 'recharts';
 
 interface CategoryBreakdown {
   name: string;
@@ -66,6 +66,33 @@ export function SpendSummaryCard({
     if (budgetConsumed >= 75) return 'text-amber-500';
     return 'text-cloudcostx-green';
   };
+
+  // Dados para o gráfico de pizza
+  const pieData = categoryBreakdown.map(category => ({
+    name: category.name,
+    value: category.value,
+  }));
+  
+  const RADIAN = Math.PI / 180;
+  const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }: any) => {
+    const radius = innerRadius + (outerRadius - innerRadius) * 0.6;
+    const x = cx + radius * Math.cos(-midAngle * RADIAN);
+    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+    return (
+      <text 
+        x={x} 
+        y={y} 
+        fill="#000" 
+        textAnchor={x > cx ? 'start' : 'end'} 
+        dominantBaseline="central"
+        fontSize={10}
+        fontWeight="bold"
+      >
+        {`${pieData[index].value}%`}
+      </text>
+    );
+  };
   
   return (
     <Card className="h-full overflow-hidden">
@@ -77,7 +104,7 @@ export function SpendSummaryCard({
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-12 gap-6">
-          <div className="col-span-12 md:col-span-3 space-y-3">
+          <div className="col-span-12 md:col-span-4 space-y-3">
             <div>
               <p className="text-sm text-muted-foreground mb-1">Gasto Total</p>
               <TooltipProvider>
@@ -107,10 +134,33 @@ export function SpendSummaryCard({
               </div>
             </div>
             
-            <div className="pt-3 border-t border-gray-100">
-              <p className="text-sm text-muted-foreground mb-1">Média Mensal</p>
-              <div className="text-2xl font-semibold">
-                {formatCurrency(monthlyAverage)}
+            <div className="grid grid-cols-3 gap-3 pt-3 border-t border-gray-100">
+              <div>
+                <p className="text-xs text-muted-foreground mb-1">Média Mensal</p>
+                <div className="text-lg font-semibold">
+                  {formatCurrency(monthlyAverage)}
+                </div>
+              </div>
+              
+              <div>
+                <p className="text-xs text-muted-foreground mb-1">Maior Gasto</p>
+                <div className="flex items-center mt-0.5">
+                  <Badge className="bg-amber-50 text-amber-700 border-amber-200 mr-1 text-xs py-0">{topService.provider}</Badge>
+                  <span className="font-medium text-xs">{topService.name}</span>
+                </div>
+                <div className="text-sm font-semibold mt-0.5">
+                  {formatCurrency(topService.cost)}
+                </div>
+              </div>
+              
+              <div>
+                <p className="text-xs text-muted-foreground mb-1">Projeção Anual</p>
+                <div className="text-lg font-semibold">
+                  {formatCurrency(forecastYTD)}
+                </div>
+                <div className="text-xs text-muted-foreground">
+                  Ano corrente
+                </div>
               </div>
             </div>
 
@@ -132,54 +182,49 @@ export function SpendSummaryCard({
             </div>
           </div>
           
-          <div className="col-span-12 md:col-span-5">
-            <p className="text-sm text-muted-foreground mb-2">Tendência de Gastos</p>
-            <div className="h-28 w-full mb-4">
-              <SparkAreaChart data={sparklineData} />
+          <div className="col-span-12 md:col-span-4">
+            <div className="flex items-center mb-2">
+              <p className="text-sm text-muted-foreground">Distribuição por Categoria</p>
             </div>
 
-            <div className="pt-2 border-t border-gray-100">
-              <div className="flex justify-between items-center mb-2">
-                <p className="text-sm text-muted-foreground">Distribuição por Categoria</p>
-              </div>
-              <div className="flex w-full h-4 rounded-full overflow-hidden">
-                {categoryBreakdown.map((category, idx) => (
-                  <TooltipProvider key={idx}>
-                    <Tooltip delayDuration={0}>
-                      <TooltipTrigger asChild>
-                        <div 
-                          className="h-full cursor-help"
-                          style={{ 
-                            width: `${category.value}%`, 
-                            backgroundColor: category.color,
-                          }}
-                        />
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p className="font-medium">{category.name}: {category.value}%</p>
-                        <p className="text-xs">
-                          {formatCurrency(totalSpend * (category.value / 100))}
-                        </p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                ))}
-              </div>
-              <div className="flex flex-wrap mt-2 gap-2">
-                {categoryBreakdown.map((category, idx) => (
-                  <div key={idx} className="flex items-center text-xs">
-                    <div 
-                      className="w-2 h-2 rounded-full mr-1"
-                      style={{ backgroundColor: category.color }}
-                    />
-                    <span>{category.name} ({category.value}%)</span>
-                  </div>
-                ))}
-              </div>
+            <div className="h-64 w-full">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={pieData}
+                    cx="50%"
+                    cy="50%"
+                    labelLine={false}
+                    label={renderCustomizedLabel}
+                    outerRadius={80}
+                    fill="#8884d8"
+                    dataKey="value"
+                  >
+                    {pieData.map((entry, index) => (
+                      <Cell 
+                        key={`cell-${index}`} 
+                        fill={categoryBreakdown[index].color} 
+                        stroke="#fff" 
+                        strokeWidth={2}
+                      />
+                    ))}
+                  </Pie>
+                  <Legend 
+                    layout="vertical" 
+                    verticalAlign="middle" 
+                    align="right"
+                    formatter={(value) => <span className="text-xs">{value}</span>}
+                  />
+                </PieChart>
+              </ResponsiveContainer>
             </div>
           </div>
           
           <div className="col-span-12 md:col-span-4 space-y-3">
+            <div className="flex items-center mb-2">
+              <p className="text-sm text-muted-foreground">Highlights</p>
+            </div>
+            
             <div className="bg-blue-50 rounded-md p-3 border border-blue-100">
               <div className="flex items-start">
                 <Calendar className="h-5 w-5 text-cloudcostx-blue mr-2 mt-0.5" />
@@ -222,29 +267,6 @@ export function SpendSummaryCard({
                       ({Math.round((savingsRealized/totalSpend)*100)}% do total)
                     </span>
                   </div>
-                </div>
-              </div>
-            </div>
-            
-            <div className="flex justify-between">
-              <div>
-                <p className="text-xs text-muted-foreground">Maior Gasto</p>
-                <div className="flex items-center mt-1">
-                  <Badge className="bg-amber-50 text-amber-700 border-amber-200 mr-2">{topService.provider}</Badge>
-                  <span className="font-medium">{topService.name}</span>
-                </div>
-                <div className="text-sm font-semibold mt-1">
-                  {formatCurrency(topService.cost)}
-                </div>
-              </div>
-              
-              <div>
-                <p className="text-xs text-muted-foreground">Projeção Anual</p>
-                <div className="text-sm font-semibold mt-1">
-                  {formatCurrency(forecastYTD)}
-                </div>
-                <div className="text-xs text-muted-foreground mt-1">
-                  Ano corrente
                 </div>
               </div>
             </div>
