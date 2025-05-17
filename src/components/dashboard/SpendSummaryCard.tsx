@@ -112,7 +112,7 @@ export function SpendSummaryCard({
                   <TooltipTrigger asChild>
                     <div className="flex items-baseline cursor-help">
                       <span className="text-4xl font-bold tracking-tight">
-                        {formatCurrency(totalSpend)}
+                        {currency} {totalSpend.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}
                       </span>
                     </div>
                   </TooltipTrigger>
