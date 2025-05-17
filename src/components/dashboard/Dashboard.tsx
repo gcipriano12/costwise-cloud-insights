@@ -155,11 +155,11 @@ export default function Dashboard() {
   };
 
   // Dados para a seção de categorias e tendências
-  const spendingCategoriesData = [
-    { name: 'Computação', value: 543210.50, color: '#FF9900' },
-    { name: 'Armazenamento', value: 324567.80, color: '#0078D4' },
-    { name: 'Rede', value: 234567.40, color: '#4285F4' },
-    { name: 'Banco de Dados', value: 143333.20, color: '#F80000' },
+  const spendingTeamsData = [
+    { name: 'Desenvolvimento', value: 495000.50, color: '#4B5563' },
+    { name: 'Infraestrutura', value: 358000.80, color: '#1D4ED8' },
+    { name: 'Data Science', value: 276500.40, color: '#9333EA' },
+    { name: 'Marketing', value: 116177.20, color: '#16A34A' },
   ];
 
   const forecastData = [
@@ -520,7 +520,7 @@ export default function Dashboard() {
         />
         
         <TrendsSection 
-          spendingCategoriesData={spendingCategoriesData}
+          spendingCategoriesData={spendingTeamsData}
           resourcesData={resourcesData}
           complianceData={complianceData}
           currency="R$"

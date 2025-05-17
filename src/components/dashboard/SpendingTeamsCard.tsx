@@ -3,18 +3,18 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { BarChart3 } from 'lucide-react';
 
-interface SpendingCategory {
+interface SpendingTeam {
   name: string;
   value: number;
   color: string;
 }
 
-interface SpendingTrendsCardProps {
-  categories: SpendingCategory[];
+interface SpendingTeamsCardProps {
+  categories: SpendingTeam[];
   currency: string;
 }
 
-export function SpendingTrendsCard({ categories, currency }: SpendingTrendsCardProps) {
+export function SpendingTeamsCard({ categories, currency }: SpendingTeamsCardProps) {
   const formatCurrency = (value: number) => {
     if (value >= 1000000) {
       return `${currency} ${(value / 1000000).toFixed(1)}M`;
@@ -32,7 +32,7 @@ export function SpendingTrendsCard({ categories, currency }: SpendingTrendsCardP
       <CardHeader className="pb-2 flex-shrink-0">
         <CardTitle className="flex items-center text-lg font-medium">
           <BarChart3 className="mr-2 h-5 w-5 text-cloudcostx-blue" />
-          Gastos por Categoria
+          Gastos por Equipe
         </CardTitle>
       </CardHeader>
       <CardContent className="flex-grow p-1 pb-2 flex flex-col">
@@ -64,7 +64,7 @@ export function SpendingTrendsCard({ categories, currency }: SpendingTrendsCardP
               />
               <Tooltip 
                 formatter={(value: number) => [`${currency} ${value.toLocaleString()}`, 'Valor']}
-                labelFormatter={(label) => `Categoria: ${label}`}
+                labelFormatter={(label) => `Equipe: ${label}`}
                 contentStyle={{ 
                   backgroundColor: 'white', 
                   border: '1px solid #f0f0f0',

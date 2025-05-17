@@ -1,5 +1,5 @@
 import React from 'react';
-import { SpendingTrendsCard } from '../SpendingTrendsCard';
+import { SpendingTeamsCard } from '../SpendingTeamsCard';
 import { ResourceUtilizationCard } from '../ResourceUtilizationCard';
 import { FinOpsComplianceCard } from '../FinOpsComplianceCard';
 
@@ -33,7 +33,7 @@ export function TrendsSection({
   return (
     <div className="grid grid-cols-12 gap-4 mb-4">
       <div className="col-span-12 lg:col-span-6">
-        <SpendingTrendsCard 
+        <SpendingTeamsCard 
           categories={spendingCategoriesData}
           currency={currency}
         />
