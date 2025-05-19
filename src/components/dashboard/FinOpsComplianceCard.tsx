@@ -24,6 +24,13 @@ export function FinOpsComplianceCard({ items }: FinOpsComplianceCardProps) {
   const compliantCount = items.filter(item => item.status === 'compliant').length;
   const compliancePercentage = Math.round((compliantCount / items.length) * 100);
 
+  // Lógica de cor condicional
+  const getComplianceColor = () => {
+    if (compliancePercentage < 60) return 'text-cloudcostx-red';
+    if (compliancePercentage < 80) return 'text-amber-500';
+    return 'text-cloudcostx-green';
+  };
+
   return (
     <Card className="h-full flex flex-col">
       <CardHeader className="pb-2 flex-shrink-0">
@@ -35,7 +42,7 @@ export function FinOpsComplianceCard({ items }: FinOpsComplianceCardProps) {
       <CardContent className="flex-grow pb-3 flex flex-col">
         <div className="flex-grow space-y-4">
           <div className="text-center mb-4">
-            <div className="text-3xl font-bold">{compliancePercentage}%</div>
+            <div className={`text-3xl font-bold ${getComplianceColor()}`}>{compliancePercentage}%</div>
             <div className="text-sm text-muted-foreground">
               {compliantCount} de {items.length} práticas em conformidade
             </div>
