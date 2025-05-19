@@ -47,35 +47,30 @@ export function ComparisonSection({
   currency 
 }: ComparisonSectionProps) {
   return (
-    <div className="grid grid-cols-12 gap-4">
-      <div className="col-span-12 md:col-span-6 lg:col-span-3">
-        <div className="h-full">
+    <div className="mb-6">
+      <h2 className="text-lg font-semibold mb-4">Comparativos e Referências</h2>
+      <div className="grid grid-cols-12 gap-4">
+        <div className="col-span-12 sm:col-span-6 lg:col-span-3">
           <EnvironmentComparisonCard 
             environments={environmentsData}
             currency={currency}
           />
         </div>
-      </div>
-      
-      <div className="col-span-12 md:col-span-6 lg:col-span-3">
-        <div className="h-full">
+        
+        <div className="col-span-12 sm:col-span-6 lg:col-span-3">
           <CostBenchmarksCard 
             benchmarks={benchmarksData}
             currency={currency}
           />
         </div>
-      </div>
-      
-      <div className="col-span-12 md:col-span-6 lg:col-span-3">
-        <div className="h-full">
+        
+        <div className="col-span-12 sm:col-span-6 lg:col-span-3">
           <NewServicesCard 
             services={newServicesData}
           />
         </div>
-      </div>
-      
-      <div className="col-span-12 md:col-span-6 lg:col-span-3">
-        <div className="h-full">
+        
+        <div className="col-span-12 sm:col-span-6 lg:col-span-3">
           <RegionHeatmapCard 
             data={regionHeatmapData}
             currency={currency}

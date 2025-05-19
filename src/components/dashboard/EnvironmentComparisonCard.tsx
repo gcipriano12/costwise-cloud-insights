@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { MapPin, ArrowRight } from 'lucide-react';
@@ -27,14 +28,14 @@ export function EnvironmentComparisonCard({ environments, currency }: Environmen
           Comparação de Ambientes
         </CardTitle>
       </CardHeader>
-      <CardContent className="flex-grow">
+      <CardContent className="flex-grow overflow-hidden">
         <div className="space-y-3">
           {environments.map((env) => {
             const changePercentage = ((env.cost - env.previousPeriodCost) / env.previousPeriodCost) * 100;
             const isIncrease = changePercentage > 0;
             return (
               <div key={env.name} className="space-y-0.5">
-                <div className="flex justify-between items-center">
+                <div className="flex justify-between items-center mb-1">
                   <span className="text-xs font-medium truncate max-w-[40%]">{env.name}</span>
                   <span className="text-base font-bold truncate max-w-[55%] text-right">
                     {currency} {env.cost.toLocaleString('pt-BR', {minimumFractionDigits: 1, maximumFractionDigits: 1})}
@@ -42,15 +43,15 @@ export function EnvironmentComparisonCard({ environments, currency }: Environmen
                 </div>
                 <Progress 
                   value={(env.cost / maxCost) * 100} 
-                  className="h-1.5" 
+                  className="h-1.5"
                 />
-                <div className="flex justify-between items-center text-[11px] text-muted-foreground">
+                <div className="flex justify-between items-center text-[11px] text-muted-foreground mt-1">
                   <div className="flex items-center truncate max-w-[70%]">
-                    <span>{currency} {env.previousPeriodCost.toLocaleString('pt-BR', {minimumFractionDigits: 1, maximumFractionDigits: 1})}</span>
-                    <ArrowRight className="h-3 w-3 mx-1" />
-                    <span>{currency} {env.cost.toLocaleString('pt-BR', {minimumFractionDigits: 1, maximumFractionDigits: 1})}</span>
+                    <span className="whitespace-nowrap">{currency} {env.previousPeriodCost.toLocaleString('pt-BR', {minimumFractionDigits: 1, maximumFractionDigits: 1})}</span>
+                    <ArrowRight className="h-3 w-3 mx-1 flex-shrink-0" />
+                    <span className="whitespace-nowrap">{currency} {env.cost.toLocaleString('pt-BR', {minimumFractionDigits: 1, maximumFractionDigits: 1})}</span>
                   </div>
-                  <div className={isIncrease ? 'text-cloudcostx-red' : 'text-cloudcostx-green'}>
+                  <div className={`whitespace-nowrap ${isIncrease ? 'text-cloudcostx-red' : 'text-cloudcostx-green'}`}>
                     {isIncrease ? '+' : ''}{changePercentage.toFixed(1)}%
                   </div>
                 </div>

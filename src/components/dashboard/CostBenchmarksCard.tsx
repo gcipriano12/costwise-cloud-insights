@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Search } from 'lucide-react';
@@ -39,57 +40,48 @@ export function CostBenchmarksCard({ benchmarks, currency }: CostBenchmarksCardP
         </CardTitle>
       </CardHeader>
       <CardContent className="flex-grow">
-        <div className="space-y-3">
-          {benchmarks.map((benchmark) => {
-            // Calculate position as percentage between best in class and industry average
-            const range = benchmark.industryAverage - benchmark.bestInClass;
-            const position = Math.max(0, Math.min(100, 
-              ((benchmark.yourCost - benchmark.bestInClass) / range) * 100
-            ));
-            // Limitar posição para não ultrapassar o gráfico
-            const safePosition = Math.max(0, Math.min(92, position));
-            // Lógica de alinhamento do valor
-            let valueAlign = 'center';
-            if (safePosition <= 10) valueAlign = 'left';
-            else if (safePosition >= 85) valueAlign = 'right';
-            return (
-              <div key={benchmark.serviceType} className="space-y-1.5">
-                <div className="flex justify-between items-center">
-                  <span className="text-xs font-medium truncate max-w-[60%]">{benchmark.serviceType}</span>
-                  {getPercentileBadge(benchmark.percentile)}
+        <div className="space-y-6">
+          {benchmarks.map((benchmark) => (
+            <div key={benchmark.serviceType} className="space-y-1">
+              <div className="flex justify-between items-center mb-1">
+                <span className="text-xs font-medium truncate max-w-[60%]">{benchmark.serviceType}</span>
+                {getPercentileBadge(benchmark.percentile)}
+              </div>
+              
+              {/* Barra de escala com marcadores e valores */}
+              <div className="relative pt-5 pb-1">
+                {/* Valor do seu custo */}
+                <div className="absolute top-0 left-0 w-full flex justify-between text-[10px] font-medium">
+                  <div className="text-green-500">Melhor: {currency} {benchmark.bestInClass.toLocaleString('pt-BR', {minimumFractionDigits: benchmark.bestInClass < 1 ? 3 : 1})}</div>
+                  <div>Você: {currency} {benchmark.yourCost.toLocaleString('pt-BR', {minimumFractionDigits: benchmark.yourCost < 1 ? 3 : 1})}</div>
+                  <div className="text-amber-500">Média: {currency} {benchmark.industryAverage.toLocaleString('pt-BR', {minimumFractionDigits: benchmark.industryAverage < 1 ? 3 : 1})}</div>
                 </div>
-                <div className="relative h-12 bg-muted rounded-md overflow-visible">
-                  {/* Valor acima da barra, alinhado com o marcador */}
-                  <div
-                    className={
-                      `absolute -top-4 w-max max-w-[90px] text-[10px] font-semibold px-1 rounded pointer-events-none bg-white bg-opacity-80 truncate ` +
-                      (valueAlign === 'center' ? 'left-1/2 -translate-x-1/2 text-center' : valueAlign === 'left' ? 'left-0 text-left' : 'right-0 text-right')
-                    }
-                    style={{ left: valueAlign === 'center' ? `${safePosition}%` : valueAlign === 'left' ? '0' : undefined, right: valueAlign === 'right' ? '0' : undefined }}
-                  >
-                    Você: {currency} {benchmark.yourCost.toLocaleString()}
-                  </div>
-                  {/* Best in class marker */}
-                  <div className="absolute top-0 left-0 h-full w-0.5 bg-green-500 flex items-center justify-center">
-                    <div className="absolute bottom-full mb-0.5 text-[9px] whitespace-nowrap transform -translate-x-1/2">
-                      Melhor: {currency} {benchmark.bestInClass.toLocaleString()}
-                    </div>
-                  </div>
-                  {/* Industry average marker */}
-                  <div className="absolute top-0 right-0 h-full w-0.5 bg-amber-500 flex items-center justify-center">
-                    <div className="absolute bottom-full mb-0.5 text-[9px] whitespace-nowrap transform -translate-x-1/2">
-                      Média: {currency} {benchmark.industryAverage.toLocaleString()}
-                    </div>
-                  </div>
-                  {/* Your position */}
-                  <div 
-                    className="absolute top-1/2 h-5 w-5 bg-cloudcostx-blue rounded-full border-2 border-white shadow-sm transform -translate-y-1/2 z-10"
-                    style={{ left: `${safePosition}%` }}
-                  />
+                
+                {/* Barra de fundo */}
+                <div className="h-8 bg-muted rounded-md relative overflow-hidden">
+                  {/* Marcadores */}
+                  <div className="absolute top-0 left-0 h-full w-0.5 bg-green-500" />
+                  <div className="absolute top-0 right-0 h-full w-0.5 bg-amber-500" />
+                  
+                  {/* Posição atual */}
+                  {(() => {
+                    // Calcular a posição relativa entre o melhor e a média
+                    const range = benchmark.industryAverage - benchmark.bestInClass;
+                    const position = range <= 0 ? 50 : Math.max(0, Math.min(100, 
+                      ((benchmark.yourCost - benchmark.bestInClass) / range) * 100
+                    ));
+                    
+                    return (
+                      <div 
+                        className="absolute top-1/2 h-5 w-5 bg-cloudcostx-blue rounded-full border-2 border-white shadow-sm transform -translate-y-1/2 z-10"
+                        style={{ left: `${position}%` }}
+                      />
+                    );
+                  })()}
                 </div>
               </div>
-            );
-          })}
+            </div>
+          ))}
         </div>
       </CardContent>
     </Card>
