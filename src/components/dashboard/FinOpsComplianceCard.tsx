@@ -30,9 +30,9 @@ export function FinOpsComplianceCard({ items }: FinOpsComplianceCardProps) {
 
   // Lógica de cor condicional para o texto
   const getComplianceColor = () => {
-    if (compliancePercentage < 60) return isDark ? 'text-red-400' : 'text-cloudcostx-red';
+    if (compliancePercentage < 60) return isDark ? 'text-red-400' : 'text-XCost-red';
     if (compliancePercentage < 80) return isDark ? 'text-amber-400' : 'text-amber-500';
-    return isDark ? 'text-green-400' : 'text-cloudcostx-green';
+    return isDark ? 'text-green-400' : 'text-XCost-green';
   };
 
   // Componente personalizado para barra de progresso
@@ -44,11 +44,11 @@ export function FinOpsComplianceCard({ items }: FinOpsComplianceCardProps) {
     
     // Lógica inversa - para conformidade, valores maiores são melhores (verde)
     if (value && value < 60) {
-      indicatorClass = isDark ? "bg-red-500" : "bg-cloudcostx-red";
+      indicatorClass = isDark ? "bg-red-500" : "bg-XCost-red";
     } else if (value && value < 80) {
       indicatorClass = isDark ? "bg-amber-500" : "bg-amber-500";
     } else {
-      indicatorClass = isDark ? "bg-green-500" : "bg-cloudcostx-green";
+      indicatorClass = isDark ? "bg-green-500" : "bg-XCost-green";
     }
     
     return (
@@ -76,7 +76,7 @@ export function FinOpsComplianceCard({ items }: FinOpsComplianceCardProps) {
         <CardTitle className="flex items-center text-lg font-medium">
           <ShieldCheck className={cn(
             "mr-2 h-5 w-5",
-            isDark ? "text-green-400" : "text-cloudcostx-green"
+            isDark ? "text-green-400" : "text-XCost-green"
           )} />
           Conformidade FinOps
         </CardTitle>
@@ -103,12 +103,12 @@ export function FinOpsComplianceCard({ items }: FinOpsComplianceCardProps) {
                     {item.status === 'compliant' ? (
                       <CheckCircle className={cn(
                         "h-4 w-4 mr-2",
-                        isDark ? "text-green-400" : "text-cloudcostx-green"
+                        isDark ? "text-green-400" : "text-XCost-green"
                       )} />
                     ) : (
                       <XCircle className={cn(
                         "h-4 w-4 mr-2",
-                        isDark ? "text-red-400" : "text-cloudcostx-red"
+                        isDark ? "text-red-400" : "text-XCost-red"
                       )} />
                     )}
                     <span className="text-left">{item.name}</span>

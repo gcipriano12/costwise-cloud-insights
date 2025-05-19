@@ -10,7 +10,7 @@ type ThemeProviderProps = {
 export function ThemeProvider({
   children,
   defaultTheme = 'system',
-  storageKey = 'cloudcostx-theme',
+  storageKey = 'X-Cost-theme',
   ...props
 }: ThemeProviderProps) {
   return (

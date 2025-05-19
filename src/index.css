@@ -45,10 +45,10 @@
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
 
-    /* CloudCostX custom colors */
-    --cloudcostx-blue: 217 91% 60%;
-    --cloudcostx-green: 150 84% 53%;
-    --cloudcostx-red: 0 91% 71%;
+    /* X Cost custom colors */
+    --XCost-blue: 217 91% 60%;
+    --XCost-green: 150 84% 53%;
+    --XCost-red: 0 91% 71%;
   }
 
   .dark {
@@ -89,10 +89,10 @@
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
 
-    /* CloudCostX custom colors - dark mode */
-    --cloudcostx-blue: 214 100% 70%;
-    --cloudcostx-green: 150 80% 60%;
-    --cloudcostx-red: 0 85% 70%;
+    /* X Cost custom colors - dark mode */
+    --XCost-blue: 214 100% 70%;
+    --XCost-green: 150 80% 60%;
+    --XCost-red: 0 85% 70%;
   }
 }
 
@@ -121,11 +121,11 @@
   }
 
   .trend-up {
-    @apply text-[hsl(var(--cloudcostx-red))];
+    @apply text-[hsl(var(--XCost-red))];
   }
 
   .trend-down {
-    @apply text-[hsl(var(--cloudcostx-green))];
+    @apply text-[hsl(var(--XCost-green))];
   }
 
   .sparkline {

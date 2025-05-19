@@ -123,8 +123,8 @@ export function EfficiencyKPIsCard({ kpis }: EfficiencyKPIsCardProps) {
     return (
       <TrendIcon 
         className={`h-4 w-4 ml-2 ${isGoodTrend 
-          ? isDark ? 'text-green-400' : 'text-cloudcostx-green' 
-          : isDark ? 'text-red-400' : 'text-cloudcostx-red'
+          ? isDark ? 'text-green-400' : 'text-XCost-green' 
+          : isDark ? 'text-red-400' : 'text-XCost-red'
         }`} 
       />
     );

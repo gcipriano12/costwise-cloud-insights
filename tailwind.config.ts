@@ -63,8 +63,8 @@ const config: Config = {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-        // CloudCostX custom colors
-        cloudcostx: {
+        // X Cost custom colors
+        XCost: {
           blue: {
             DEFAULT: "#3b82f6",
             dark: "#1A2B3C",

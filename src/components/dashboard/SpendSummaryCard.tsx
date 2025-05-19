@@ -67,9 +67,9 @@ export function SpendSummaryCard({
   };
 
   const getBudgetStatusColor = () => {
-    if (budgetConsumed >= 90) return isDark ? 'text-red-400' : 'text-cloudcostx-red';
+    if (budgetConsumed >= 90) return isDark ? 'text-red-400' : 'text-XCost-red';
     if (budgetConsumed >= 75) return isDark ? 'text-amber-400' : 'text-amber-500';
-    return isDark ? 'text-green-400' : 'text-cloudcostx-green';
+    return isDark ? 'text-green-400' : 'text-XCost-green';
   };
 
   // Calcular valores absolutos para cada provedor
@@ -177,11 +177,11 @@ export function SpendSummaryCard({
   >(({ className, value, ...props }, ref) => {
     let indicatorClass = "bg-primary";
     if (value && value >= 90) {
-      indicatorClass = isDark ? "bg-red-500" : "bg-cloudcostx-red";
+      indicatorClass = isDark ? "bg-red-500" : "bg-XCost-red";
     } else if (value && value >= 75) {
       indicatorClass = isDark ? "bg-amber-500" : "bg-amber-500";
     } else {
-      indicatorClass = isDark ? "bg-green-500" : "bg-cloudcostx-green";
+      indicatorClass = isDark ? "bg-green-500" : "bg-XCost-green";
     }
     
     return (
@@ -207,7 +207,7 @@ export function SpendSummaryCard({
     <Card className="h-full overflow-hidden">
       <CardHeader className="pb-2">
         <CardTitle className="flex items-center text-lg font-medium">
-          <DollarSign className="mr-2 h-5 w-5 text-cloudcostx-blue" />
+          <DollarSign className="mr-2 h-5 w-5 text-XCost-blue" />
           Resumo de Gastos
         </CardTitle>
       </CardHeader>
@@ -236,8 +236,8 @@ export function SpendSummaryCard({
               <div className={cn(
                 "mt-2 inline-flex items-center px-2 py-1 rounded-md text-sm font-medium", 
                 isIncrease 
-                  ? isDark ? "bg-red-900/50 border border-red-800 text-red-400" : "bg-red-50 text-cloudcostx-red" 
-                  : isDark ? "bg-green-900/50 border border-green-800 text-green-400" : "bg-green-50 text-cloudcostx-green"
+                  ? isDark ? "bg-red-900/50 border border-red-800 text-red-400" : "bg-red-50 text-XCost-red" 
+                  : isDark ? "bg-green-900/50 border border-green-800 text-green-400" : "bg-green-50 text-XCost-green"
               )}>
                 {isIncrease ? (
                   <TrendingUp className="h-4 w-4 mr-1 flex-shrink-0" />
@@ -364,21 +364,21 @@ export function SpendSummaryCard({
               <div className="flex items-start">
                 <Calendar className={cn(
                   "h-5 w-5 mr-2 mt-0.5",
-                  isDark ? "text-blue-400" : "text-cloudcostx-blue"
+                  isDark ? "text-blue-400" : "text-XCost-blue"
                 )} />
                 <div>
                   <p className="text-xs text-muted-foreground">Previsão Próximo Mês</p>
                   <div className="flex items-center">
                     <span className={cn(
                       "text-lg font-bold",
-                      isDark ? "text-blue-400" : "text-cloudcostx-blue"
+                      isDark ? "text-blue-400" : "text-XCost-blue"
                     )}>{formatCurrency(projectedNextMonth)}</span>
                     <ArrowRight className="h-3 w-3 mx-1 text-muted-foreground" />
                     <span className={cn(
                       "text-xs",
                       isIncrease 
-                        ? isDark ? "text-red-400" : "text-cloudcostx-red" 
-                        : isDark ? "text-green-400" : "text-cloudcostx-green"
+                        ? isDark ? "text-red-400" : "text-XCost-red" 
+                        : isDark ? "text-green-400" : "text-XCost-green"
                     )}>
                       {isIncrease ? '+' : ''}{previousPeriodChange}%
                     </span>
@@ -394,18 +394,18 @@ export function SpendSummaryCard({
               <div className="flex items-start">
                 <AlertTriangle className={cn(
                   "h-5 w-5 mr-2 mt-0.5",
-                  isDark ? "text-red-400" : "text-cloudcostx-red"
+                  isDark ? "text-red-400" : "text-XCost-red"
                 )} />
                 <div>
                   <p className="text-xs text-muted-foreground">Desperdício Estimado</p>
                   <div className="flex items-center">
                     <span className={cn(
                       "text-lg font-bold",
-                      isDark ? "text-red-400" : "text-cloudcostx-red"
+                      isDark ? "text-red-400" : "text-XCost-red"
                     )}>{formatCurrency(wastedSpend)}</span>
                     <span className={cn(
                       "text-xs ml-2",
-                      isDark ? "text-red-400" : "text-cloudcostx-red"
+                      isDark ? "text-red-400" : "text-XCost-red"
                     )}>
                       ({Math.round((wastedSpend/totalSpend)*100)}% do total)
                     </span>
@@ -421,18 +421,18 @@ export function SpendSummaryCard({
               <div className="flex items-start">
                 <Coins className={cn(
                   "h-5 w-5 mr-2 mt-0.5",
-                  isDark ? "text-green-400" : "text-cloudcostx-green"
+                  isDark ? "text-green-400" : "text-XCost-green"
                 )} />
                 <div>
                   <p className="text-xs text-muted-foreground">Economias Realizadas</p>
                   <div className="flex items-center">
                     <span className={cn(
                       "text-lg font-bold",
-                      isDark ? "text-green-400" : "text-cloudcostx-green"
+                      isDark ? "text-green-400" : "text-XCost-green"
                     )}>{formatCurrency(savingsRealized)}</span>
                     <span className={cn(
                       "text-xs ml-2",
-                      isDark ? "text-green-400" : "text-cloudcostx-green"
+                      isDark ? "text-green-400" : "text-XCost-green"
                     )}>
                       ({Math.round((savingsRealized/totalSpend)*100)}% do total)
                     </span>

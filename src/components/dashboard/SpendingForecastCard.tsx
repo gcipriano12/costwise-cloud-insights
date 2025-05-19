@@ -88,7 +88,7 @@ export function SpendingForecastCard({ data, currency }: SpendingForecastCardPro
       <CardHeader className="pb-2">
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center text-lg font-medium">
-            <TrendingUp className="mr-2 h-5 w-5 text-cloudcostx-blue-light" />
+            <TrendingUp className="mr-2 h-5 w-5 text-XCost-blue-light" />
             Previsão de Gastos
           </CardTitle>
           

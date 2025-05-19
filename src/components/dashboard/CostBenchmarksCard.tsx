@@ -72,7 +72,7 @@ export function CostBenchmarksCard({ benchmarks, currency }: CostBenchmarksCardP
                     
                     return (
                   <div 
-                        className="absolute top-1/2 h-5 w-5 bg-cloudcostx-blue rounded-full border-2 border-white shadow-sm transform -translate-y-1/2 z-10"
+                        className="absolute top-1/2 h-5 w-5 bg-XCost-blue rounded-full border-2 border-white shadow-sm transform -translate-y-1/2 z-10"
                     style={{ left: `${position}%` }}
                       />
                     );

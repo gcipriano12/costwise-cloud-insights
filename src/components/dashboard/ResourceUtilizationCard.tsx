@@ -33,9 +33,9 @@ export function ResourceUtilizationCard({ resources }: ResourceUtilizationCardPr
 
   // Determinar a classe de cor com base na média
   const getAverageUtilizationColor = () => {
-    if (averageUtilization >= 85) return isDark ? 'text-red-400' : 'text-cloudcostx-red';
+    if (averageUtilization >= 85) return isDark ? 'text-red-400' : 'text-XCost-red';
     if (averageUtilization >= 70) return isDark ? 'text-amber-400' : 'text-amber-500';
-    return isDark ? 'text-blue-400' : 'text-cloudcostx-blue';
+    return isDark ? 'text-blue-400' : 'text-XCost-blue';
   };
   
   // Componente de barra de progresso personalizado
@@ -47,11 +47,11 @@ export function ResourceUtilizationCard({ resources }: ResourceUtilizationCardPr
     
     if (value && warningThreshold) {
       if (value >= warningThreshold) {
-        indicatorClass = isDark ? "bg-red-500" : "bg-cloudcostx-red";
+        indicatorClass = isDark ? "bg-red-500" : "bg-XCost-red";
       } else if (value >= warningThreshold * 0.8) {
         indicatorClass = isDark ? "bg-amber-500" : "bg-amber-500";
       } else {
-        indicatorClass = isDark ? "bg-blue-500" : "bg-cloudcostx-blue";
+        indicatorClass = isDark ? "bg-blue-500" : "bg-XCost-blue";
       }
     }
     
@@ -125,7 +125,7 @@ export function ResourceUtilizationCard({ resources }: ResourceUtilizationCardPr
                     <span className={cn(
                       "text-xs font-medium",
                       utilizationPercentage >= resource.warningThreshold 
-                        ? isDark ? "text-red-400" : "text-cloudcostx-red"
+                        ? isDark ? "text-red-400" : "text-XCost-red"
                         : utilizationPercentage >= resource.warningThreshold * 0.8 
                           ? isDark ? "text-amber-400" : "text-amber-500"
                           : isDark ? "text-slate-400" : "text-muted-foreground"

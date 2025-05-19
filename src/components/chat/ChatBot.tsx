@@ -248,7 +248,7 @@ export function ChatBot() {
     <>
       {/* Botão flutuante do chat */}
       <Button
-        className="fixed bottom-4 right-4 rounded-full w-12 h-12 p-0 bg-cloudcostx-blue hover:bg-cloudcostx-blue/90"
+        className="fixed bottom-4 right-4 rounded-full w-12 h-12 p-0 bg-XCost-blue hover:bg-XCost-blue/90"
         onClick={() => setIsOpen(true)}
       >
         <MessageCircle className="h-6 w-6" />
@@ -269,7 +269,7 @@ export function ChatBot() {
               <div className="flex items-center">
                 <Bot className={cn(
                   "h-5 w-5 mr-2",
-                  isDark ? "text-blue-400" : "text-cloudcostx-blue"
+                  isDark ? "text-blue-400" : "text-XCost-blue"
                 )} />
                 <h3 className={cn(
                   "font-semibold",
@@ -312,7 +312,7 @@ export function ChatBot() {
                     <div
                       className={`max-w-[80%] rounded-lg p-2 ${
                         msg.isUser
-                          ? 'bg-cloudcostx-blue text-white'
+                          ? 'bg-XCost-blue text-white'
                           : isDark 
                             ? 'bg-slate-800 text-gray-100' 
                             : 'bg-white text-gray-900 border border-gray-200'
@@ -329,7 +329,7 @@ export function ChatBot() {
                         "text-xs opacity-70",
                         isDark && !msg.isUser ? "text-gray-400" : ""
                       )}>
-                        {msg.timestamp.toLocaleTimeString()}
+                        {msg.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                       </span>
                     </div>
                   </div>
@@ -382,7 +382,7 @@ export function ChatBot() {
                 <Button
                   type="submit"
                   disabled={isLoading || !message.trim()}
-                  className="bg-cloudcostx-blue hover:bg-cloudcostx-blue/90"
+                  className="bg-XCost-blue hover:bg-XCost-blue/90"
                 >
                   <Send className="h-4 w-4" />
                 </Button>

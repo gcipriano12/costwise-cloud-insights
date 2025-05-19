@@ -16,7 +16,7 @@ interface TimeFilterProps {
 export function TimeFilter({ value, onChange }: TimeFilterProps) {
   return (
     <div className="flex items-center space-x-2">
-      <span className="text-sm text-cloudcostx-gray-400">Período:</span>
+      <span className="text-sm text-XCost-gray-400">Período:</span>
       <Select value={value} onValueChange={onChange}>
         <SelectTrigger className="w-48 h-8 text-sm">
           <SelectValue placeholder="Selecionar período" />

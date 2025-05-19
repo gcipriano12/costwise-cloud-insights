@@ -50,7 +50,7 @@ export default function Header() {
           {/* Logo e navegação */}
           <div className="flex items-center">
             <div className="text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-500 to-indigo-600 text-transparent bg-clip-text">
-              CloudCostX
+              X Cost
             </div>
             
             {/* Navegação Desktop */}

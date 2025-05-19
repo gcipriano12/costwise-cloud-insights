@@ -25,16 +25,16 @@ export function EnvironmentComparisonCard({ environments, currency }: Environmen
   
   // Função para determinar a cor da eficiência com mais nuances
   const getEfficiencyColor = (efficiency: number) => {
-    if (efficiency >= 80) return isDark ? 'text-green-400' : 'text-cloudcostx-green';
+    if (efficiency >= 80) return isDark ? 'text-green-400' : 'text-XCost-green';
     if (efficiency >= 65) return isDark ? 'text-amber-400' : 'text-amber-500';
-    return isDark ? 'text-red-400' : 'text-cloudcostx-red';
+    return isDark ? 'text-red-400' : 'text-XCost-red';
   };
   
   // Função para determinar a cor do valor de variação (positivo ou negativo)
   const getChangeColor = (isIncrease: boolean) => {
     return isIncrease 
-      ? isDark ? 'text-red-400' : 'text-cloudcostx-red' 
-      : isDark ? 'text-green-400' : 'text-cloudcostx-green';
+      ? isDark ? 'text-red-400' : 'text-XCost-red' 
+      : isDark ? 'text-green-400' : 'text-XCost-green';
   };
   
   // Componente personalizado para barra de progresso

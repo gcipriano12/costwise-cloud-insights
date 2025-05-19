@@ -68,10 +68,10 @@ export function SavingsOpportunitiesCard({
 
   const getEffortTextColor = (effort: string) => {
     switch(effort) {
-      case 'low': return isDark ? 'text-green-400' : 'text-cloudcostx-green';
+      case 'low': return isDark ? 'text-green-400' : 'text-XCost-green';
       case 'medium': return isDark ? 'text-amber-400' : 'text-amber-600';
-      case 'high': return isDark ? 'text-red-400' : 'text-cloudcostx-red';
-      default: return isDark ? 'text-green-400' : 'text-cloudcostx-green';
+      case 'high': return isDark ? 'text-red-400' : 'text-XCost-red';
+      default: return isDark ? 'text-green-400' : 'text-XCost-green';
     }
   };
 
@@ -92,7 +92,7 @@ export function SavingsOpportunitiesCard({
   const shouldShowPagination = opportunities.length > 7;
 
   // Definir a cor do texto para o cabeçalho com base na criticidade
-  const headerTextColorClass = isDark ? "text-green-400" : "text-cloudcostx-green";
+  const headerTextColorClass = isDark ? "text-green-400" : "text-XCost-green";
   // Pegar a cor atual do texto com base na oportunidade selecionada
   const currentEffortColor = getEffortTextColor(opportunities[currentIndex]?.effort || 'low');
   
@@ -101,7 +101,7 @@ export function SavingsOpportunitiesCard({
       <CardHeader className="pb-1 flex-shrink-0">
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center text-lg font-medium">
-            <Lightbulb className={cn("mr-2 h-5 w-5", isDark ? "text-green-400" : "text-cloudcostx-green")} />
+            <Lightbulb className={cn("mr-2 h-5 w-5", isDark ? "text-green-400" : "text-XCost-green")} />
             Oportunidades de Economia
           </CardTitle>
           <div className={`text-xl font-bold ${headerTextColorClass}`}>

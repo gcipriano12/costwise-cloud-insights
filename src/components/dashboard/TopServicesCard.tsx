@@ -66,7 +66,7 @@ export function TopServicesCard({ services, currency }: TopServicesProps) {
     <Card className="h-full overflow-hidden">
       <CardHeader className="pb-2">
         <CardTitle className="flex items-center text-lg font-medium">
-          <BarChart2 className={cn("mr-2 h-5 w-5", isDark ? "text-blue-400" : "text-cloudcostx-blue")} />
+          <BarChart2 className={cn("mr-2 h-5 w-5", isDark ? "text-blue-400" : "text-XCost-blue")} />
           Top Serviços
         </CardTitle>
       </CardHeader>
@@ -124,10 +124,10 @@ export function TopServicesCard({ services, currency }: TopServicesProps) {
                         isIncrease 
                           ? isDark 
                             ? "bg-red-900/50 border border-red-800 text-red-400" 
-                            : "bg-red-50 text-cloudcostx-red" 
+                            : "bg-red-50 text-XCost-red" 
                           : isDark 
                             ? "bg-green-900/50 border border-green-800 text-green-400" 
-                            : "bg-green-50 text-cloudcostx-green"
+                            : "bg-green-50 text-XCost-green"
                       )}>
                         {isIncrease ? (
                           <TrendingUp className="h-3 w-3 mr-1 flex-shrink-0" />
@@ -143,7 +143,7 @@ export function TopServicesCard({ services, currency }: TopServicesProps) {
                         size="sm" 
                         className={cn(
                           "h-8 text-xs w-full flex items-center justify-center",
-                          isDark ? "text-blue-400" : "text-cloudcostx-blue"
+                          isDark ? "text-blue-400" : "text-XCost-blue"
                         )}
                       >
                         <span className="mr-1">Detalhes</span>

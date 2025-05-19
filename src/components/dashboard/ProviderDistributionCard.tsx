@@ -137,7 +137,7 @@ export function CategoryDistributionCard({ data, currency }: CategoryDistributio
       <CardHeader className="pb-1 flex-shrink-0">
         <div className="flex items-center">
           <CardTitle className="flex items-center text-lg font-medium whitespace-nowrap">
-            <Disc className="mr-2 h-5 w-5 text-cloudcostx-blue" />
+            <Disc className="mr-2 h-5 w-5 text-XCost-blue" />
             Distribuição por Categoria
           </CardTitle>
         </div>

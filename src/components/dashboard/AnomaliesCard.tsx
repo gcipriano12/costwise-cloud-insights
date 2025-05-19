@@ -43,9 +43,9 @@ export function AnomaliesCard({ anomalies, currency }: AnomaliesCardProps) {
   
   const getSeverityTextColor = (severity: string) => {
     switch(severity) {
-      case 'high': return isDark ? 'text-red-400' : 'text-cloudcostx-red';
+      case 'high': return isDark ? 'text-red-400' : 'text-XCost-red';
       case 'medium': return isDark ? 'text-amber-400' : 'text-amber-600';
-      case 'low': return isDark ? 'text-blue-400' : 'text-cloudcostx-blue';
+      case 'low': return isDark ? 'text-blue-400' : 'text-XCost-blue';
       default: return '';
     }
   };

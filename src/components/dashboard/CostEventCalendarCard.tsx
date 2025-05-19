@@ -143,7 +143,7 @@ export function CostEventCalendarCard({ events }: CostEventCalendarCardProps) {
           <CardTitle className="flex items-center text-lg font-medium">
             <CalendarIcon className={cn(
               "h-5 w-5 mr-2",
-              isDark ? "text-blue-400" : "text-cloudcostx-blue"
+              isDark ? "text-blue-400" : "text-XCost-blue"
             )} />
             Calendário de Planejamento
           </CardTitle>
