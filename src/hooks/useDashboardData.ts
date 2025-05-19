@@ -6,7 +6,7 @@ export type SpendSummary = {
   currency: string;
   previousPeriodChange: number;
   sparklineData: number[];
-  categoryBreakdown?: Array<{
+  providerBreakdown?: Array<{
     name: string;
     value: number;
     color: string;
@@ -18,6 +18,12 @@ export type SpendSummary = {
 };
 
 export type ProviderDistribution = {
+  name: string;
+  value: number;
+  color: string;
+};
+
+export type CategoryDistribution = {
   name: string;
   value: number;
   color: string;
@@ -141,6 +147,7 @@ export type RegionData = {
 export type DashboardData = {
   spendSummaryData: SpendSummary;
   providerDistributionData: ProviderDistribution[];
+  categoryDistributionData: CategoryDistribution[];
   topServicesData: TopService[];
   anomaliesData: Anomaly[];
   savingsOpportunitiesData: SavingsOpportunities;
@@ -169,11 +176,11 @@ export const useDashboardData = () => {
       currency: 'R$',
       previousPeriodChange: -12.5,
       sparklineData: [45000, 48000, 52000, 49000, 54000, 59000, 58000],
-      categoryBreakdown: [
-        { name: 'Computação', value: 58, color: '#60A5FA' },
-        { name: 'Armazenamento', value: 22, color: '#F97316' },
-        { name: 'Rede', value: 12, color: '#10B981' },
-        { name: 'Outros', value: 8, color: '#8B5CF6' }
+      providerBreakdown: [
+        { name: 'AWS', value: 58, color: '#F5A623' },
+        { name: 'Azure', value: 22, color: '#0078D4' },
+        { name: 'GCP', value: 12, color: '#4285F4' },
+        { name: 'Oracle Cloud', value: 8, color: '#f80404' }
       ],
       wastedSpend: 186851.83,
       budgetLimit: 1500000,
@@ -186,6 +193,14 @@ export const useDashboardData = () => {
       { name: 'Azure', value: 324567.80, color: '#0078D4' },
       { name: 'GCP', value: 234567.40, color: '#4285F4' },
       { name: 'Oracle Cloud', value: 143333.20, color: '#F80000' },
+    ],
+    
+    categoryDistributionData: [
+      { name: 'Computação', value: 623210.50, color: '#60A5FA' },
+      { name: 'Armazenamento', value: 274567.80, color: '#F97316' },
+      { name: 'Rede', value: 184567.40, color: '#10B981' },
+      { name: 'Banco de Dados', value: 114567.20, color: '#8B5CF6' },
+      { name: 'Outros', value: 48765.90, color: '#EC4899' },
     ],
     
     topServicesData: [

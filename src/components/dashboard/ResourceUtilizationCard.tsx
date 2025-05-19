@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
+import * as ProgressPrimitive from "@radix-ui/react-progress";
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Activity, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useTheme } from '@/hooks/useTheme';
+import { cn } from '@/lib/utils';
 
 interface ResourceUsage {
   name: string;
@@ -16,15 +19,10 @@ interface ResourceUtilizationCardProps {
 }
 
 export function ResourceUtilizationCard({ resources }: ResourceUtilizationCardProps) {
+  const { isDark } = useTheme();
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 5;
   
-  const getUtilizationColor = (usage: number, warningThreshold: number) => {
-    if (usage >= warningThreshold) return 'bg-cloudcostx-red';
-    if (usage >= warningThreshold * 0.8) return 'bg-amber-500';
-    return 'bg-cloudcostx-blue';
-  };
-
   // Calcular a média de utilização geral
   const averageUtilization = Math.round(
     resources.reduce((sum, resource) => {
@@ -35,10 +33,46 @@ export function ResourceUtilizationCard({ resources }: ResourceUtilizationCardPr
 
   // Determinar a classe de cor com base na média
   const getAverageUtilizationColor = () => {
-    if (averageUtilization >= 85) return 'text-cloudcostx-red';
-    if (averageUtilization >= 70) return 'text-amber-500';
-    return 'text-cloudcostx-blue';
+    if (averageUtilization >= 85) return isDark ? 'text-red-400' : 'text-cloudcostx-red';
+    if (averageUtilization >= 70) return isDark ? 'text-amber-400' : 'text-amber-500';
+    return isDark ? 'text-blue-400' : 'text-cloudcostx-blue';
   };
+  
+  // Componente de barra de progresso personalizado
+  const CustomProgressBar = React.forwardRef<
+    React.ElementRef<typeof ProgressPrimitive.Root>,
+    React.ComponentPropsWithoutRef<typeof ProgressPrimitive.Root> & { warningThreshold?: number }
+  >(({ className, value, warningThreshold = 85, ...props }, ref) => {
+    let indicatorClass = "bg-primary";
+    
+    if (value && warningThreshold) {
+      if (value >= warningThreshold) {
+        indicatorClass = isDark ? "bg-red-500" : "bg-cloudcostx-red";
+      } else if (value >= warningThreshold * 0.8) {
+        indicatorClass = isDark ? "bg-amber-500" : "bg-amber-500";
+      } else {
+        indicatorClass = isDark ? "bg-blue-500" : "bg-cloudcostx-blue";
+      }
+    }
+    
+    return (
+      <ProgressPrimitive.Root
+        ref={ref}
+        className={cn(
+          "relative h-1.5 w-full overflow-hidden rounded-full",
+          isDark ? "bg-slate-700" : "bg-gray-100",
+          className
+        )}
+        {...props}
+      >
+        <ProgressPrimitive.Indicator
+          className={cn("h-full w-full flex-1 transition-all", indicatorClass)}
+          style={{ transform: `translateX(-${100 - (value || 0)}%)` }}
+        />
+      </ProgressPrimitive.Root>
+    );
+  });
+  CustomProgressBar.displayName = "CustomProgressBar";
   
   // Calcular o número total de páginas
   const totalPages = Math.ceil(resources.length / itemsPerPage);
@@ -76,14 +110,9 @@ export function ResourceUtilizationCard({ resources }: ResourceUtilizationCardPr
             <div className="text-sm text-muted-foreground">
               Utilização média dos recursos
             </div>
-            <Progress 
-              value={averageUtilization} 
-              className={`h-2 mt-2 ${
-                averageUtilization >= 85 ? 'bg-cloudcostx-red' : 
-                averageUtilization >= 70 ? 'bg-amber-500' : 
-                'bg-cloudcostx-blue'
-              }`}
-            />
+            <div className="mt-2">
+              <CustomProgressBar value={averageUtilization} warningThreshold={85} className="h-2" />
+            </div>
           </div>
           
           <div className="space-y-3">
@@ -93,17 +122,20 @@ export function ResourceUtilizationCard({ resources }: ResourceUtilizationCardPr
                 <div key={resource.name} className="space-y-1.5">
                   <div className="flex justify-between items-center">
                     <span className="text-sm font-medium">{resource.name}</span>
-                    <span className={`text-xs font-medium ${
-                      utilizationPercentage >= resource.warningThreshold ? 'text-cloudcostx-red' : 
-                      utilizationPercentage >= resource.warningThreshold * 0.8 ? 'text-amber-500' : 
-                      'text-muted-foreground'
-                    }`}>
+                    <span className={cn(
+                      "text-xs font-medium",
+                      utilizationPercentage >= resource.warningThreshold 
+                        ? isDark ? "text-red-400" : "text-cloudcostx-red"
+                        : utilizationPercentage >= resource.warningThreshold * 0.8 
+                          ? isDark ? "text-amber-400" : "text-amber-500"
+                          : isDark ? "text-slate-400" : "text-muted-foreground"
+                    )}>
                       {utilizationPercentage}%
                     </span>
                   </div>
-                  <Progress 
+                  <CustomProgressBar 
                     value={utilizationPercentage} 
-                    className={`h-1.5 ${getUtilizationColor(utilizationPercentage, resource.warningThreshold)}`}
+                    warningThreshold={resource.warningThreshold}
                   />
                 </div>
               );
@@ -113,7 +145,10 @@ export function ResourceUtilizationCard({ resources }: ResourceUtilizationCardPr
         
         {/* Paginação - Só exibir se tiver mais de 4 itens */}
         {shouldShowPagination && (
-          <div className="flex justify-center items-center mt-2 pt-1 border-t border-gray-100">
+          <div className={cn(
+            "flex justify-center items-center mt-2 pt-1 border-t",
+            isDark ? "border-slate-700" : "border-gray-100"
+          )}>
             <div className="text-xs flex items-center">
               <Button 
                 variant="ghost" 

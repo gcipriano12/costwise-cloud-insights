@@ -7,6 +7,7 @@ import { ComparisonSection } from './sections/ComparisonSection';
 import type { 
   SpendSummary,
   ProviderDistribution,
+  CategoryDistribution,
   TopService,
   Anomaly,
   SavingsOpportunities,
@@ -29,6 +30,7 @@ interface DashboardContentProps {
   onTimeFilterChange: (filter: string) => void;
   spendSummaryData: SpendSummary;
   providerDistributionData: ProviderDistribution[];
+  categoryDistributionData: CategoryDistribution[];
   topServicesData: TopService[];
   anomaliesData: Anomaly[];
   savingsOpportunitiesData: SavingsOpportunities;
@@ -50,6 +52,7 @@ export const DashboardContent: React.FC<DashboardContentProps> = ({
   onTimeFilterChange,
   spendSummaryData,
   providerDistributionData,
+  categoryDistributionData,
   topServicesData,
   anomaliesData,
   savingsOpportunitiesData,
@@ -76,6 +79,7 @@ export const DashboardContent: React.FC<DashboardContentProps> = ({
       <SummarySection 
         spendSummaryData={spendSummaryData}
         providerDistributionData={providerDistributionData}
+        categoryDistributionData={categoryDistributionData}
         anomaliesData={anomaliesData}
         savingsOpportunitiesData={savingsOpportunitiesData}
       />

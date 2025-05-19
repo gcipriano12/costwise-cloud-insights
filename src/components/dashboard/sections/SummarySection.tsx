@@ -1,7 +1,6 @@
-
 import React from 'react';
 import { SpendSummaryCard } from '../SpendSummaryCard';
-import { ProviderDistributionCard } from '../ProviderDistributionCard';
+import { CategoryDistributionCard } from '../CategoryDistributionCard';
 import { AnomaliesCard } from '../AnomaliesCard';
 import { SavingsOpportunitiesCard } from '../SavingsOpportunitiesCard';
 import { ChartPie } from 'lucide-react';
@@ -12,7 +11,7 @@ interface SummarySectionProps {
     currency: string;
     previousPeriodChange: number;
     sparklineData: number[];
-    categoryBreakdown?: Array<{
+    providerBreakdown?: Array<{
       name: string;
       value: number;
       color: string;
@@ -23,6 +22,11 @@ interface SummarySectionProps {
     savingsRealized?: number;
   };
   providerDistributionData: {
+    name: string;
+    value: number;
+    color: string;
+  }[];
+  categoryDistributionData: {
     name: string;
     value: number;
     color: string;
@@ -49,7 +53,8 @@ interface SummarySectionProps {
 
 export function SummarySection({ 
   spendSummaryData, 
-  providerDistributionData, 
+  providerDistributionData,
+  categoryDistributionData, 
   anomaliesData, 
   savingsOpportunitiesData 
 }: SummarySectionProps) {
@@ -68,7 +73,7 @@ export function SummarySection({
           currency={spendSummaryData.currency}
           previousPeriodChange={spendSummaryData.previousPeriodChange}
           sparklineData={spendSummaryData.sparklineData}
-          categoryBreakdown={spendSummaryData.categoryBreakdown}
+          providerBreakdown={spendSummaryData.providerBreakdown}
           wastedSpend={spendSummaryData.wastedSpend}
           budgetLimit={spendSummaryData.budgetLimit}
           budgetConsumed={spendSummaryData.budgetConsumed}
@@ -79,8 +84,8 @@ export function SummarySection({
       {/* Os outros três cards ficam lado a lado abaixo */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <div className="col-span-1">
-          <ProviderDistributionCard 
-            data={providerDistributionData}
+          <CategoryDistributionCard 
+            data={categoryDistributionData}
             currency="R$"
           />
         </div>

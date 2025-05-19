@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import Header from '../layout/Header';
 import { ChatBot } from '../chat/ChatBot';
@@ -11,6 +10,7 @@ export default function Dashboard() {
     setTimeFilter,
     spendSummaryData,
     providerDistributionData,
+    categoryDistributionData,
     topServicesData,
     anomaliesData,
     savingsOpportunitiesData,
@@ -36,6 +36,7 @@ export default function Dashboard() {
         onTimeFilterChange={setTimeFilter}
         spendSummaryData={spendSummaryData}
         providerDistributionData={providerDistributionData}
+        categoryDistributionData={categoryDistributionData}
         topServicesData={topServicesData}
         anomaliesData={anomaliesData}
         savingsOpportunitiesData={savingsOpportunitiesData}

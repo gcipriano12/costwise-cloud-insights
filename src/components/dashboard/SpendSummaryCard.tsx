@@ -1,5 +1,6 @@
 import React from 'react';
-import { TrendingUp, TrendingDown, DollarSign, Calendar, AlertCircle, BarChart3, ArrowRight, Disc, Target, AlertTriangle, Coins, PieChart as PieChartIcon, Sparkles } from 'lucide-react';
+import * as ProgressPrimitive from "@radix-ui/react-progress";
+import { TrendingUp, TrendingDown, DollarSign, Calendar, AlertCircle, BarChart3, ArrowRight, Disc, Target, AlertTriangle, Coins, PieChart as PieChartIcon, Sparkles, Cloud } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { Badge } from '@/components/ui/badge';
@@ -8,7 +9,7 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Legend } from 'recharts';
 import { useTheme } from '@/hooks/useTheme';
 import { cn } from '@/lib/utils';
 
-interface CategoryBreakdown {
+interface ProviderBreakdown {
   name: string;
   value: number;
   color: string;
@@ -19,7 +20,7 @@ interface SpendSummaryProps {
   currency: string;
   previousPeriodChange: number;
   sparklineData: number[];
-  categoryBreakdown?: CategoryBreakdown[];
+  providerBreakdown?: ProviderBreakdown[];
   wastedSpend?: number;
   budgetLimit?: number;
   budgetConsumed?: number;
@@ -31,11 +32,11 @@ export function SpendSummaryCard({
   currency, 
   previousPeriodChange, 
   sparklineData,
-  categoryBreakdown = [
-    { name: 'Computação', value: 58, color: '#60A5FA' },
-    { name: 'Armazenamento', value: 22, color: '#F97316' },
-    { name: 'Rede', value: 12, color: '#10B981' },
-    { name: 'Outros', value: 8, color: '#8B5CF6' }
+  providerBreakdown = [
+    { name: 'AWS', value: 58, color: '#F5A623' },
+    { name: 'Azure', value: 22, color: '#0078D4' },
+    { name: 'GCP', value: 12, color: '#4285F4' },
+    { name: 'Oracle Cloud', value: 8, color: '#f80404' }
   ],
   wastedSpend = totalSpend * 0.15,
   budgetLimit = totalSpend * 1.2,
@@ -71,9 +72,9 @@ export function SpendSummaryCard({
   };
 
   // Dados para o gráfico de pizza
-  const pieData = categoryBreakdown.map(category => ({
-    name: category.name,
-    value: category.value,
+  const pieData = providerBreakdown.map(provider => ({
+    name: provider.name,
+    value: provider.value,
   }));
   
   const RADIAN = Math.PI / 180;
@@ -100,6 +101,39 @@ export function SpendSummaryCard({
     );
   };
   
+  // Personalizado para a barra de progresso
+  const CustomProgressBar = React.forwardRef<
+    React.ElementRef<typeof ProgressPrimitive.Root>,
+    React.ComponentPropsWithoutRef<typeof ProgressPrimitive.Root>
+  >(({ className, value, ...props }, ref) => {
+    let indicatorClass = "bg-primary";
+    if (value && value >= 90) {
+      indicatorClass = isDark ? "bg-red-500" : "bg-cloudcostx-red";
+    } else if (value && value >= 75) {
+      indicatorClass = isDark ? "bg-amber-500" : "bg-amber-500";
+    } else {
+      indicatorClass = isDark ? "bg-green-500" : "bg-cloudcostx-green";
+    }
+    
+    return (
+      <ProgressPrimitive.Root
+        ref={ref}
+        className={cn(
+          "relative h-1.5 w-full overflow-hidden rounded-full",
+          isDark ? "bg-slate-700" : "bg-gray-100",
+          className
+        )}
+        {...props}
+      >
+        <ProgressPrimitive.Indicator
+          className={cn("h-full w-full flex-1 transition-all", indicatorClass)}
+          style={{ transform: `translateX(-${100 - (value || 0)}%)` }}
+        />
+      </ProgressPrimitive.Root>
+    );
+  });
+  CustomProgressBar.displayName = "CustomProgressBar";
+
   return (
     <Card className="h-full overflow-hidden">
       <CardHeader className="pb-2">
@@ -192,13 +226,7 @@ export function SpendSummaryCard({
                 <span className={`text-xs font-medium ${getBudgetStatusColor()}`}>{budgetConsumed}%</span>
               </div>
               <div className="mt-1.5">
-                <Progress 
-                  value={budgetConsumed} 
-                  className={cn(
-                    "h-1.5",
-                    isDark ? "bg-slate-700" : ""
-                  )}
-                />
+                <CustomProgressBar value={budgetConsumed} />
               </div>
               <div className="flex justify-between text-xs mt-1 text-muted-foreground">
                 <span>Consumido</span>
@@ -209,7 +237,7 @@ export function SpendSummaryCard({
           
           <div className="col-span-12 md:col-span-4">
             <div className="flex items-center mb-2">
-              <p className="text-sm text-muted-foreground">Distribuição por Categoria</p>
+              <p className="text-sm text-muted-foreground">Distribuição por Provedor</p>
             </div>
 
             <div className="h-64 w-full">
@@ -228,7 +256,7 @@ export function SpendSummaryCard({
                     {pieData.map((entry, index) => (
                       <Cell 
                         key={`cell-${index}`} 
-                        fill={categoryBreakdown[index].color} 
+                        fill={providerBreakdown[index].color} 
                         stroke={isDark ? "#333" : "#fff"}
                         strokeWidth={2}
                       />
