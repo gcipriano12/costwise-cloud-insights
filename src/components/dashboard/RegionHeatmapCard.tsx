@@ -57,7 +57,7 @@ export function RegionHeatmapCard({ data, currency }: RegionHeatmapCardProps) {
     const { x, y, width, height, name, value, fill, percentage } = props;
     const formattedValue = `${currency} ${Math.round(value / 1000)}K`;
     const canShowText = width > 60 && height > 70;
-
+    
     return (
       <g>
         <rect
@@ -73,22 +73,22 @@ export function RegionHeatmapCard({ data, currency }: RegionHeatmapCardProps) {
         />
         {canShowText && (
           <>
-            <text
-              x={x + width / 2}
+          <text
+            x={x + width / 2}
               y={y + height / 2 - 20} // Ajustado para nome
-              textAnchor="middle"
-              dominantBaseline="middle"
-              style={{
+            textAnchor="middle"
+            dominantBaseline="middle"
+            style={{
                 fill: '#000000',
                 fontSize: Math.min(13, Math.max(10, width / 9)),
-                fontWeight: 'bold',
+              fontWeight: 'bold',
                 stroke: '#000000',
                 strokeWidth: 0.3,
                 paintOrder: 'stroke',
-              }}
-            >
-              {name}
-            </text>
+            }}
+          >
+            {name}
+          </text>
             <text
               x={x + width / 2}
               y={y + height / 2} // Ajustado para valor

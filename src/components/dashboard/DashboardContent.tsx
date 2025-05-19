@@ -73,39 +73,39 @@ export const DashboardContent: React.FC<DashboardContentProps> = ({
       isDark ? "bg-slate-950" : "bg-gray-50"
     )}>
       <div className="container mx-auto px-4">
-        <SummarySection 
-          spendSummaryData={spendSummaryData}
-          providerDistributionData={providerDistributionData}
-          anomaliesData={anomaliesData}
-          savingsOpportunitiesData={savingsOpportunitiesData}
-        />
-        
-        <ServicesSection 
-          topServicesData={topServicesData}
-          forecastData={forecastData}
-          currency={currency}
-        />
-        
-        <TrendsSection 
-          spendingCategoriesData={spendingTeamsData}
-          resourcesData={resourcesData}
-          complianceData={complianceData}
-          currency={currency}
-        />
-        
-        <KpiSection 
-          kpiData={kpiData}
-          costEventsData={costEventsData}
-          currentMonth="Maio 2025"
-        />
-        
-        <ComparisonSection 
-          environmentsData={environmentsData}
-          benchmarksData={benchmarksData}
-          newServicesData={newServicesData}
-          regionHeatmapData={regionHeatmapData}
-          currency={currency}
-        />
+      <SummarySection 
+        spendSummaryData={spendSummaryData}
+        providerDistributionData={providerDistributionData}
+        anomaliesData={anomaliesData}
+        savingsOpportunitiesData={savingsOpportunitiesData}
+      />
+      
+      <ServicesSection 
+        topServicesData={topServicesData}
+        forecastData={forecastData}
+        currency={currency}
+      />
+      
+      <TrendsSection 
+        spendingCategoriesData={spendingTeamsData}
+        resourcesData={resourcesData}
+        complianceData={complianceData}
+        currency={currency}
+      />
+      
+      <KpiSection 
+        kpiData={kpiData}
+        costEventsData={costEventsData}
+        currentMonth="Maio 2025"
+      />
+      
+      <ComparisonSection 
+        environmentsData={environmentsData}
+        benchmarksData={benchmarksData}
+        newServicesData={newServicesData}
+        regionHeatmapData={regionHeatmapData}
+        currency={currency}
+      />
       </div>
     </main>
   );

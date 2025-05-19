@@ -42,7 +42,7 @@ export default function Header() {
             </div>
             
             {/* Navegação Desktop */}
-            <nav className="hidden md:block">
+          <nav className="hidden md:block">
               <ul className="flex items-center space-x-6">
                 {navItems.map((item) => (
                   <li key={item.name}>
@@ -59,9 +59,9 @@ export default function Header() {
                     </a>
                   </li>
                 ))}
-              </ul>
-            </nav>
-          </div>
+            </ul>
+          </nav>
+        </div>
 
           {/* Ações do header */}
           <div className="flex items-center space-x-2">
@@ -69,33 +69,33 @@ export default function Header() {
             <ThemeToggle />
             
             {/* Notificações */}
-            <Button variant="ghost" size="icon" className="relative">
-              <Bell className="h-5 w-5" />
+          <Button variant="ghost" size="icon" className="relative">
+            <Bell className="h-5 w-5" />
               <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
-            </Button>
-            
+          </Button>
+          
             {/* Configurações */}
-            <Button variant="ghost" size="icon">
-              <Settings className="h-5 w-5" />
-            </Button>
-            
+          <Button variant="ghost" size="icon">
+            <Settings className="h-5 w-5" />
+          </Button>
+          
             {/* Menu do usuário */}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
                 <Button variant="outline" size="sm" className="ml-2">
                   <span className="font-medium">Minha Conta</span>
-                </Button>
-              </DropdownMenuTrigger>
+              </Button>
+            </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-48">
                 <DropdownMenuLabel>Usuário</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>Perfil</DropdownMenuItem>
-                <DropdownMenuItem>Configurações</DropdownMenuItem>
-                <DropdownMenuItem>Suporte</DropdownMenuItem>
-                <DropdownMenuSeparator />
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>Perfil</DropdownMenuItem>
+              <DropdownMenuItem>Configurações</DropdownMenuItem>
+              <DropdownMenuItem>Suporte</DropdownMenuItem>
+              <DropdownMenuSeparator />
                 <DropdownMenuItem className="text-red-500">Sair</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            </DropdownMenuContent>
+          </DropdownMenu>
             
             {/* Botão de menu mobile */}
             <Button 

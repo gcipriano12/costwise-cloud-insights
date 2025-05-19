@@ -42,9 +42,9 @@ export function CostBenchmarksCard({ benchmarks, currency }: CostBenchmarksCardP
         <div className="space-y-4">
           {benchmarks.map((benchmark) => (
             <div key={benchmark.serviceType} className="space-y-1">
-              <div className="flex justify-between items-center">
+                <div className="flex justify-between items-center">
                 <span className="text-sm font-medium truncate max-w-[60%]">{benchmark.serviceType}</span>
-                {getPercentileBadge(benchmark.percentile)}
+                  {getPercentileBadge(benchmark.percentile)}
               </div>
               
               {/* Barra de escala com marcadores e valores */}
@@ -71,9 +71,9 @@ export function CostBenchmarksCard({ benchmarks, currency }: CostBenchmarksCardP
                     ));
                     
                     return (
-                      <div 
+                  <div 
                         className="absolute top-1/2 h-5 w-5 bg-cloudcostx-blue rounded-full border-2 border-white shadow-sm transform -translate-y-1/2 z-10"
-                        style={{ left: `${position}%` }}
+                    style={{ left: `${position}%` }}
                       />
                     );
                   })()}
