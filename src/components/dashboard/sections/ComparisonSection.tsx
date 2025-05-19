@@ -5,7 +5,7 @@ import { CostBenchmarksCard } from '../CostBenchmarksCard';
 import { NewServicesCard } from '../NewServicesCard';
 import { RegionHeatmapCard } from '../RegionHeatmapCard';
 import { Card, CardHeader, CardTitle } from '@/components/ui/card';
-import { Reference } from 'lucide-react';
+import { BarChart } from 'lucide-react';
 
 interface ComparisonSectionProps {
   environmentsData: {
@@ -51,7 +51,7 @@ export function ComparisonSection({
   return (
     <div className="mb-6">
       <div className="flex items-center mb-4">
-        <Reference className="h-5 w-5 mr-2 text-purple-600" />
+        <BarChart className="h-5 w-5 mr-2 text-purple-600" />
         <h2 className="text-lg font-semibold">Comparativos e Referências</h2>
       </div>
       
