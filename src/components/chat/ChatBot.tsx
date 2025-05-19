@@ -12,13 +12,26 @@ interface Message {
   timestamp: Date;
 }
 
+// Função para gerar um ID único para a sessão de chat
+const generateChatId = () => {
+  return 'chat_' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+};
+
 export function ChatBot() {
   const { isDark } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [chatId, setChatId] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Gerar um novo chatId quando o chat é aberto pela primeira vez
+  useEffect(() => {
+    if (isOpen && !chatId) {
+      setChatId(generateChatId());
+    }
+  }, [isOpen, chatId]);
 
   // Esta função rola a área de mensagens para a mensagem mais recente
   const scrollToBottom = () => {
@@ -29,6 +42,37 @@ export function ChatBot() {
   useEffect(() => {
     scrollToBottom();
   }, [messages, isLoading]);
+
+  // Formatar mensagens anteriores para o contexto
+  const formatPreviousMessages = () => {
+    // Limitamos a apenas as últimas 5 mensagens para contexto
+    const contextMessages = messages.slice(-5);
+    return contextMessages.map(msg => ({
+      text: msg.text,
+      isUser: msg.isUser,
+      timestamp: msg.timestamp.toISOString()
+    }));
+  };
+
+  // Função para extrair a resposta do formato retornado pelo webhook
+  const extractResponse = (data: any): string => {
+    // Se a resposta for um array e tiver pelo menos um elemento
+    if (Array.isArray(data) && data.length > 0) {
+      // Verifica se o primeiro elemento tem a propriedade 'output'
+      if (data[0] && data[0].output) {
+        return data[0].output;
+      }
+    }
+    
+    // Formatos alternativos
+    if (data && data.response) {
+      return data.response;
+    }
+    
+    // Formato não reconhecido, retorna mensagem padrão
+    console.warn('Formato de resposta não reconhecido:', data);
+    return 'Desculpe, não consegui processar sua mensagem.';
+  };
 
   const sendMessage = async () => {
     if (!message.trim()) return;
@@ -43,13 +87,23 @@ export function ChatBot() {
     setMessage('');
     setIsLoading(true);
 
+    // Garantir que tenhamos um chatId válido
+    const currentChatId = chatId || generateChatId();
+    if (!chatId) {
+      setChatId(currentChatId);
+    }
+
     try {
       const response = await fetch('https://vreco.app.n8n.cloud/webhook-test/chatbot', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ message: newMessage.text }),
+        body: JSON.stringify({ 
+          message: newMessage.text,
+          chatId: currentChatId,
+          previous_messages: formatPreviousMessages()
+        }),
       });
 
       if (!response.ok) {
@@ -58,8 +112,11 @@ export function ChatBot() {
 
       const data = await response.json();
       
+      // Usar a função extractResponse para obter o texto da resposta
+      const responseText = extractResponse(data);
+      
       setMessages(prev => [...prev, {
-        text: data.response || 'Desculpe, não consegui processar sua mensagem.',
+        text: responseText,
         isUser: false,
         timestamp: new Date()
       }]);
@@ -73,6 +130,15 @@ export function ChatBot() {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  // Reset do chat quando é fechado
+  const handleCloseChat = () => {
+    setIsOpen(false);
+    // Opcional: Deixar o histórico e o chatId persistir entre aberturas
+    // Se quiser limpar o histórico ao fechar, descomente as linhas abaixo:
+    // setMessages([]);
+    // setChatId(null);
   };
 
   return (
@@ -110,7 +176,7 @@ export function ChatBot() {
               <Button
                 variant="ghost"
                 size="icon"
-                onClick={() => setIsOpen(false)}
+                onClick={handleCloseChat}
                 className={isDark ? "text-gray-300 hover:text-white" : ""}
               >
                 <X className="h-4 w-4" />
@@ -122,30 +188,44 @@ export function ChatBot() {
               "h-96 overflow-y-auto p-4 space-y-4",
               isDark ? "bg-slate-900" : "bg-gray-50"
             )}>
-              {messages.map((msg, index) => (
-                <div
-                  key={index}
-                  className={`flex ${msg.isUser ? 'justify-end' : 'justify-start'}`}
-                >
-                  <div
-                    className={`max-w-[80%] rounded-lg p-2 ${
-                      msg.isUser
-                        ? 'bg-cloudcostx-blue text-white'
-                        : isDark 
-                          ? 'bg-slate-800 text-gray-100' 
-                          : 'bg-white text-gray-900 border border-gray-200'
-                    }`}
-                  >
-                    <p className="text-sm">{msg.text}</p>
-                    <span className={cn(
-                      "text-xs opacity-70",
-                      isDark && !msg.isUser ? "text-gray-400" : ""
-                    )}>
-                      {msg.timestamp.toLocaleTimeString()}
-                    </span>
-                  </div>
+              {messages.length === 0 ? (
+                <div className={cn(
+                  "h-full flex flex-col items-center justify-center text-center p-4",
+                  isDark ? "text-slate-400" : "text-slate-500"
+                )}>
+                  <Bot className={cn(
+                    "h-12 w-12 mb-4",
+                    isDark ? "text-slate-600" : "text-slate-300"
+                  )} />
+                  <p className="text-sm mb-2">Como posso ajudar você hoje?</p>
+                  <p className="text-xs">Faça uma pergunta sobre custos de nuvem, orçamentos ou recomendações de economia.</p>
                 </div>
-              ))}
+              ) : (
+                messages.map((msg, index) => (
+                  <div
+                    key={index}
+                    className={`flex ${msg.isUser ? 'justify-end' : 'justify-start'}`}
+                  >
+                    <div
+                      className={`max-w-[80%] rounded-lg p-2 ${
+                        msg.isUser
+                          ? 'bg-cloudcostx-blue text-white'
+                          : isDark 
+                            ? 'bg-slate-800 text-gray-100' 
+                            : 'bg-white text-gray-900 border border-gray-200'
+                      }`}
+                    >
+                      <p className="text-sm">{msg.text}</p>
+                      <span className={cn(
+                        "text-xs opacity-70",
+                        isDark && !msg.isUser ? "text-gray-400" : ""
+                      )}>
+                        {msg.timestamp.toLocaleTimeString()}
+                      </span>
+                    </div>
+                  </div>
+                ))
+              )}
               {isLoading && (
                 <div className="flex justify-start">
                   <div className={cn(
