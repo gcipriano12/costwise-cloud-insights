@@ -55,28 +55,28 @@ export function ComparisonSection({
         <h2 className="text-lg font-semibold">Comparativos e Referências</h2>
       </div>
       
-      <div className="grid grid-cols-12 gap-4">
-        <div className="col-span-12 sm:col-span-6 xl:col-span-3">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="col-span-1">
           <EnvironmentComparisonCard 
             environments={environmentsData}
             currency={currency}
           />
         </div>
         
-        <div className="col-span-12 sm:col-span-6 xl:col-span-3">
+        <div className="col-span-1">
           <CostBenchmarksCard 
             benchmarks={benchmarksData}
             currency={currency}
           />
         </div>
         
-        <div className="col-span-12 sm:col-span-6 xl:col-span-3">
+        <div className="col-span-1">
           <NewServicesCard 
             services={newServicesData}
           />
         </div>
         
-        <div className="col-span-12 sm:col-span-6 xl:col-span-3">
+        <div className="col-span-1">
           <RegionHeatmapCard 
             data={regionHeatmapData}
             currency={currency}

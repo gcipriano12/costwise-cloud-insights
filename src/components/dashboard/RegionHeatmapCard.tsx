@@ -37,6 +37,9 @@ export function RegionHeatmapCard({ data, currency }: RegionHeatmapCardProps) {
     // Adjust color based on depth for better visual hierarchy
     const color = `hsl(220, 70%, ${80 - (depth * 10 + Math.floor(value / 10000) * 20)}%)`;
     
+    // Only render text if there's enough space for it
+    const shouldRenderText = width > 40 && height > 25;
+    
     return (
       <g>
         <rect
@@ -51,8 +54,7 @@ export function RegionHeatmapCard({ data, currency }: RegionHeatmapCardProps) {
             strokeOpacity: 1 / (depth + 1e-10),
           }}
         />
-        {/* Only render text if there's enough space */}
-        {width > 50 && height > 30 && (
+        {shouldRenderText && (
           <text
             x={x + width / 2}
             y={y + height / 2}
@@ -60,7 +62,7 @@ export function RegionHeatmapCard({ data, currency }: RegionHeatmapCardProps) {
             dominantBaseline="middle"
             style={{
               fill: '#fff',
-              fontSize: 10,
+              fontSize: Math.min(10, Math.max(8, width / 10)),
               fontWeight: 'bold',
               textShadow: '1px 1px 1px rgba(0,0,0,0.5)',
             }}
@@ -73,12 +75,12 @@ export function RegionHeatmapCard({ data, currency }: RegionHeatmapCardProps) {
   };
 
   return (
-    <Card className="h-full">
-      <CardHeader className="pb-2">
+    <Card className="h-full flex flex-col">
+      <CardHeader className="pb-2 flex-shrink-0">
         <CardTitle className="text-lg font-medium">Heatmap de Custos por Região</CardTitle>
       </CardHeader>
-      <CardContent>
-        <div className="h-[180px]">
+      <CardContent className="flex-grow p-2">
+        <div className="h-[180px] min-h-[180px] w-full">
           <ResponsiveContainer width="100%" height="100%">
             <Treemap
               data={data}
@@ -86,6 +88,7 @@ export function RegionHeatmapCard({ data, currency }: RegionHeatmapCardProps) {
               stroke="#fff"
               fill="#8884d8"
               content={<CustomizedContent />}
+              animationDuration={500}
             >
               <Tooltip content={<CustomTooltip />} />
             </Treemap>

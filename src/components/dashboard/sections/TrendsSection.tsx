@@ -39,21 +39,21 @@ export function TrendsSection({
         <h2 className="text-lg font-semibold">Tendências e Utilização</h2>
       </div>
       
-      <div className="grid grid-cols-12 gap-4">
-        <div className="col-span-12 lg:col-span-6">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <div className="col-span-1 lg:col-span-2">
           <SpendingTeamsCard 
             categories={spendingCategoriesData}
             currency={currency}
           />
         </div>
         
-        <div className="col-span-12 md:col-span-6 lg:col-span-3">
+        <div className="col-span-1">
           <ResourceUtilizationCard 
             resources={resourcesData}
           />
         </div>
         
-        <div className="col-span-12 md:col-span-6 lg:col-span-3">
+        <div className="col-span-1">
           <FinOpsComplianceCard 
             items={complianceData}
           />

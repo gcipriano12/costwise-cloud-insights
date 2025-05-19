@@ -77,22 +77,22 @@ export function SummarySection({
       </div>
       
       {/* Os outros três cards ficam lado a lado abaixo */}
-      <div className="grid grid-cols-12 gap-4">
-        <div className="col-span-12 md:col-span-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="col-span-1">
           <ProviderDistributionCard 
             data={providerDistributionData}
             currency="R$"
           />
         </div>
         
-        <div className="col-span-12 md:col-span-4">
+        <div className="col-span-1">
           <AnomaliesCard 
             anomalies={anomaliesData}
             currency="R$"
           />
         </div>
 
-        <div className="col-span-12 md:col-span-4">
+        <div className="col-span-1">
           <SavingsOpportunitiesCard 
             opportunities={savingsOpportunitiesData.opportunities}
             totalPotentialSavings={savingsOpportunitiesData.totalPotentialSavings}

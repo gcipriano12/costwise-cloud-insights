@@ -30,15 +30,15 @@ export function ServicesSection({ topServicesData, forecastData, currency }: Ser
         <h2 className="text-lg font-semibold">Serviços e Previsões</h2>
       </div>
       
-      <div className="grid grid-cols-12 gap-4">
-        <div className="col-span-12 md:col-span-12 lg:col-span-6">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+        <div className="col-span-1">
           <TopServicesCard 
             services={topServicesData}
             currency={currency}
           />
         </div>
 
-        <div className="col-span-12 md:col-span-12 lg:col-span-6">
+        <div className="col-span-1">
           <SpendingForecastCard 
             data={forecastData}
             currency={currency}
