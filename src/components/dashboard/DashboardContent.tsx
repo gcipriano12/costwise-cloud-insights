@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { TimeFilter } from './TimeFilter';
+import { DashboardHeader } from './DashboardHeader';
 import { SummarySection } from './sections/SummarySection';
 import { ServicesSection } from './sections/ServicesSection';
 import { TrendsSection } from './sections/TrendsSection';
@@ -67,10 +67,10 @@ export const DashboardContent: React.FC<DashboardContentProps> = ({
 }) => {
   return (
     <main className="container mx-auto px-4 py-6">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-semibold text-cloudcostx-blue">Dashboard</h1>
-        <TimeFilter value={timeFilter} onChange={onTimeFilterChange} />
-      </div>
+      <DashboardHeader 
+        timeFilter={timeFilter} 
+        onTimeFilterChange={onTimeFilterChange}
+      />
       
       {/* Seções do Dashboard refatoradas */}
       <SummarySection 
