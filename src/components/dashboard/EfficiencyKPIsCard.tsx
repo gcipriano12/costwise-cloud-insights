@@ -1,7 +1,14 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { TrendingUp, TrendingDown, BarChart2, ChevronLeft, ChevronRight, HelpCircle } from 'lucide-react';
+import { TrendingUp, TrendingDown, BarChart2, ChevronLeft, ChevronRight, HelpCircle, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { 
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogClose
+} from "@/components/ui/dialog";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { useTheme } from '@/hooks/useTheme';
 import { cn } from '@/lib/utils';
@@ -69,6 +76,8 @@ export function EfficiencyKPIsCard({ kpis }: EfficiencyKPIsCardProps) {
   const { isDark } = useTheme();
   const [activeCategory, setActiveCategory] = useState<KPICategory>('eficiencia');
   const [currentPage, setCurrentPage] = useState(0);
+  const [activeKpiInfo, setActiveKpiInfo] = useState<KPI | null>(null);
+  const [showMobileDialog, setShowMobileDialog] = useState(false);
   const itemsPerPage = 4;
 
   // Gerar cores de categoria com base no tema atual
@@ -119,6 +128,12 @@ export function EfficiencyKPIsCard({ kpis }: EfficiencyKPIsCardProps) {
         }`} 
       />
     );
+  };
+
+  // Função para mostrar informações do KPI em dispositivos móveis
+  const handleShowKpiInfo = (kpi: KPI) => {
+    setActiveKpiInfo(kpi);
+    setShowMobileDialog(true);
   };
 
   // Lista de todas as categorias
@@ -176,32 +191,47 @@ export function EfficiencyKPIsCard({ kpis }: EfficiencyKPIsCardProps) {
                     <div className="flex items-center justify-between">
                       <div className="text-sm text-muted-foreground">{kpi.name}</div>
                       {kpi.description && (
-                        <TooltipProvider>
-                          <Tooltip delayDuration={0}>
-                            <TooltipTrigger asChild>
-                              <Button variant="ghost" size="icon" className="h-5 w-5 p-0 hover:bg-transparent">
-                                <HelpCircle className={`h-4 w-4 ${activeColor.text}`} />
-                              </Button>
-                            </TooltipTrigger>
-                            <TooltipContent className={cn(
-                              "max-w-xs",
-                              isDark ? "bg-slate-800 border-slate-700 text-white" : "bg-white border-gray-200 text-slate-900"
-                            )}>
-                              <div>
-                                <p className="font-medium mb-1">{kpi.name}</p>
-                                <p className="text-xs mb-1">{kpi.description}</p>
-                                {kpi.formula && (
-                                  <div className={cn(
-                                    "p-1 rounded text-xs font-mono",
-                                    isDark ? "bg-slate-700" : "bg-slate-100"
-                                  )}>
-                                    {kpi.formula}
+                        <>
+                          {/* Tooltip para desktop */}
+                          <div className="hidden sm:block">
+                            <TooltipProvider>
+                              <Tooltip delayDuration={0}>
+                                <TooltipTrigger asChild>
+                                  <Button variant="ghost" size="icon" className="h-5 w-5 p-0 hover:bg-transparent">
+                                    <HelpCircle className={`h-4 w-4 ${activeColor.text}`} />
+                                  </Button>
+                                </TooltipTrigger>
+                                <TooltipContent className={cn(
+                                  "max-w-xs",
+                                  isDark ? "bg-slate-800 border-slate-700 text-white" : "bg-white border-gray-200 text-slate-900"
+                                )}>
+                                  <div>
+                                    <p className="font-medium mb-1">{kpi.name}</p>
+                                    <p className="text-xs mb-1">{kpi.description}</p>
+                                    {kpi.formula && (
+                                      <div className={cn(
+                                        "p-1 rounded text-xs font-mono",
+                                        isDark ? "bg-slate-700" : "bg-slate-100"
+                                      )}>
+                                        {kpi.formula}
+                                      </div>
+                                    )}
                                   </div>
-                                )}
-                              </div>
-                            </TooltipContent>
-                          </Tooltip>
-                        </TooltipProvider>
+                                </TooltipContent>
+                              </Tooltip>
+                            </TooltipProvider>
+                          </div>
+                          
+                          {/* Botão para dispositivos móveis que abre um diálogo */}
+                          <Button 
+                            variant="ghost" 
+                            size="icon" 
+                            className="sm:hidden h-5 w-5 p-0 hover:bg-transparent"
+                            onClick={() => handleShowKpiInfo(kpi)}
+                          >
+                            <HelpCircle className={`h-4 w-4 ${activeColor.text}`} />
+                          </Button>
+                        </>
                       )}
                     </div>
                     <div className="flex items-center mt-1">
@@ -259,6 +289,31 @@ export function EfficiencyKPIsCard({ kpis }: EfficiencyKPIsCardProps) {
           </div>
         )}
       </CardContent>
+      
+      {/* Diálogo para mostrar informações do KPI em dispositivos móveis */}
+      <Dialog open={showMobileDialog} onOpenChange={setShowMobileDialog}>
+        <DialogContent className={cn(
+          "sm:hidden px-4 pt-4 pb-4 max-w-[90%]",
+          isDark ? "bg-slate-900" : ""
+        )}>
+          <DialogHeader className="flex items-center justify-between pb-0">
+            <DialogTitle className="text-base font-medium">{activeKpiInfo?.name}</DialogTitle>
+            <DialogClose asChild>
+            </DialogClose>
+          </DialogHeader>
+          <div className="mt-0">
+            <p className="text-sm mt-1 mb-2">{activeKpiInfo?.description}</p>
+            {activeKpiInfo?.formula && (
+              <div className={cn(
+                "p-2 mt-1 rounded text-xs font-mono",
+                isDark ? "bg-slate-800" : "bg-slate-100"
+              )}>
+                {activeKpiInfo.formula}
+              </div>
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
     </Card>
   );
 }

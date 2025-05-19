@@ -1,5 +1,5 @@
 import React from 'react';
-import { Bell, Menu, Settings, X } from 'lucide-react';
+import { Bell, Menu, Settings, X, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/theme/ThemeToggle';
 import { useTheme } from '@/hooks/useTheme';
@@ -106,8 +106,9 @@ export default function Header() {
               {/* Menu do usuário */}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline" size="sm" className="ml-1 px-2 sm:px-3">
-                    <span className="sr-only sm:not-sr-only sm:font-medium">Minha Conta</span>
+                  <Button variant="ghost" size="icon">
+                    <User className="h-5 w-5" />
+                    <span className="sr-only">Minha Conta</span>
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-48">
@@ -179,6 +180,10 @@ export default function Header() {
                 <a href="#" className="flex items-center py-3 px-4 text-base font-medium rounded-md hover:bg-gray-50 dark:hover:bg-slate-800">
                   <Settings className="h-5 w-5 mr-3" />
                   Configurações
+                </a>
+                <a href="#" className="flex items-center py-3 px-4 text-base font-medium rounded-md hover:bg-gray-50 dark:hover:bg-slate-800">
+                  <User className="h-5 w-5 mr-3" />
+                  Minha Conta
                 </a>
               </div>
             </div>

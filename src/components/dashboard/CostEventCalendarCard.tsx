@@ -184,8 +184,8 @@ export function CostEventCalendarCard({ events }: CostEventCalendarCardProps) {
                 value={selectedYear.toString()}
                 onValueChange={(value) => setSelectedYear(parseInt(value))}
               >
-                <SelectTrigger className="w-[70px] sm:w-[80px] h-8 text-sm">
-                  <SelectValue placeholder="Ano" />
+                <SelectTrigger className="w-[80px] sm:w-[90px] h-8 text-sm">
+                  <SelectValue placeholder="Ano" className="pr-2" />
                 </SelectTrigger>
                 <SelectContent>
                   {years.map((year) => (

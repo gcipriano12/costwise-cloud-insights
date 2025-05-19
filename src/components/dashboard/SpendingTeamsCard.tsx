@@ -2,6 +2,8 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { BarChart3 } from 'lucide-react';
+import { useTheme } from '@/hooks/useTheme';
+import { cn } from '@/lib/utils';
 
 interface SpendingTeam {
   name: string;
@@ -15,6 +17,8 @@ interface SpendingTeamsCardProps {
 }
 
 export function SpendingTeamsCard({ categories, currency }: SpendingTeamsCardProps) {
+  const { isDark } = useTheme();
+  
   const formatCurrency = (value: number) => {
     if (value >= 1000000) {
       return `${currency} ${(value / 1000000).toFixed(1)}M`;
@@ -45,31 +49,50 @@ export function SpendingTeamsCard({ categories, currency }: SpendingTeamsCardPro
               barCategoryGap={15}
               layout="vertical"
             >
-              <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={false} stroke="#f0f0f0" />
+              <CartesianGrid 
+                strokeDasharray="3 3" 
+                horizontal={true} 
+                vertical={false} 
+                stroke={isDark ? "#333333" : "#f0f0f0"} 
+              />
               <XAxis 
                 type="number"
                 tickFormatter={formatCurrency}
-                tick={{ fontSize: 11 }}
+                tick={{ 
+                  fontSize: 11,
+                  fill: isDark ? "#94a3b8" : "#64748b"
+                }}
                 tickLine={false}
-                axisLine={{ stroke: '#e0e0e0' }}
+                axisLine={{ stroke: isDark ? "#333333" : "#e0e0e0" }}
                 tickCount={5}
               />
               <YAxis 
                 dataKey="name"
                 type="category" 
                 width={120}
-                tick={{ fontSize: 12, fontWeight: 500 }}
+                tick={{ 
+                  fontSize: 12, 
+                  fontWeight: 500,
+                  fill: isDark ? "#94a3b8" : "#64748b"
+                }}
                 tickLine={false}
-                axisLine={{ stroke: '#e0e0e0' }}
+                axisLine={{ stroke: isDark ? "#333333" : "#e0e0e0" }}
               />
               <Tooltip 
                 formatter={(value: number) => [`${currency} ${value.toLocaleString()}`, 'Valor']}
                 labelFormatter={(label) => `Equipe: ${label}`}
                 contentStyle={{ 
-                  backgroundColor: 'white', 
-                  border: '1px solid #f0f0f0',
+                  backgroundColor: isDark ? '#1e293b' : 'white', 
+                  border: `1px solid ${isDark ? '#334155' : '#f0f0f0'}`,
                   borderRadius: '6px',
-                  boxShadow: '0 2px 8px rgba(0,0,0,0.05)'
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
+                  color: isDark ? '#e2e8f0' : '#1e293b'
+                }}
+                itemStyle={{
+                  color: isDark ? '#94a3b8' : '#64748b'
+                }}
+                labelStyle={{
+                  color: isDark ? '#e2e8f0' : '#1e293b'
                 }}
               />
               <Bar 
