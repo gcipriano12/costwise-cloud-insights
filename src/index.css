@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono&display=swap');
 
 @tailwind base;
@@ -45,16 +44,21 @@
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* CloudCostX custom colors */
+    --cloudcostx-blue: 217 91% 60%;
+    --cloudcostx-green: 150 84% 53%;
+    --cloudcostx-red: 0 91% 71%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
+    --background: 222.2 47.4% 6.2%;
     --foreground: 210 40% 98%;
 
-    --card: 222.2 84% 4.9%;
+    --card: 222.2 47.4% 8.1%;
     --card-foreground: 210 40% 98%;
 
-    --popover: 222.2 84% 4.9%;
+    --popover: 222.2 47.4% 8.1%;
     --popover-foreground: 210 40% 98%;
 
     --primary: 210 40% 98%;
@@ -75,6 +79,7 @@
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
+    
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -83,6 +88,11 @@
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* CloudCostX custom colors - dark mode */
+    --cloudcostx-blue: 214 100% 70%;
+    --cloudcostx-green: 150 80% 60%;
+    --cloudcostx-red: 0 85% 70%;
   }
 }
 
@@ -96,27 +106,34 @@
   }
 }
 
-/* Custom CloudCostX styles */
-.card {
-  @apply bg-white rounded-lg shadow-md border border-cloudcostx-gray-200 overflow-hidden;
-}
+/* Card styles with dark mode support */
+@layer components {
+  .card {
+    @apply bg-card text-card-foreground rounded-lg shadow-sm border overflow-hidden transition-colors duration-200;
+  }
 
-.card-header {
-  @apply p-4 border-b border-cloudcostx-gray-200 font-medium text-lg;
-}
+  .card-header {
+    @apply p-4 border-b font-medium text-lg;
+  }
 
-.card-body {
-  @apply p-4;
-}
+  .card-body {
+    @apply p-4;
+  }
 
-.trend-up {
-  @apply text-cloudcostx-red;
-}
+  .trend-up {
+    @apply text-[hsl(var(--cloudcostx-red))];
+  }
 
-.trend-down {
-  @apply text-cloudcostx-green;
-}
+  .trend-down {
+    @apply text-[hsl(var(--cloudcostx-green))];
+  }
 
-.sparkline {
-  @apply h-8 w-24 inline-block;
+  .sparkline {
+    @apply h-8 w-24 inline-block;
+  }
+
+  /* Animate background transitions */
+  .background-transition {
+    @apply transition-colors duration-200;
+  }
 }
