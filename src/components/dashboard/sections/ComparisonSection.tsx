@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { EnvironmentComparisonCard } from '../EnvironmentComparisonCard';
 import { CostBenchmarksCard } from '../CostBenchmarksCard';
@@ -48,6 +47,11 @@ export function ComparisonSection({
   regionHeatmapData, 
   currency 
 }: ComparisonSectionProps) {
+  // Filtrar as top 5 regiões pelo valor total
+  const topRegions = [...regionHeatmapData]
+    .sort((a, b) => b.value - a.value)
+    .slice(0, 5);
+
   return (
     <div className="mb-6">
       <div className="flex items-center mb-4">
@@ -55,30 +59,30 @@ export function ComparisonSection({
         <h2 className="text-lg font-semibold">Comparativos e Referências</h2>
       </div>
       
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <div className="col-span-1">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-stretch">
+        <div className="col-span-1 h-full flex flex-col">
           <EnvironmentComparisonCard 
             environments={environmentsData}
             currency={currency}
           />
         </div>
         
-        <div className="col-span-1">
+        <div className="col-span-1 h-full flex flex-col">
           <CostBenchmarksCard 
             benchmarks={benchmarksData}
             currency={currency}
           />
         </div>
         
-        <div className="col-span-1">
+        <div className="col-span-1 h-full flex flex-col">
           <NewServicesCard 
             services={newServicesData}
           />
         </div>
         
-        <div className="col-span-1">
+        <div className="col-span-1 h-full flex flex-col">
           <RegionHeatmapCard 
-            data={regionHeatmapData}
+            data={topRegions}
             currency={currency}
           />
         </div>

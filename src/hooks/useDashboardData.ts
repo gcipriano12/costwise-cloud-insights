@@ -567,8 +567,7 @@ export const useDashboardData = () => {
         value: 543210.50,
         children: [
           { name: 'us-east-1', value: 243210.30 },
-          { name: 'sa-east-1', value: 120000.20 },
-          { name: 'eu-west-1', value: 180000.00 },
+          { name: 'sa-east-1', value: 120000.20 }
         ]
       },
       {
@@ -576,17 +575,14 @@ export const useDashboardData = () => {
         value: 324567.80,
         children: [
           { name: 'East US', value: 124567.50 },
-          { name: 'Brazil South', value: 100000.30 },
-          { name: 'West Europe', value: 100000.00 },
+          { name: 'Brazil South', value: 100000.30 }
         ]
       },
       {
         name: 'GCP',
         value: 234567.40,
         children: [
-          { name: 'us-central1', value: 114567.20 },
-          { name: 'southamerica-east1', value: 60000.20 },
-          { name: 'europe-west1', value: 60000.00 },
+          { name: 'us-central1', value: 114567.20 }
         ]
       },
     ],

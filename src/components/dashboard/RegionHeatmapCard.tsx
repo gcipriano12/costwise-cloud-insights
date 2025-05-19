@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ResponsiveContainer, Treemap, Tooltip } from 'recharts';
@@ -15,6 +14,11 @@ interface RegionHeatmapCardProps {
 }
 
 export function RegionHeatmapCard({ data, currency }: RegionHeatmapCardProps) {
+  // Garantir que apenas as top 5 regiões sejam exibidas
+  const topRegions = [...data]
+    .sort((a, b) => b.value - a.value)
+    .slice(0, 5);
+
   // Custom tooltip for the treemap
   const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {
@@ -34,10 +38,10 @@ export function RegionHeatmapCard({ data, currency }: RegionHeatmapCardProps) {
   const CustomizedContent = (props: any) => {
     const { x, y, width, height, depth, name, value } = props;
     
-    // Adjust color based on depth for better visual hierarchy
-    const color = `hsl(220, 70%, ${80 - (depth * 10 + Math.floor(value / 10000) * 20)}%)`;
+    // Usar cores mais distintas entre si para melhor visualização
+    const color = `hsl(${(props.index * 55) % 360}, 70%, ${80 - (depth * 10 + Math.floor(value / 10000) * 20)}%)`;
     
-    // Only render text if there's enough space for it
+    // Mostrar texto apenas se houver espaço suficiente
     const shouldRenderText = width > 40 && height > 25;
     
     return (
@@ -50,25 +54,41 @@ export function RegionHeatmapCard({ data, currency }: RegionHeatmapCardProps) {
           style={{
             fill: color,
             stroke: '#fff',
-            strokeWidth: 2 / (depth + 1e-10),
-            strokeOpacity: 1 / (depth + 1e-10),
+            strokeWidth: 3,
+            strokeOpacity: 1,
           }}
         />
         {shouldRenderText && (
-          <text
-            x={x + width / 2}
-            y={y + height / 2}
-            textAnchor="middle"
-            dominantBaseline="middle"
-            style={{
-              fill: '#fff',
-              fontSize: Math.min(10, Math.max(8, width / 10)),
-              fontWeight: 'bold',
-              textShadow: '1px 1px 1px rgba(0,0,0,0.5)',
-            }}
-          >
-            {name}
-          </text>
+          <>
+            <text
+              x={x + width / 2}
+              y={y + height / 2 - 6}
+              textAnchor="middle"
+              dominantBaseline="middle"
+              style={{
+                fill: '#fff',
+                fontSize: Math.min(12, Math.max(9, width / 10)),
+                fontWeight: 'bold',
+                textShadow: '1px 1px 1px rgba(0,0,0,0.5)',
+              }}
+            >
+              {name}
+            </text>
+            <text
+              x={x + width / 2}
+              y={y + height / 2 + 10}
+              textAnchor="middle"
+              dominantBaseline="middle"
+              style={{
+                fill: '#fff',
+                fontSize: Math.min(10, Math.max(8, width / 12)),
+                fontWeight: 'medium',
+                textShadow: '1px 1px 1px rgba(0,0,0,0.5)',
+              }}
+            >
+              {currency} {Math.round(value / 1000)}K
+            </text>
+          </>
         )}
       </g>
     );
@@ -79,11 +99,11 @@ export function RegionHeatmapCard({ data, currency }: RegionHeatmapCardProps) {
       <CardHeader className="pb-2 flex-shrink-0">
         <CardTitle className="text-lg font-medium">Heatmap de Custos por Região</CardTitle>
       </CardHeader>
-      <CardContent className="flex-grow p-2">
-        <div className="h-[180px] min-h-[180px] w-full">
+      <CardContent className="flex-grow p-2 flex flex-col">
+        <div className="flex-grow h-[360px] min-h-[180px] w-full">
           <ResponsiveContainer width="100%" height="100%">
             <Treemap
-              data={data}
+              data={topRegions}
               dataKey="value"
               stroke="#fff"
               fill="#8884d8"
