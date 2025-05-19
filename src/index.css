@@ -98,11 +98,11 @@
 
 /* Custom CloudCostX styles */
 .card {
-  @apply bg-white dark:bg-[#1A202C] rounded-lg shadow-md border border-cloudcostx-gray-200 dark:border-gray-700 overflow-hidden;
+  @apply bg-white rounded-lg shadow-md border border-cloudcostx-gray-200 overflow-hidden;
 }
 
 .card-header {
-  @apply p-4 border-b border-cloudcostx-gray-200 dark:border-gray-700 font-medium text-lg;
+  @apply p-4 border-b border-cloudcostx-gray-200 font-medium text-lg;
 }
 
 .card-body {
@@ -120,13 +120,3 @@
 .sparkline {
   @apply h-8 w-24 inline-block;
 }
-
-/* Dark mode text styles */
-.dark .text-foreground {
-  @apply text-white;
-}
-
-.dark .text-muted-foreground {
-  @apply text-slate-400;
-}
-
