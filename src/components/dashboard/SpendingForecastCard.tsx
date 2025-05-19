@@ -31,9 +31,18 @@ export function SpendingForecastCard({ data, currency }: SpendingForecastCardPro
     if (value >= 1000000) {
       return `${currency} ${(value / 1000000).toFixed(2)}M`;
     } else if (value >= 1000) {
-      return `${currency} ${(value / 1000).toFixed(2)}K`;
+      return `${currency} ${(value / 1000).toFixed(0)}K`;
     }
     return `${currency} ${value.toLocaleString()}`;
+  };
+  
+  // Formatador específico para o eixo Y que mantém espaçamento consistente
+  const formatYAxisTick = (value: number) => {
+    if (value === 0) return `${currency} 0K`;
+    if (value >= 1000000) {
+      return `${currency} ${(value / 1000000).toFixed(0)}M`;
+    }
+    return `${currency} ${(value / 1000).toFixed(0)}K`;
   };
   
   const CustomTooltip = ({ active, payload, label }: any) => {
@@ -111,8 +120,8 @@ export function SpendingForecastCard({ data, currency }: SpendingForecastCardPro
                 axisLine={{ stroke: isDark ? "#475569" : "#e5e7eb" }}
               />
               <YAxis 
-                tickFormatter={(value) => `${currency} ${(value/1000).toFixed(0)}K`}
-                width={65}
+                tickFormatter={formatYAxisTick}
+                width={70}
                 tick={{ fontSize: 12, fill: isDark ? "#cbd5e1" : undefined }}
                 tickLine={false}
                 axisLine={{ stroke: isDark ? "#475569" : "#e5e7eb" }}
@@ -127,7 +136,10 @@ export function SpendingForecastCard({ data, currency }: SpendingForecastCardPro
                   position: 'right',
                   value: 'Orçamento', 
                   fill: isDark ? "#f87171" : "#F87171", 
-                  fontSize: 11
+                  fontSize: 11,
+                  offset: 10,
+                  formatter: () => 'Orçamento',
+                  className: isDark ? 'text-red-400' : 'text-red-500'
                 }}
               />
               <Line 

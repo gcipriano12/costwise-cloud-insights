@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import { PieChart, Pie, Cell, ResponsiveContainer, Legend } from 'recharts';
+import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip as RechartsTooltip, Sector } from 'recharts';
 import { useTheme } from '@/hooks/useTheme';
 import { cn } from '@/lib/utils';
 
@@ -46,6 +46,7 @@ export function SpendSummaryCard({
   const { isDark } = useTheme();
   const isIncrease = previousPeriodChange > 0;
   const changeAbs = Math.abs(previousPeriodChange);
+  const [activeIndex, setActiveIndex] = React.useState<number | null>(null);
   
   const monthlyAverage = totalSpend / 6;
   const projectedNextMonth = totalSpend * (1 + (previousPeriodChange / 100));
@@ -71,10 +72,18 @@ export function SpendSummaryCard({
     return isDark ? 'text-green-400' : 'text-cloudcostx-green';
   };
 
+  // Calcular valores absolutos para cada provedor
+  const providerValues = providerBreakdown.map(provider => ({
+    ...provider,
+    absoluteValue: (provider.value / 100) * totalSpend
+  }));
+
   // Dados para o gráfico de pizza
-  const pieData = providerBreakdown.map(provider => ({
+  const pieData = providerValues.map(provider => ({
     name: provider.name,
     value: provider.value,
+    absoluteValue: provider.absoluteValue,
+    color: provider.color
   }));
   
   const RADIAN = Math.PI / 180;
@@ -99,6 +108,66 @@ export function SpendSummaryCard({
         {`${pieData[index].value}%`}
       </text>
     );
+  };
+
+  // Componente para setor ativo (quando o mouse passa por cima)
+  const renderActiveShape = (props: any) => {
+    const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, payload, value } = props;
+    
+    return (
+      <g>
+        <Sector
+          cx={cx}
+          cy={cy}
+          innerRadius={innerRadius}
+          outerRadius={outerRadius + 6}
+          startAngle={startAngle}
+          endAngle={endAngle}
+          fill={fill}
+          strokeWidth={2}
+          stroke={isDark ? "#fff" : "#000"}
+        />
+      </g>
+    );
+  };
+
+  // Tooltip customizado para o gráfico de pizza
+  const CustomPieTooltip = ({ active, payload }: any) => {
+    if (active && payload && payload.length) {
+      const data = payload[0].payload;
+      
+      return (
+        <div className={cn(
+          "p-3 border rounded-md shadow-md",
+          isDark 
+            ? "bg-slate-800 border-slate-700 text-white" 
+            : "bg-white border-gray-200 text-slate-900"
+        )}>
+          <p className="font-medium text-sm mb-1">{data.name}</p>
+          <p className="text-sm">
+            <span className="font-semibold">{formatCurrency(data.absoluteValue)}</span>
+          </p>
+          <p className={cn(
+            "text-xs mt-1",
+            isDark ? "text-slate-400" : "text-muted-foreground"
+          )}>
+            {data.value}% do total
+          </p>
+        </div>
+      );
+    }
+    
+    return null;
+  };
+  
+  // Função para lidar com o hover/touch no gráfico de pizza
+  const onPieEnter = (_: any, index: number) => {
+    setActiveIndex(index);
+  };
+
+  // Função para lidar com o mouse saindo do gráfico
+  const onPieLeave = () => {
+    setActiveIndex(null);
   };
   
   // Personalizado para a barra de progresso
@@ -244,6 +313,8 @@ export function SpendSummaryCard({
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie
+                    activeIndex={activeIndex !== null ? activeIndex : undefined}
+                    activeShape={renderActiveShape}
                     data={pieData}
                     cx="50%"
                     cy="50%"
@@ -252,11 +323,14 @@ export function SpendSummaryCard({
                     outerRadius={80}
                     fill="#8884d8"
                     dataKey="value"
+                    onMouseEnter={onPieEnter}
+                    onMouseLeave={onPieLeave}
+                    onClick={onPieEnter}
                   >
                     {pieData.map((entry, index) => (
                       <Cell 
                         key={`cell-${index}`} 
-                        fill={providerBreakdown[index].color} 
+                        fill={entry.color} 
                         stroke={isDark ? "#333" : "#fff"}
                         strokeWidth={2}
                       />
@@ -268,6 +342,10 @@ export function SpendSummaryCard({
                     align="right"
                     formatter={(value) => <span className="text-xs">{value}</span>}
                     wrapperStyle={{ color: isDark ? "#E2E8F0" : undefined }}
+                  />
+                  <RechartsTooltip 
+                    content={<CustomPieTooltip />}
+                    wrapperStyle={{ outline: 'none' }}
                   />
                 </PieChart>
               </ResponsiveContainer>

@@ -31,7 +31,7 @@ export default function Header() {
   }, [mobileMenuOpen]);
 
   const navItems = [
-    { name: 'Dashboard', href: '/', active: true },
+    { name: 'Visão Geral', href: '/', active: true },
     { name: 'Análise', href: '/analise' },
     { name: 'Alocação', href: '/alocacao' },
     { name: 'Recomendações', href: '/recomendacoes' },

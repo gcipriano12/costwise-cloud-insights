@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { MessageCircle, X, Send } from "lucide-react";
+import { MessageCircle, X, Send, Bot } from "lucide-react";
 import { useTheme } from "@/hooks/useTheme";
 import { cn } from "@/lib/utils";
 
@@ -97,10 +97,16 @@ export function ChatBot() {
               "flex items-center justify-between p-4 border-b",
               isDark ? "border-slate-700" : "border-gray-200"
             )}>
-              <h3 className={cn(
-                "font-semibold",
-                isDark ? "text-white" : "text-gray-900"
-              )}>Chat de Suporte</h3>
+              <div className="flex items-center">
+                <Bot className={cn(
+                  "h-5 w-5 mr-2",
+                  isDark ? "text-blue-400" : "text-cloudcostx-blue"
+                )} />
+                <h3 className={cn(
+                  "font-semibold",
+                  isDark ? "text-white" : "text-gray-900"
+                )}>FinBot Assistant</h3>
+              </div>
               <Button
                 variant="ghost"
                 size="icon"
