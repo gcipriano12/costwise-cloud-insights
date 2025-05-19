@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Search } from 'lucide-react';
@@ -33,25 +32,25 @@ export function CostBenchmarksCard({ benchmarks, currency }: CostBenchmarksCardP
   
   return (
     <Card className="h-full flex flex-col">
-      <CardHeader className="pb-2">
+      <CardHeader className="pb-2 flex-shrink-0">
         <CardTitle className="flex items-center text-base font-semibold">
           <Search className="h-5 w-5 mr-2 text-purple-500" />
           Benchmarks de Custos
         </CardTitle>
       </CardHeader>
-      <CardContent className="flex-grow">
-        <div className="space-y-6">
+      <CardContent className="flex-grow px-4 pt-2 pb-3 overflow-auto">
+        <div className="space-y-4">
           {benchmarks.map((benchmark) => (
             <div key={benchmark.serviceType} className="space-y-1">
-              <div className="flex justify-between items-center mb-1">
-                <span className="text-xs font-medium truncate max-w-[60%]">{benchmark.serviceType}</span>
+              <div className="flex justify-between items-center">
+                <span className="text-sm font-medium truncate max-w-[60%]">{benchmark.serviceType}</span>
                 {getPercentileBadge(benchmark.percentile)}
               </div>
               
               {/* Barra de escala com marcadores e valores */}
               <div className="relative pt-5 pb-1">
                 {/* Valor do seu custo */}
-                <div className="absolute top-0 left-0 w-full flex justify-between text-[10px] font-medium">
+                <div className="absolute top-0 left-0 w-full flex justify-between text-xs font-medium">
                   <div className="text-green-500">Melhor: {currency} {benchmark.bestInClass.toLocaleString('pt-BR', {minimumFractionDigits: benchmark.bestInClass < 1 ? 3 : 1})}</div>
                   <div>Você: {currency} {benchmark.yourCost.toLocaleString('pt-BR', {minimumFractionDigits: benchmark.yourCost < 1 ? 3 : 1})}</div>
                   <div className="text-amber-500">Média: {currency} {benchmark.industryAverage.toLocaleString('pt-BR', {minimumFractionDigits: benchmark.industryAverage < 1 ? 3 : 1})}</div>

@@ -99,7 +99,7 @@ export function AnomaliesCard({ anomalies, currency }: AnomaliesCardProps) {
         </div>
       </CardHeader>
       <CardContent className="flex-grow p-3 pt-2 pb-3 overflow-auto">
-        {anomalies.length > 0 ? (
+          {anomalies.length > 0 ? (
           <div className="flex flex-col h-full">
             {/* Card principal */}
             <div className={`flex-shrink-0 p-3 rounded-lg border mb-2 ${getSeverityColor(anomalies[currentIndex].severity)}`}>
@@ -190,8 +190,8 @@ export function AnomaliesCard({ anomalies, currency }: AnomaliesCardProps) {
                   </Button>
                 </div>
               </div>
-            )}
-          </div>
+          )}
+        </div>
         ) : (
           <div className="h-full flex items-center justify-center border border-dashed rounded-lg">
             <p className="text-muted-foreground text-sm">Nenhuma anomalia detectada no período selecionado.</p>

@@ -134,11 +134,11 @@ export function ProviderDistributionCard({ data, currency }: ProviderDistributio
           <ResponsiveContainer width="100%" height="100%">
             <Treemap
               data={treeMapData.children}
-              dataKey="value"
+                dataKey="value"
               stroke="#fff"
               animationDuration={500}
               content={<CustomizedContent />}
-            >
+              >
               <Tooltip content={<CustomTooltip />} />
             </Treemap>
           </ResponsiveContainer>

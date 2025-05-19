@@ -115,7 +115,7 @@ export function SavingsOpportunitiesCard({
                 <div className="flex items-center">
                   <CheckCircle className={`h-5 w-5 ${currentEffortColor} mr-2`} />
                   <h4 className="font-medium text-sm">{opportunities[currentIndex].title}</h4>
-                </div>
+        </div>
                 <Badge className={getEffortColor(opportunities[currentIndex].effort)}>
                   {getEffortLabel(opportunities[currentIndex].effort)}
                 </Badge>
@@ -139,7 +139,7 @@ export function SavingsOpportunitiesCard({
                 <div className="flex items-center">
                   <span className={`text-sm font-medium ${currentEffortColor}`}>
                     {formatCurrency(opportunities[currentIndex].savings)}
-                  </span>
+                </span>
                   <span className="text-muted-foreground ml-1 text-xs">/mês</span>
                 </div>
                 
@@ -206,11 +206,11 @@ export function SavingsOpportunitiesCard({
                 </div>
               </div>
             )}
-          </div>
+            </div>
         ) : (
           <div className="h-full flex items-center justify-center border border-dashed rounded-lg">
             <p className="text-muted-foreground text-sm">Nenhuma oportunidade de economia encontrada.</p>
-          </div>
+        </div>
         )}
       </CardContent>
     </Card>

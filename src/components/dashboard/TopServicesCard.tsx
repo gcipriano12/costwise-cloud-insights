@@ -56,21 +56,21 @@ export function TopServicesCard({ services, currency }: TopServicesProps) {
       </CardHeader>
       <CardContent className="p-0">
         <div className="h-[358px] overflow-y-auto">
-          <Table>
+        <Table>
             <TableHeader className="bg-gray-50 sticky top-0 z-10">
-              <TableRow>
+            <TableRow>
                 <TableHead className="font-medium text-xs">Serviço</TableHead>
                 <TableHead className="font-medium text-xs">Provedor</TableHead>
                 <TableHead className="text-right font-medium text-xs">Gasto Atual</TableHead>
                 <TableHead className="text-right font-medium text-xs">Variação</TableHead>
                 <TableHead className="w-24"></TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {services.map((service) => {
-                const isIncrease = service.trend > 0;
-                
-                return (
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {services.map((service) => {
+              const isIncrease = service.trend > 0;
+              
+              return (
                   <TableRow key={service.id} className="hover:bg-gray-50">
                     <TableCell className="font-medium py-3 text-sm">{service.name}</TableCell>
                     <TableCell>
@@ -81,7 +81,7 @@ export function TopServicesCard({ services, currency }: TopServicesProps) {
                         {service.provider}
                       </Badge>
                     </TableCell>
-                    <TableCell className="text-right">
+                  <TableCell className="text-right">
                       <TooltipProvider>
                         <Tooltip>
                           <TooltipTrigger asChild>
@@ -94,8 +94,8 @@ export function TopServicesCard({ services, currency }: TopServicesProps) {
                           </TooltipContent>
                         </Tooltip>
                       </TooltipProvider>
-                    </TableCell>
-                    <TableCell className="text-right">
+                  </TableCell>
+                  <TableCell className="text-right">
                       <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
                         isIncrease 
                           ? 'bg-red-50 text-cloudcostx-red' 
@@ -107,9 +107,9 @@ export function TopServicesCard({ services, currency }: TopServicesProps) {
                           <TrendingDown className="h-3 w-3 mr-1 flex-shrink-0" />
                         )}
                         {Math.abs(service.trend)}%
-                      </span>
-                    </TableCell>
-                    <TableCell>
+                    </span>
+                  </TableCell>
+                  <TableCell>
                       <Button 
                         variant="ghost" 
                         size="sm" 
@@ -117,13 +117,13 @@ export function TopServicesCard({ services, currency }: TopServicesProps) {
                       >
                         <span className="mr-1">Detalhes</span>
                         <ArrowUpRight className="h-3 w-3" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
         </div>
       </CardContent>
     </Card>

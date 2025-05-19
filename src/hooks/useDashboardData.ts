@@ -604,7 +604,7 @@ export const useDashboardData = () => {
       },
       { 
         serviceType: 'Banco de Dados',
-        yourCost: 52.30,
+        yourCost:42.30,
         industryAverage: 45.20,
         bestInClass: 39.10,
         percentile: 85

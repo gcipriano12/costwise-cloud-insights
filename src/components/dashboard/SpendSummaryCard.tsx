@@ -105,7 +105,7 @@ export function SpendSummaryCard({
       <CardContent>
         <div className="grid grid-cols-12 gap-6">
           <div className="col-span-12 md:col-span-4 space-y-3">
-            <div>
+          <div>
               <p className="text-sm text-muted-foreground mb-1">Gasto Total</p>
               <TooltipProvider>
                 <Tooltip delayDuration={0}>

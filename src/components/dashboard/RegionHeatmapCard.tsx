@@ -1,49 +1,63 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ResponsiveContainer, Treemap, Tooltip } from 'recharts';
+import { MapPin } from 'lucide-react';
 
-interface RegionCost {
+// Atualizando a interface para os dados que o card receberá
+interface FlatRegionData {
   name: string;
   value: number;
-  children?: RegionCost[];
+  providerName: string; // Adicionado para lógica de cores
+  fill?: string; // Adicionado para carregar a cor do provedor
+  percentage?: string; // Adicionado para o tooltip e texto
 }
 
 interface RegionHeatmapCardProps {
-  data: RegionCost[];
+  data: FlatRegionData[]; // Agora espera a lista achatada e pré-processada
   currency: string;
 }
 
-export function RegionHeatmapCard({ data, currency }: RegionHeatmapCardProps) {
-  // Garantir que apenas as top 5 regiões sejam exibidas
-  const topRegions = [...data]
-    .sort((a, b) => b.value - a.value)
-    .slice(0, 5);
+// Mapa de cores por provedor
+const PROVIDER_COLORS: { [key: string]: string } = {
+  'AWS': '#F5A623',          // Laranja
+  'GCP': '#4285F4',          // Azul Google
+  'Azure': '#0078D4',        // Azul Microsoft
+  'Oracle Cloud': '#E74C3C', // Vermelho
+  'Default': '#CCCCCC'       // Cinza para provedores não mapeados
+};
 
-  // Custom tooltip for the treemap
+export function RegionHeatmapCard({ data, currency }: RegionHeatmapCardProps) {
+  // Os dados já vêm como top 5 regiões achatadas da ComparisonSection.
+  // A propriedade 'fill' será adicionada ao preparar os dados para o Treemap.
+
+  const totalValueForTop5 = data.reduce((sum, region) => sum + region.value, 0);
+
+  const treemapData = data.map(region => ({
+    ...region,
+    fill: PROVIDER_COLORS[region.providerName] || PROVIDER_COLORS.Default,
+    percentage: totalValueForTop5 > 0 ? ((region.value / totalValueForTop5) * 100).toFixed(1) : "0.0"
+  }));
+
   const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {
+      const item = payload[0].payload; // Acessa os dados do item do treemap
       return (
-        <div className="bg-background border border-border p-2 rounded-md shadow-md">
-          <p className="font-medium">{payload[0].name}</p>
-          <p className="text-sm">
-            {currency} {payload[0].value.toLocaleString()}
-          </p>
+        <div className="bg-white p-3 border border-gray-200 rounded-md shadow-lg text-sm">
+          <p className="font-semibold mb-1">{item.name}</p>
+          <p>Custo: <span className="font-medium">{currency} {item.value.toLocaleString()}</span></p>
+          <p>Provedor: <span className="font-medium">{item.providerName}</span></p>
+          <p>% do Top 5: <span className="font-medium">{item.percentage}%</span></p>
         </div>
       );
     }
     return null;
   };
 
-  // Custom content component for the treemap rectangles
   const CustomizedContent = (props: any) => {
-    const { x, y, width, height, depth, name, value } = props;
-    
-    // Usar cores mais distintas entre si para melhor visualização
-    const color = `hsl(${(props.index * 55) % 360}, 70%, ${80 - (depth * 10 + Math.floor(value / 10000) * 20)}%)`;
-    
-    // Mostrar texto apenas se houver espaço suficiente
-    const shouldRenderText = width > 40 && height > 25;
-    
+    const { x, y, width, height, name, value, fill, percentage } = props;
+    const formattedValue = `${currency} ${Math.round(value / 1000)}K`;
+    const canShowText = width > 60 && height > 70;
+
     return (
       <g>
         <rect
@@ -52,41 +66,60 @@ export function RegionHeatmapCard({ data, currency }: RegionHeatmapCardProps) {
           width={width}
           height={height}
           style={{
-            fill: color,
-            stroke: '#fff',
-            strokeWidth: 3,
-            strokeOpacity: 1,
+            fill: fill, // Cor baseada no provedor
+            stroke: '#FFFFFF',
+            strokeWidth: 2,
           }}
         />
-        {shouldRenderText && (
+        {canShowText && (
           <>
             <text
               x={x + width / 2}
-              y={y + height / 2 - 6}
+              y={y + height / 2 - 20} // Ajustado para nome
               textAnchor="middle"
               dominantBaseline="middle"
               style={{
-                fill: '#fff',
-                fontSize: Math.min(12, Math.max(9, width / 10)),
+                fill: '#000000',
+                fontSize: Math.min(13, Math.max(10, width / 9)),
                 fontWeight: 'bold',
-                textShadow: '1px 1px 1px rgba(0,0,0,0.5)',
+                stroke: '#000000',
+                strokeWidth: 0.3,
+                paintOrder: 'stroke',
               }}
             >
               {name}
             </text>
             <text
               x={x + width / 2}
-              y={y + height / 2 + 10}
+              y={y + height / 2} // Ajustado para valor
               textAnchor="middle"
               dominantBaseline="middle"
               style={{
-                fill: '#fff',
-                fontSize: Math.min(10, Math.max(8, width / 12)),
-                fontWeight: 'medium',
-                textShadow: '1px 1px 1px rgba(0,0,0,0.5)',
+                fill: '#000000',
+                fontSize: Math.min(11, Math.max(9, width / 11)),
+                fontWeight: 'normal',
+                stroke: '#000000',
+                strokeWidth: 0.3,
+                paintOrder: 'stroke',
               }}
             >
-              {currency} {Math.round(value / 1000)}K
+              {formattedValue}
+            </text>
+            <text
+              x={x + width / 2}
+              y={y + height / 2 + 20} // Ajustado para porcentagem
+              textAnchor="middle"
+              dominantBaseline="middle"
+              style={{
+                fill: '#000000',
+                fontSize: Math.min(10, Math.max(8, width / 13)),
+                fontWeight: 'normal',
+                stroke: '#000000',
+                strokeWidth: 0.3,
+                paintOrder: 'stroke',
+              }}
+            >
+              {percentage}%
             </text>
           </>
         )}
@@ -95,20 +128,24 @@ export function RegionHeatmapCard({ data, currency }: RegionHeatmapCardProps) {
   };
 
   return (
-    <Card className="h-full flex flex-col">
+    <Card className="h-full flex flex-col bg-[#1A202C] text-white">
       <CardHeader className="pb-2 flex-shrink-0">
-        <CardTitle className="text-lg font-medium">Heatmap de Custos por Região</CardTitle>
+        <CardTitle className="flex items-center text-base font-semibold text-white">
+          <MapPin className="h-5 w-5 mr-2 text-green-500" />
+          Heatmap de Custos por Região
+        </CardTitle>
       </CardHeader>
-      <CardContent className="flex-grow p-2 flex flex-col">
-        <div className="flex-grow h-[360px] min-h-[180px] w-full">
+      <CardContent className="flex-grow px-4 pt-2 pb-3 overflow-auto">
+        <div className="h-[250px] w-full">
           <ResponsiveContainer width="100%" height="100%">
             <Treemap
-              data={topRegions}
+              data={treemapData} // Usando os dados processados com a cor
               dataKey="value"
-              stroke="#fff"
-              fill="#8884d8"
+              stroke="#FFFFFF"
+              isAnimationActive={false}
               content={<CustomizedContent />}
-              animationDuration={500}
+              // O fill aqui é um fallback, a cor real vem de treemapData[x].fill
+              fill={PROVIDER_COLORS.Default} 
             >
               <Tooltip content={<CustomTooltip />} />
             </Treemap>

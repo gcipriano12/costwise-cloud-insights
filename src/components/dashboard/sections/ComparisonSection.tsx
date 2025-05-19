@@ -6,6 +6,20 @@ import { RegionHeatmapCard } from '../RegionHeatmapCard';
 import { Card, CardHeader, CardTitle } from '@/components/ui/card';
 import { BarChart } from 'lucide-react';
 
+// Definindo a interface para os dados das regiões aninhadas como vêm do hook
+interface NestedRegionData {
+  name: string; // Nome do provedor ou da região pai
+  value: number;
+  children?: Array<{ name: string; value: number }>;
+}
+
+// Interface para os dados de região "achatados" que serão passados para o Heatmap
+interface FlatRegionData {
+  name: string;        // Nome da região (ex: 'us-east-1')
+  value: number;
+  providerName: string; // Nome do provedor (ex: 'AWS')
+}
+
 interface ComparisonSectionProps {
   environmentsData: {
     name: string;
@@ -29,14 +43,7 @@ interface ComparisonSectionProps {
     currency: string;
     tags: string[];
   }[];
-  regionHeatmapData: {
-    name: string;
-    value: number;
-    children?: {
-      name: string;
-      value: number;
-    }[];
-  }[];
+  regionHeatmapData: NestedRegionData[]; // Usando a nova interface
   currency: string;
 }
 
@@ -47,8 +54,35 @@ export function ComparisonSection({
   regionHeatmapData, 
   currency 
 }: ComparisonSectionProps) {
-  // Filtrar as top 5 regiões pelo valor total
-  const topRegions = [...regionHeatmapData]
+
+  // Função para achatar os dados de região e adicionar o nome do provedor
+  const flattenRegionData = (data: NestedRegionData[]): FlatRegionData[] => {
+    const flatData: FlatRegionData[] = [];
+    data.forEach(providerEntry => {
+      if (providerEntry.children && providerEntry.children.length > 0) {
+        providerEntry.children.forEach(region => {
+          flatData.push({
+            name: region.name,
+            value: region.value,
+            providerName: providerEntry.name // Nome do provedor pai
+          });
+        });
+      } else {
+        // Se não houver children, trata a entrada principal como uma região (menos comum)
+        flatData.push({
+          name: providerEntry.name,
+          value: providerEntry.value,
+          providerName: providerEntry.name // Assume que o nome da entrada é também o provedor
+        });
+      }
+    });
+    return flatData;
+  };
+
+  const allFlatRegions = flattenRegionData(regionHeatmapData);
+
+  // Filtrar as top 5 regiões pelo valor total, agora da lista achatada
+  const top5RegionsFlat = allFlatRegions
     .sort((a, b) => b.value - a.value)
     .slice(0, 5);
 
@@ -82,7 +116,7 @@ export function ComparisonSection({
         
         <div className="col-span-1 h-full flex flex-col">
           <RegionHeatmapCard 
-            data={topRegions}
+            data={top5RegionsFlat} // Passa os dados achatados e filtrados
             currency={currency}
           />
         </div>
