@@ -2,6 +2,8 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ResponsiveContainer, Treemap, Tooltip } from 'recharts';
 import { PieChart, BarChart3, Cloud } from 'lucide-react';
+import { useTheme } from '@/hooks/useTheme';
+import { cn } from '@/lib/utils';
 
 interface ProviderData {
   name: string;
@@ -15,6 +17,7 @@ interface ProviderDistributionProps {
 }
 
 export function ProviderDistributionCard({ data, currency }: ProviderDistributionProps) {
+  const { isDark } = useTheme();
   const total = data.reduce((sum, provider) => sum + provider.value, 0);
   
   const formatCurrency = (value: number) => {
@@ -47,12 +50,20 @@ export function ProviderDistributionCard({ data, currency }: ProviderDistributio
       const data = payload[0].payload;
       
       return (
-        <div className="bg-white p-3 border border-gray-200 rounded-md shadow-lg">
+        <div className={cn(
+          "p-3 border rounded-md shadow-lg",
+          isDark 
+            ? "bg-slate-800 border-slate-700 text-white" 
+            : "bg-white border-gray-200 text-slate-900"
+        )}>
           <p className="font-semibold text-sm mb-1">{data.name}</p>
           <p className="text-sm font-mono">
             {formatCurrency(data.value)}
           </p>
-          <p className="text-xs text-muted-foreground mt-1 font-medium">
+          <p className={cn(
+            "text-xs mt-1 font-medium",
+            isDark ? "text-slate-400" : "text-muted-foreground"
+          )}>
             {data.percentage}% do total
           </p>
         </div>
@@ -65,6 +76,8 @@ export function ProviderDistributionCard({ data, currency }: ProviderDistributio
   // Componente de conteúdo customizado para o treemap
   const CustomizedContent = (props: any) => {
     const { x, y, width, height, name, value, color, index } = props;
+    const textColor = isDark ? '#FFFFFF' : '#000000';
+    const strokeColor = isDark ? '#FFFFFF' : '#000000';
     
     return (
       <g>
@@ -75,7 +88,7 @@ export function ProviderDistributionCard({ data, currency }: ProviderDistributio
           height={height}
           style={{
             fill: color,
-            stroke: '#fff',
+            stroke: isDark ? '#333' : '#fff',
             strokeWidth: 2,
             strokeOpacity: 1,
           }}
@@ -88,8 +101,8 @@ export function ProviderDistributionCard({ data, currency }: ProviderDistributio
               textAnchor="middle"
               dominantBaseline="middle"
               style={{
-                fill: '#000',
-                stroke: '#000',
+                fill: textColor,
+                stroke: strokeColor,
                 strokeWidth: 0.5,
                 fontSize: 12,
                 fontWeight: 'bold',
@@ -104,8 +117,8 @@ export function ProviderDistributionCard({ data, currency }: ProviderDistributio
               textAnchor="middle"
               dominantBaseline="middle"
               style={{
-                fill: '#000',
-                stroke: '#000',
+                fill: textColor,
+                stroke: strokeColor,
                 strokeWidth: 0.5,
                 fontSize: 10,
                 paintOrder: 'stroke',
@@ -130,15 +143,18 @@ export function ProviderDistributionCard({ data, currency }: ProviderDistributio
         </div>
       </CardHeader>
       <CardContent className="flex-grow p-3">
-        <div className="h-[360px] rounded border border-gray-100">
+        <div className={cn(
+          "h-[360px] rounded border",
+          isDark ? "border-slate-700" : "border-gray-100"
+        )}>
           <ResponsiveContainer width="100%" height="100%">
             <Treemap
               data={treeMapData.children}
-                dataKey="value"
-              stroke="#fff"
+              dataKey="value"
+              stroke={isDark ? "#333" : "#fff"}
               animationDuration={500}
               content={<CustomizedContent />}
-              >
+            >
               <Tooltip content={<CustomTooltip />} />
             </Treemap>
           </ResponsiveContainer>

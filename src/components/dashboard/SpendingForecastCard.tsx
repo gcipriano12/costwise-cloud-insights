@@ -3,6 +3,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine } from 'recharts';
 import { TrendingUp, AlertCircle } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import { useTheme } from '@/hooks/useTheme';
+import { cn } from '@/lib/utils';
 
 interface ForecastDataPoint {
   month: string;
@@ -17,6 +19,8 @@ interface SpendingForecastCardProps {
 }
 
 export function SpendingForecastCard({ data, currency }: SpendingForecastCardProps) {
+  const { isDark } = useTheme();
+  
   // Verificar se o último valor previsto ultrapassa o orçamento
   const lastPoint = data[data.length - 1];
   const budgetExceeded = lastPoint.forecast && lastPoint.budget && lastPoint.forecast > lastPoint.budget;
@@ -35,15 +39,30 @@ export function SpendingForecastCard({ data, currency }: SpendingForecastCardPro
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-white p-3 border border-gray-200 rounded-md shadow-md">
-          <p className="font-medium text-xs border-b pb-1 mb-2">{label}</p>
+        <div className={cn(
+          "p-3 border rounded-md shadow-md",
+          isDark 
+            ? "bg-slate-800 border-slate-700 text-white" 
+            : "bg-white border-gray-200 text-slate-900"
+        )}>
+          <p className={cn(
+            "font-medium text-xs border-b pb-1 mb-2",
+            isDark ? "border-slate-700" : "border-gray-200"
+          )}>
+            {label}
+          </p>
           {payload.map((entry: any) => (
             <div key={entry.dataKey} className="flex items-center text-sm mb-1 last:mb-0">
               <div
                 className="w-3 h-3 rounded-full mr-2"
                 style={{ backgroundColor: entry.color }}
               />
-              <span className="mr-2 text-xs text-muted-foreground">{entry.name}:</span>
+              <span className={cn(
+                "mr-2 text-xs",
+                isDark ? "text-slate-400" : "text-muted-foreground"
+              )}>
+                {entry.name}:
+              </span>
               <span className="font-medium">
                 {entry.value ? formatCurrency(entry.value) : '-'}
               </span>
@@ -65,7 +84,9 @@ export function SpendingForecastCard({ data, currency }: SpendingForecastCardPro
           </CardTitle>
           
           {budgetExceeded && (
-            <Badge variant="outline" className="bg-red-50 text-red-700 border-red-200">
+            <Badge variant="outline" className={cn(
+              isDark ? "bg-red-900/50 text-red-100 border-red-800" : "bg-red-50 text-red-700 border-red-200"
+            )}>
               <AlertCircle className="h-3 w-3 mr-1" />
               <span className="text-xs">Previsão acima do orçamento</span>
             </Badge>
@@ -79,51 +100,54 @@ export function SpendingForecastCard({ data, currency }: SpendingForecastCardPro
               data={data}
               margin={{ top: 10, right: 30, left: 0, bottom: 20 }}
             >
-              <CartesianGrid strokeDasharray="3 3" stroke="#f5f5f5" />
+              <CartesianGrid 
+                strokeDasharray="3 3" 
+                stroke={isDark ? "#334155" : "#f5f5f5"} 
+              />
               <XAxis 
                 dataKey="month" 
-                tick={{ fontSize: 12 }} 
+                tick={{ fontSize: 12, fill: isDark ? "#cbd5e1" : undefined }} 
                 tickLine={false}
-                axisLine={{ stroke: '#e5e7eb' }}
+                axisLine={{ stroke: isDark ? "#475569" : "#e5e7eb" }}
               />
               <YAxis 
                 tickFormatter={(value) => `${currency} ${(value/1000).toFixed(0)}K`}
                 width={65}
-                tick={{ fontSize: 12 }}
+                tick={{ fontSize: 12, fill: isDark ? "#cbd5e1" : undefined }}
                 tickLine={false}
-                axisLine={{ stroke: '#e5e7eb' }}
+                axisLine={{ stroke: isDark ? "#475569" : "#e5e7eb" }}
               />
               <Tooltip content={<CustomTooltip />} />
               <ReferenceLine 
                 y={data[0].budget} 
-                stroke="#F87171" 
+                stroke={isDark ? "#f87171" : "#F87171"} 
                 strokeDasharray="3 3" 
                 strokeWidth={2}
                 label={{ 
                   position: 'right',
                   value: 'Orçamento', 
-                  fill: '#F87171', 
+                  fill: isDark ? "#f87171" : "#F87171", 
                   fontSize: 11
                 }}
               />
               <Line 
                 type="monotone" 
                 dataKey="actual" 
-                stroke="#1A2B3C" 
+                stroke={isDark ? "#94A3B8" : "#1A2B3C"} 
                 strokeWidth={2} 
-                dot={{ r: 4, fill: '#1A2B3C', strokeWidth: 0 }}
+                dot={{ r: 4, fill: isDark ? "#94A3B8" : "#1A2B3C", strokeWidth: 0 }}
                 name="Gasto Real"
-                activeDot={{ r: 6, fill: '#1A2B3C', stroke: 'white', strokeWidth: 2 }}
+                activeDot={{ r: 6, fill: isDark ? "#94A3B8" : "#1A2B3C", stroke: isDark ? "#1e293b" : "white", strokeWidth: 2 }}
               />
               <Line 
                 type="monotone" 
                 dataKey="forecast" 
-                stroke="#60A5FA" 
+                stroke={isDark ? "#3B82F6" : "#60A5FA"} 
                 strokeWidth={2} 
                 strokeDasharray="5 5"
-                dot={{ r: 4, fill: '#60A5FA', strokeWidth: 0 }}
+                dot={{ r: 4, fill: isDark ? "#3B82F6" : "#60A5FA", strokeWidth: 0 }}
                 name="Previsão"
-                activeDot={{ r: 6, fill: '#60A5FA', stroke: 'white', strokeWidth: 2 }}
+                activeDot={{ r: 6, fill: isDark ? "#3B82F6" : "#60A5FA", stroke: isDark ? "#1e293b" : "white", strokeWidth: 2 }}
               />
             </LineChart>
           </ResponsiveContainer>
@@ -131,11 +155,17 @@ export function SpendingForecastCard({ data, currency }: SpendingForecastCardPro
         
         <div className="mt-4 flex justify-between text-xs text-muted-foreground">
           <div className="flex items-center">
-            <div className="w-3 h-3 rounded-full bg-[#1A2B3C] mr-1"></div>
+            <div className={cn(
+              "w-3 h-3 rounded-full mr-1",
+              isDark ? "bg-[#94A3B8]" : "bg-[#1A2B3C]"
+            )}></div>
             <span>Gasto real</span>
           </div>
           <div className="flex items-center">
-            <div className="w-3 h-3 rounded-full bg-[#60A5FA] mr-1"></div>
+            <div className={cn(
+              "w-3 h-3 rounded-full mr-1", 
+              isDark ? "bg-[#3B82F6]" : "bg-[#60A5FA]"
+            )}></div>
             <span>Previsão</span>
           </div>
           <div className="flex items-center">

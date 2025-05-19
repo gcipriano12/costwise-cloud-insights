@@ -2,6 +2,8 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Sparkles } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import { useTheme } from '@/hooks/useTheme';
+import { cn } from '@/lib/utils';
 
 interface NewService {
   id: string;
@@ -18,6 +20,8 @@ interface NewServicesCardProps {
 }
 
 export function NewServicesCard({ services }: NewServicesCardProps) {
+  const { isDark } = useTheme();
+  
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return new Intl.DateTimeFormat('pt-BR', { 
@@ -27,7 +31,7 @@ export function NewServicesCard({ services }: NewServicesCardProps) {
   };
   
   return (
-    <Card className="h-full flex flex-col bg-[#1A202C] text-white">
+    <Card className="h-full flex flex-col">
       <CardHeader className="pb-2 flex-shrink-0">
         <CardTitle className="flex items-center text-base font-semibold">
           <Sparkles className="h-5 w-5 mr-2 text-amber-500" />
@@ -37,15 +41,24 @@ export function NewServicesCard({ services }: NewServicesCardProps) {
       <CardContent className="flex-grow px-4 pt-2 pb-3 overflow-auto">
         <div className="space-y-3">
           {services.map((service) => (
-            <div key={service.id} className="border-b border-border pb-3 last:border-0 last:pb-0">
+            <div key={service.id} className={cn(
+              "border-b pb-3 last:border-0 last:pb-0",
+              isDark ? "border-slate-700" : "border-gray-100"
+            )}>
               <div className="flex justify-between items-start">
                 <div>
                   <div className="text-sm font-medium">{service.name}</div>
-                  <div className="text-xs text-slate-400">{service.provider}</div>
+                  <div className={cn(
+                    "text-xs",
+                    isDark ? "text-slate-400" : "text-muted-foreground"
+                  )}>{service.provider}</div>
                 </div>
                 <div className="text-right">
                   <div className="text-base font-bold">{service.currency} {service.cost.toLocaleString()}</div>
-                  <div className="text-xs text-slate-400">{formatDate(service.addedDate)}</div>
+                  <div className={cn(
+                    "text-xs",
+                    isDark ? "text-slate-400" : "text-muted-foreground"
+                  )}>{formatDate(service.addedDate)}</div>
                 </div>
               </div>
               <div className="flex flex-wrap gap-1 mt-2">
@@ -59,7 +72,10 @@ export function NewServicesCard({ services }: NewServicesCardProps) {
           ))}
           
           {services.length === 0 && (
-            <div className="text-center text-slate-400 py-4">
+            <div className={cn(
+              "text-center py-4",
+              isDark ? "text-slate-400" : "text-muted-foreground"
+            )}>
               Nenhum novo serviço detectado no período.
             </div>
           )}

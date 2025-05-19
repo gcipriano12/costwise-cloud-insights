@@ -3,6 +3,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { AlertTriangle, ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import { useTheme } from '@/hooks/useTheme';
+import { cn } from '@/lib/utils';
 
 interface Anomaly {
   id: string;
@@ -19,6 +21,7 @@ interface AnomaliesCardProps {
 
 export function AnomaliesCard({ anomalies, currency }: AnomaliesCardProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const { isDark } = useTheme();
   
   const formatCurrency = (value: number) => {
     if (value >= 1000000) {
@@ -31,27 +34,27 @@ export function AnomaliesCard({ anomalies, currency }: AnomaliesCardProps) {
 
   const getSeverityColor = (severity: string) => {
     switch(severity) {
-      case 'high': return 'bg-red-50 border-red-200';
-      case 'medium': return 'bg-amber-50 border-amber-200';
-      case 'low': return 'bg-blue-50 border-blue-200';
+      case 'high': return isDark ? 'bg-red-900/50 border-red-800' : 'bg-red-50 border-red-200';
+      case 'medium': return isDark ? 'bg-amber-900/50 border-amber-800' : 'bg-amber-50 border-amber-200';
+      case 'low': return isDark ? 'bg-blue-900/50 border-blue-800' : 'bg-blue-50 border-blue-200';
       default: return '';
     }
   };
   
   const getSeverityTextColor = (severity: string) => {
     switch(severity) {
-      case 'high': return 'text-cloudcostx-red';
-      case 'medium': return 'text-amber-600';
-      case 'low': return 'text-cloudcostx-blue';
+      case 'high': return isDark ? 'text-red-400' : 'text-cloudcostx-red';
+      case 'medium': return isDark ? 'text-amber-400' : 'text-amber-600';
+      case 'low': return isDark ? 'text-blue-400' : 'text-cloudcostx-blue';
       default: return '';
     }
   };
 
   const getSeverityBadgeStyle = (severity: string) => {
     switch(severity) {
-      case 'high': return 'bg-red-100 text-red-700 border-0';
-      case 'medium': return 'bg-amber-100 text-amber-700 border-0';
-      case 'low': return 'bg-blue-100 text-blue-700 border-0';
+      case 'high': return isDark ? 'bg-red-900 text-red-100 border-0' : 'bg-red-100 text-red-700 border-0';
+      case 'medium': return isDark ? 'bg-amber-900 text-amber-100 border-0' : 'bg-amber-100 text-amber-700 border-0';
+      case 'low': return isDark ? 'bg-blue-900 text-blue-100 border-0' : 'bg-blue-100 text-blue-700 border-0';
       default: return '';
     }
   };
@@ -67,10 +70,10 @@ export function AnomaliesCard({ anomalies, currency }: AnomaliesCardProps) {
 
   const getSeverityDotColor = (severity: string) => {
     switch(severity) {
-      case 'high': return '#ef4444';
-      case 'medium': return '#f59e0b';
-      case 'low': return '#3b82f6';
-      default: return '#71717a';
+      case 'high': return isDark ? '#f87171' : '#ef4444';
+      case 'medium': return isDark ? '#fcd34d' : '#f59e0b';
+      case 'low': return isDark ? '#60a5fa' : '#3b82f6';
+      default: return isDark ? '#94a3b8' : '#71717a';
     }
   };
 
@@ -147,7 +150,12 @@ export function AnomaliesCard({ anomalies, currency }: AnomaliesCardProps) {
                 return (
                   <div 
                     key={anomaly.id} 
-                    className="flex items-center justify-between p-2 border border-gray-100 rounded-lg text-xs hover:bg-gray-50 cursor-pointer"
+                    className={cn(
+                      "flex items-center justify-between p-2 border rounded-lg text-xs cursor-pointer",
+                      isDark 
+                        ? "border-slate-700 hover:bg-slate-800" 
+                        : "border-gray-100 hover:bg-gray-50"
+                    )}
                     onClick={() => setCurrentIndex(idx)}
                   >
                     <div className="flex items-center flex-1">
@@ -167,7 +175,10 @@ export function AnomaliesCard({ anomalies, currency }: AnomaliesCardProps) {
             
             {/* Paginação - só exibe se tiver mais de 7 itens */}
             {shouldShowPagination && (
-              <div className="flex justify-center items-center mt-2 pt-1 border-t border-gray-100">
+              <div className={cn(
+                "flex justify-center items-center mt-2 pt-1 border-t",
+                isDark ? "border-slate-700" : "border-gray-100"
+              )}>
                 <div className="text-xs flex items-center">
                   <Button 
                     variant="ghost" 
@@ -193,7 +204,10 @@ export function AnomaliesCard({ anomalies, currency }: AnomaliesCardProps) {
           )}
         </div>
         ) : (
-          <div className="h-full flex items-center justify-center border border-dashed rounded-lg">
+          <div className={cn(
+            "h-full flex items-center justify-center border rounded-lg",
+            isDark ? "border-slate-700 border-dashed" : "border-dashed"
+          )}>
             <p className="text-muted-foreground text-sm">Nenhuma anomalia detectada no período selecionado.</p>
           </div>
         )}

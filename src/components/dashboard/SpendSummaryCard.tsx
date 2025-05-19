@@ -5,6 +5,8 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend } from 'recharts';
+import { useTheme } from '@/hooks/useTheme';
+import { cn } from '@/lib/utils';
 
 interface CategoryBreakdown {
   name: string;
@@ -40,6 +42,7 @@ export function SpendSummaryCard({
   budgetConsumed = 75,
   savingsRealized = totalSpend * 0.08
 }: SpendSummaryProps) {
+  const { isDark } = useTheme();
   const isIncrease = previousPeriodChange > 0;
   const changeAbs = Math.abs(previousPeriodChange);
   
@@ -62,9 +65,9 @@ export function SpendSummaryCard({
   };
 
   const getBudgetStatusColor = () => {
-    if (budgetConsumed >= 90) return 'text-cloudcostx-red';
-    if (budgetConsumed >= 75) return 'text-amber-500';
-    return 'text-cloudcostx-green';
+    if (budgetConsumed >= 90) return isDark ? 'text-red-400' : 'text-cloudcostx-red';
+    if (budgetConsumed >= 75) return isDark ? 'text-amber-400' : 'text-amber-500';
+    return isDark ? 'text-green-400' : 'text-cloudcostx-green';
   };
 
   // Dados para o gráfico de pizza
@@ -83,11 +86,14 @@ export function SpendSummaryCard({
       <text 
         x={x} 
         y={y} 
-        fill="#000" 
+        fill={isDark ? "#FFFFFF" : "#000000"} 
         textAnchor={x > cx ? 'start' : 'end'} 
         dominantBaseline="central"
         fontSize={10}
         fontWeight="bold"
+        stroke={isDark ? "#333" : "#fff"}
+        strokeWidth={0.5}
+        paintOrder="stroke"
       >
         {`${pieData[index].value}%`}
       </text>
@@ -116,13 +122,20 @@ export function SpendSummaryCard({
                       </span>
                     </div>
                   </TooltipTrigger>
-                  <TooltipContent>
+                  <TooltipContent className={cn(
+                    isDark ? "bg-slate-800 border-slate-700 text-white" : "bg-white border-gray-200 text-slate-900"
+                  )}>
                     <p>Gasto total: {currency} {totalSpend.toLocaleString()}</p>
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
               
-              <div className={`mt-2 inline-flex items-center px-2 py-1 rounded-md text-sm font-medium ${isIncrease ? 'bg-red-50 text-cloudcostx-red' : 'bg-green-50 text-cloudcostx-green'}`}>
+              <div className={cn(
+                "mt-2 inline-flex items-center px-2 py-1 rounded-md text-sm font-medium", 
+                isIncrease 
+                  ? isDark ? "bg-red-900/50 border border-red-800 text-red-400" : "bg-red-50 text-cloudcostx-red" 
+                  : isDark ? "bg-green-900/50 border border-green-800 text-green-400" : "bg-green-50 text-cloudcostx-green"
+              )}>
                 {isIncrease ? (
                   <TrendingUp className="h-4 w-4 mr-1 flex-shrink-0" />
                 ) : (
@@ -134,7 +147,10 @@ export function SpendSummaryCard({
               </div>
             </div>
             
-            <div className="grid grid-cols-3 gap-3 pt-3 border-t border-gray-100">
+            <div className={cn(
+              "grid grid-cols-3 gap-3 pt-3 border-t",
+              isDark ? "border-slate-700" : "border-gray-100"
+            )}>
               <div>
                 <p className="text-xs text-muted-foreground mb-1">Média Mensal</p>
                 <div className="text-lg font-semibold">
@@ -145,7 +161,10 @@ export function SpendSummaryCard({
               <div>
                 <p className="text-xs text-muted-foreground mb-1">Maior Gasto</p>
                 <div className="flex items-center mt-0.5">
-                  <Badge className="bg-amber-50 text-amber-700 border-amber-200 mr-1 text-xs py-0">{topService.provider}</Badge>
+                  <Badge className={cn(
+                    "mr-1 text-xs py-0",
+                    isDark ? "bg-amber-900 text-amber-100 border-0" : "bg-amber-50 text-amber-700 border-amber-200"
+                  )}>{topService.provider}</Badge>
                   <span className="font-medium text-xs">{topService.name}</span>
                 </div>
                 <div className="text-sm font-semibold mt-0.5">
@@ -164,7 +183,10 @@ export function SpendSummaryCard({
               </div>
             </div>
 
-            <div className="pt-3 border-t border-gray-100">
+            <div className={cn(
+              "pt-3 border-t",
+              isDark ? "border-slate-700" : "border-gray-100"
+            )}>
               <div className="flex justify-between items-center">
                 <p className="text-sm text-muted-foreground">Limite Orçamentário</p>
                 <span className={`text-xs font-medium ${getBudgetStatusColor()}`}>{budgetConsumed}%</span>
@@ -172,7 +194,10 @@ export function SpendSummaryCard({
               <div className="mt-1.5">
                 <Progress 
                   value={budgetConsumed} 
-                  className="h-1.5"
+                  className={cn(
+                    "h-1.5",
+                    isDark ? "bg-slate-700" : ""
+                  )}
                 />
               </div>
               <div className="flex justify-between text-xs mt-1 text-muted-foreground">
@@ -204,7 +229,7 @@ export function SpendSummaryCard({
                       <Cell 
                         key={`cell-${index}`} 
                         fill={categoryBreakdown[index].color} 
-                        stroke="#fff" 
+                        stroke={isDark ? "#333" : "#fff"}
                         strokeWidth={2}
                       />
                     ))}
@@ -214,6 +239,7 @@ export function SpendSummaryCard({
                     verticalAlign="middle" 
                     align="right"
                     formatter={(value) => <span className="text-xs">{value}</span>}
+                    wrapperStyle={{ color: isDark ? "#E2E8F0" : undefined }}
                   />
                 </PieChart>
               </ResponsiveContainer>
@@ -225,15 +251,29 @@ export function SpendSummaryCard({
               <p className="text-sm text-muted-foreground">Highlights</p>
             </div>
             
-            <div className="bg-blue-50 rounded-md p-3 border border-blue-100">
+            <div className={cn(
+              "rounded-md p-3 border",
+              isDark ? "bg-blue-900/50 border-blue-800" : "bg-blue-50 border-blue-100"
+            )}>
               <div className="flex items-start">
-                <Calendar className="h-5 w-5 text-cloudcostx-blue mr-2 mt-0.5" />
+                <Calendar className={cn(
+                  "h-5 w-5 mr-2 mt-0.5",
+                  isDark ? "text-blue-400" : "text-cloudcostx-blue"
+                )} />
                 <div>
                   <p className="text-xs text-muted-foreground">Previsão Próximo Mês</p>
                   <div className="flex items-center">
-                    <span className="text-lg font-bold text-cloudcostx-blue">{formatCurrency(projectedNextMonth)}</span>
+                    <span className={cn(
+                      "text-lg font-bold",
+                      isDark ? "text-blue-400" : "text-cloudcostx-blue"
+                    )}>{formatCurrency(projectedNextMonth)}</span>
                     <ArrowRight className="h-3 w-3 mx-1 text-muted-foreground" />
-                    <span className={`text-xs ${isIncrease ? 'text-cloudcostx-red' : 'text-cloudcostx-green'}`}>
+                    <span className={cn(
+                      "text-xs",
+                      isIncrease 
+                        ? isDark ? "text-red-400" : "text-cloudcostx-red" 
+                        : isDark ? "text-green-400" : "text-cloudcostx-green"
+                    )}>
                       {isIncrease ? '+' : ''}{previousPeriodChange}%
                     </span>
                   </div>
@@ -241,14 +281,26 @@ export function SpendSummaryCard({
               </div>
             </div>
 
-            <div className="bg-red-50 rounded-md p-3 border border-red-100">
+            <div className={cn(
+              "rounded-md p-3 border",
+              isDark ? "bg-red-900/50 border-red-800" : "bg-red-50 border-red-100"
+            )}>
               <div className="flex items-start">
-                <AlertTriangle className="h-5 w-5 text-cloudcostx-red mr-2 mt-0.5" />
+                <AlertTriangle className={cn(
+                  "h-5 w-5 mr-2 mt-0.5",
+                  isDark ? "text-red-400" : "text-cloudcostx-red"
+                )} />
                 <div>
                   <p className="text-xs text-muted-foreground">Desperdício Estimado</p>
                   <div className="flex items-center">
-                    <span className="text-lg font-bold text-cloudcostx-red">{formatCurrency(wastedSpend)}</span>
-                    <span className="text-xs text-cloudcostx-red ml-2">
+                    <span className={cn(
+                      "text-lg font-bold",
+                      isDark ? "text-red-400" : "text-cloudcostx-red"
+                    )}>{formatCurrency(wastedSpend)}</span>
+                    <span className={cn(
+                      "text-xs ml-2",
+                      isDark ? "text-red-400" : "text-cloudcostx-red"
+                    )}>
                       ({Math.round((wastedSpend/totalSpend)*100)}% do total)
                     </span>
                   </div>
@@ -256,14 +308,26 @@ export function SpendSummaryCard({
               </div>
             </div>
             
-            <div className="bg-green-50 rounded-md p-3 border border-green-100">
+            <div className={cn(
+              "rounded-md p-3 border",
+              isDark ? "bg-green-900/50 border-green-800" : "bg-green-50 border-green-100"
+            )}>
               <div className="flex items-start">
-                <Coins className="h-5 w-5 text-cloudcostx-green mr-2 mt-0.5" />
+                <Coins className={cn(
+                  "h-5 w-5 mr-2 mt-0.5",
+                  isDark ? "text-green-400" : "text-cloudcostx-green"
+                )} />
                 <div>
                   <p className="text-xs text-muted-foreground">Economias Realizadas</p>
                   <div className="flex items-center">
-                    <span className="text-lg font-bold text-cloudcostx-green">{formatCurrency(savingsRealized)}</span>
-                    <span className="text-xs text-cloudcostx-green ml-2">
+                    <span className={cn(
+                      "text-lg font-bold",
+                      isDark ? "text-green-400" : "text-cloudcostx-green"
+                    )}>{formatCurrency(savingsRealized)}</span>
+                    <span className={cn(
+                      "text-xs ml-2",
+                      isDark ? "text-green-400" : "text-cloudcostx-green"
+                    )}>
                       ({Math.round((savingsRealized/totalSpend)*100)}% do total)
                     </span>
                   </div>

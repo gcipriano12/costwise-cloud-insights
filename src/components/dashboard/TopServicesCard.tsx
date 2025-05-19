@@ -12,6 +12,8 @@ import {
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { useTheme } from '@/hooks/useTheme';
+import { cn } from '@/lib/utils';
 
 interface ServiceData {
   id: string;
@@ -28,6 +30,8 @@ interface TopServicesProps {
 }
 
 export function TopServicesCard({ services, currency }: TopServicesProps) {
+  const { isDark } = useTheme();
+  
   const formatCurrency = (value: number) => {
     if (value >= 1000000) {
       return `${currency} ${(value / 1000000).toFixed(2)}M`;
@@ -39,10 +43,22 @@ export function TopServicesCard({ services, currency }: TopServicesProps) {
 
   const getProviderColor = (provider: string) => {
     switch(provider.toLowerCase()) {
-      case 'aws': return 'bg-amber-50 text-amber-700 border-amber-200';
-      case 'azure': return 'bg-blue-50 text-blue-700 border-blue-200';
-      case 'gcp': return 'bg-emerald-50 text-emerald-700 border-emerald-200';
-      default: return 'bg-gray-50 text-gray-700 border-gray-200';
+      case 'aws': 
+        return isDark 
+          ? 'bg-amber-900/50 text-amber-100 border-amber-800' 
+          : 'bg-amber-50 text-amber-700 border-amber-200';
+      case 'azure': 
+        return isDark 
+          ? 'bg-blue-900/50 text-blue-100 border-blue-800' 
+          : 'bg-blue-50 text-blue-700 border-blue-200';
+      case 'gcp': 
+        return isDark 
+          ? 'bg-emerald-900/50 text-emerald-100 border-emerald-800' 
+          : 'bg-emerald-50 text-emerald-700 border-emerald-200';
+      default: 
+        return isDark 
+          ? 'bg-slate-800 text-slate-300 border-slate-700' 
+          : 'bg-gray-50 text-gray-700 border-gray-200';
     }
   };
 
@@ -50,14 +66,17 @@ export function TopServicesCard({ services, currency }: TopServicesProps) {
     <Card className="h-full overflow-hidden">
       <CardHeader className="pb-2">
         <CardTitle className="flex items-center text-lg font-medium">
-          <BarChart2 className="mr-2 h-5 w-5 text-cloudcostx-blue" />
+          <BarChart2 className={cn("mr-2 h-5 w-5", isDark ? "text-blue-400" : "text-cloudcostx-blue")} />
           Top Serviços
         </CardTitle>
       </CardHeader>
       <CardContent className="p-0">
         <div className="h-[358px] overflow-y-auto">
         <Table>
-            <TableHeader className="bg-gray-50 sticky top-0 z-10">
+            <TableHeader className={cn(
+              "sticky top-0 z-10",
+              isDark ? "bg-slate-800" : "bg-gray-50"
+            )}>
             <TableRow>
                 <TableHead className="font-medium text-xs">Serviço</TableHead>
                 <TableHead className="font-medium text-xs">Provedor</TableHead>
@@ -71,7 +90,9 @@ export function TopServicesCard({ services, currency }: TopServicesProps) {
               const isIncrease = service.trend > 0;
               
               return (
-                  <TableRow key={service.id} className="hover:bg-gray-50">
+                  <TableRow key={service.id} className={cn(
+                    isDark ? "hover:bg-slate-800/70" : "hover:bg-gray-50"
+                  )}>
                     <TableCell className="font-medium py-3 text-sm">{service.name}</TableCell>
                     <TableCell>
                       <Badge 
@@ -89,18 +110,25 @@ export function TopServicesCard({ services, currency }: TopServicesProps) {
                               {formatCurrency(service.currentSpend)}
                             </span>
                           </TooltipTrigger>
-                          <TooltipContent>
+                          <TooltipContent className={cn(
+                            isDark ? "bg-slate-800 border-slate-700 text-white" : "bg-white border-gray-200 text-slate-900"
+                          )}>
                             <p>{currency} {service.currentSpend.toLocaleString()}</p>
                           </TooltipContent>
                         </Tooltip>
                       </TooltipProvider>
                   </TableCell>
                   <TableCell className="text-right">
-                      <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
+                      <span className={cn(
+                        "inline-flex items-center px-2 py-1 rounded-full text-xs font-medium",
                         isIncrease 
-                          ? 'bg-red-50 text-cloudcostx-red' 
-                          : 'bg-green-50 text-cloudcostx-green'
-                      }`}>
+                          ? isDark 
+                            ? "bg-red-900/50 border border-red-800 text-red-400" 
+                            : "bg-red-50 text-cloudcostx-red" 
+                          : isDark 
+                            ? "bg-green-900/50 border border-green-800 text-green-400" 
+                            : "bg-green-50 text-cloudcostx-green"
+                      )}>
                         {isIncrease ? (
                           <TrendingUp className="h-3 w-3 mr-1 flex-shrink-0" />
                         ) : (
@@ -113,7 +141,10 @@ export function TopServicesCard({ services, currency }: TopServicesProps) {
                       <Button 
                         variant="ghost" 
                         size="sm" 
-                        className="h-8 text-xs w-full text-cloudcostx-blue flex items-center justify-center"
+                        className={cn(
+                          "h-8 text-xs w-full flex items-center justify-center",
+                          isDark ? "text-blue-400" : "text-cloudcostx-blue"
+                        )}
                       >
                         <span className="mr-1">Detalhes</span>
                         <ArrowUpRight className="h-3 w-3" />

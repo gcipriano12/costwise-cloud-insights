@@ -2,6 +2,8 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ResponsiveContainer, Treemap, Tooltip } from 'recharts';
 import { MapPin } from 'lucide-react';
+import { useTheme } from '@/hooks/useTheme';
+import { cn } from '@/lib/utils';
 
 // Atualizando a interface para os dados que o card receberá
 interface FlatRegionData {
@@ -27,6 +29,7 @@ const PROVIDER_COLORS: { [key: string]: string } = {
 };
 
 export function RegionHeatmapCard({ data, currency }: RegionHeatmapCardProps) {
+  const { isDark } = useTheme();
   // Os dados já vêm como top 5 regiões achatadas da ComparisonSection.
   // A propriedade 'fill' será adicionada ao preparar os dados para o Treemap.
 
@@ -42,7 +45,12 @@ export function RegionHeatmapCard({ data, currency }: RegionHeatmapCardProps) {
     if (active && payload && payload.length) {
       const item = payload[0].payload; // Acessa os dados do item do treemap
       return (
-        <div className="bg-white p-3 border border-gray-200 rounded-md shadow-lg text-sm">
+        <div className={cn(
+          "p-3 border rounded-md shadow-lg text-sm",
+          isDark 
+            ? "bg-slate-800 border-slate-700 text-white" 
+            : "bg-white border-gray-200 text-slate-900"
+        )}>
           <p className="font-semibold mb-1">{item.name}</p>
           <p>Custo: <span className="font-medium">{currency} {item.value.toLocaleString()}</span></p>
           <p>Provedor: <span className="font-medium">{item.providerName}</span></p>
@@ -58,6 +66,16 @@ export function RegionHeatmapCard({ data, currency }: RegionHeatmapCardProps) {
     const formattedValue = `${currency} ${Math.round(value / 1000)}K`;
     const canShowText = width > 60 && height > 70;
     
+    // Determinar cor do texto com base em contraste
+    // Usamos cores escuras para textos em fundos claros e vice-versa
+    const getContrastingTextColor = (bgColor: string) => {
+      // Para cores claras, usamos texto escuro, para escuras usamos claro
+      const isLightColor = fill && ['#F5A623', '#CCCCCC'].includes(fill);
+      return isLightColor ? '#000000' : '#FFFFFF';
+    };
+    
+    const textColor = getContrastingTextColor(fill);
+    
     return (
       <g>
         <rect
@@ -67,7 +85,7 @@ export function RegionHeatmapCard({ data, currency }: RegionHeatmapCardProps) {
           height={height}
           style={{
             fill: fill, // Cor baseada no provedor
-            stroke: '#FFFFFF',
+            stroke: isDark ? '#333333' : '#FFFFFF',
             strokeWidth: 2,
           }}
         />
@@ -75,16 +93,16 @@ export function RegionHeatmapCard({ data, currency }: RegionHeatmapCardProps) {
           <>
           <text
             x={x + width / 2}
-              y={y + height / 2 - 20} // Ajustado para nome
+            y={y + height / 2 - 20} // Ajustado para nome
             textAnchor="middle"
             dominantBaseline="middle"
             style={{
-                fill: '#000000',
-                fontSize: Math.min(13, Math.max(10, width / 9)),
+              fill: textColor,
+              fontSize: Math.min(13, Math.max(10, width / 9)),
               fontWeight: 'bold',
-                stroke: '#000000',
-                strokeWidth: 0.3,
-                paintOrder: 'stroke',
+              stroke: textColor,
+              strokeWidth: 0.3,
+              paintOrder: 'stroke',
             }}
           >
             {name}
@@ -95,10 +113,10 @@ export function RegionHeatmapCard({ data, currency }: RegionHeatmapCardProps) {
               textAnchor="middle"
               dominantBaseline="middle"
               style={{
-                fill: '#000000',
+                fill: textColor,
                 fontSize: Math.min(11, Math.max(9, width / 11)),
                 fontWeight: 'normal',
-                stroke: '#000000',
+                stroke: textColor,
                 strokeWidth: 0.3,
                 paintOrder: 'stroke',
               }}
@@ -111,10 +129,10 @@ export function RegionHeatmapCard({ data, currency }: RegionHeatmapCardProps) {
               textAnchor="middle"
               dominantBaseline="middle"
               style={{
-                fill: '#000000',
+                fill: textColor,
                 fontSize: Math.min(10, Math.max(8, width / 13)),
                 fontWeight: 'normal',
-                stroke: '#000000',
+                stroke: textColor,
                 strokeWidth: 0.3,
                 paintOrder: 'stroke',
               }}
@@ -128,9 +146,9 @@ export function RegionHeatmapCard({ data, currency }: RegionHeatmapCardProps) {
   };
 
   return (
-    <Card className="h-full flex flex-col bg-[#1A202C] text-white">
+    <Card className="h-full flex flex-col">
       <CardHeader className="pb-2 flex-shrink-0">
-        <CardTitle className="flex items-center text-base font-semibold text-white">
+        <CardTitle className="flex items-center text-base font-semibold">
           <MapPin className="h-5 w-5 mr-2 text-green-500" />
           Heatmap de Custos por Região
         </CardTitle>
@@ -141,7 +159,7 @@ export function RegionHeatmapCard({ data, currency }: RegionHeatmapCardProps) {
             <Treemap
               data={treemapData} // Usando os dados processados com a cor
               dataKey="value"
-              stroke="#FFFFFF"
+              stroke={isDark ? "#333333" : "#FFFFFF"}
               isAnimationActive={false}
               content={<CustomizedContent />}
               // O fill aqui é um fallback, a cor real vem de treemapData[x].fill

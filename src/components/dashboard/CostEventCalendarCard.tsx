@@ -3,6 +3,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Calendar as CalendarIcon, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useTheme } from '@/hooks/useTheme';
+import { cn } from '@/lib/utils';
 
 interface CostEvent {
   id: string;
@@ -19,6 +21,7 @@ interface CostEventCalendarCardProps {
 }
 
 export function CostEventCalendarCard({ events }: CostEventCalendarCardProps) {
+  const { isDark } = useTheme();
   // Estado para controlar o mês e ano selecionados
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
@@ -60,10 +63,22 @@ export function CostEventCalendarCard({ events }: CostEventCalendarCardProps) {
   // Definir classe baseada no tipo de evento
   const getEventTypeColor = (type: string) => {
     switch(type) {
-      case 'billing': return 'bg-blue-500 hover:bg-blue-600';
-      case 'contract': return 'bg-purple-500 hover:bg-purple-600';
-      case 'budget': return 'bg-amber-500 hover:bg-amber-600';
-      default: return 'bg-gray-500 hover:bg-gray-600';
+      case 'billing': 
+        return isDark 
+          ? 'bg-blue-800 hover:bg-blue-700 text-white' 
+          : 'bg-blue-500 hover:bg-blue-600 text-white';
+      case 'contract': 
+        return isDark 
+          ? 'bg-purple-800 hover:bg-purple-700 text-white' 
+          : 'bg-purple-500 hover:bg-purple-600 text-white';
+      case 'budget': 
+        return isDark 
+          ? 'bg-amber-800 hover:bg-amber-700 text-white' 
+          : 'bg-amber-500 hover:bg-amber-600 text-white';
+      default: 
+        return isDark 
+          ? 'bg-slate-700 hover:bg-slate-600 text-white' 
+          : 'bg-gray-500 hover:bg-gray-600 text-white';
     }
   };
   
@@ -93,12 +108,42 @@ export function CostEventCalendarCard({ events }: CostEventCalendarCardProps) {
     return new Intl.DateTimeFormat('pt-BR', { day: 'numeric', month: 'short' }).format(eventDate);
   };
   
+  // Função para obter as classes do elemento de data circular
+  const getDateCircleClasses = (isPastEvent: boolean) => {
+    if (isPastEvent) {
+      return isDark 
+        ? 'bg-red-900 text-red-200' 
+        : 'bg-red-100 text-red-700';
+    } else {
+      return isDark 
+        ? 'bg-blue-900 text-blue-200' 
+        : 'bg-blue-100 text-blue-700';
+    }
+  };
+  
+  // Função para obter as classes do elemento de evento
+  const getEventClasses = (isPastEvent: boolean) => {
+    return cn(
+      "flex items-center justify-between p-2 rounded-md",
+      isPastEvent
+        ? isDark 
+          ? "bg-red-900/50 border border-red-800" 
+          : "bg-red-50 border border-red-100"
+        : isDark 
+          ? "bg-slate-800/60 border border-slate-700" 
+          : "bg-muted/30"
+    );
+  };
+  
   return (
     <Card className="h-full flex flex-col">
       <CardHeader className="pb-2 flex-shrink-0">
         <div className="flex items-center justify-between w-full">
           <CardTitle className="flex items-center text-lg font-medium">
-            <CalendarIcon className="h-5 w-5 mr-2 text-cloudcostx-blue" />
+            <CalendarIcon className={cn(
+              "h-5 w-5 mr-2",
+              isDark ? "text-blue-400" : "text-cloudcostx-blue"
+            )} />
             Calendário de Planejamento
           </CardTitle>
           
@@ -106,10 +151,16 @@ export function CostEventCalendarCard({ events }: CostEventCalendarCardProps) {
           <div className="flex items-center space-x-2">
             <button 
               onClick={goToPreviousMonth}
-              className="p-1 rounded-full hover:bg-gray-100"
+              className={cn(
+                "p-1 rounded-full",
+                isDark ? "hover:bg-slate-700" : "hover:bg-gray-100"
+              )}
               aria-label="Mês anterior"
             >
-              <ChevronLeft className="h-5 w-5 text-gray-500" />
+              <ChevronLeft className={cn(
+                "h-5 w-5",
+                isDark ? "text-slate-400" : "text-gray-500"
+              )} />
             </button>
             <div className="flex items-center space-x-2">
               <Select
@@ -145,10 +196,16 @@ export function CostEventCalendarCard({ events }: CostEventCalendarCardProps) {
             </div>
             <button 
               onClick={goToNextMonth}
-              className="p-1 rounded-full hover:bg-gray-100"
+              className={cn(
+                "p-1 rounded-full",
+                isDark ? "hover:bg-slate-700" : "hover:bg-gray-100"
+              )}
               aria-label="Próximo mês"
             >
-              <ChevronRight className="h-5 w-5 text-gray-500" />
+              <ChevronRight className={cn(
+                "h-5 w-5",
+                isDark ? "text-slate-400" : "text-gray-500"
+              )} />
             </button>
           </div>
         </div>
@@ -164,18 +221,21 @@ export function CostEventCalendarCard({ events }: CostEventCalendarCardProps) {
               return (
                 <div 
                   key={event.id} 
-                  className={`flex items-center justify-between p-2 rounded-md ${
-                    isPastEvent ? 'bg-red-50 border border-red-100' : 'bg-muted/30'
-                  }`}
+                  className={getEventClasses(isPastEvent)}
                 >
                   <div className="flex items-center space-x-2">
                     <div className={`text-sm font-semibold rounded-full w-8 h-8 flex items-center justify-center ${
-                      isPastEvent ? 'bg-red-100 text-red-700' : 'bg-blue-100 text-blue-700'
+                      getDateCircleClasses(isPastEvent)
                     }`}>
                       {eventDate.getDate()}
                     </div>
                     <div>
-                      <div className={`text-sm font-medium ${isPastEvent ? 'text-red-700' : ''}`}>
+                      <div className={cn(
+                        "text-sm font-medium",
+                        isPastEvent 
+                          ? isDark ? "text-red-400" : "text-red-700" 
+                          : ""
+                      )}>
                         {event.title}
                       </div>
                       {event.impact && event.currency && (
@@ -192,7 +252,10 @@ export function CostEventCalendarCard({ events }: CostEventCalendarCardProps) {
               );
             })
           ) : (
-            <div className="flex items-center justify-center h-full text-muted-foreground">
+            <div className={cn(
+              "flex items-center justify-center h-full",
+              isDark ? "text-slate-400" : "text-muted-foreground"
+            )}>
               Nenhum evento para {months[selectedMonth]} de {selectedYear}
             </div>
           )}
