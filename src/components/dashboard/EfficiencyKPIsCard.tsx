@@ -127,36 +127,39 @@ export function EfficiencyKPIsCard({ kpis }: EfficiencyKPIsCardProps) {
   const activeColor = CATEGORY_COLORS[activeCategory];
   
   return (
-    <Card className="h-full flex flex-col">
+    <Card className="h-full flex flex-col overflow-hidden">
       <CardHeader className="pb-2 flex-shrink-0">
-        <div className="flex justify-between items-center">
-          <CardTitle className="flex items-center text-lg font-medium">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
+          <CardTitle className="flex items-center text-lg font-medium mb-2 sm:mb-0">
             <BarChart2 className={`h-5 w-5 mr-2 ${activeColor.text}`} />
             KPIs de Eficiência
           </CardTitle>
           
-          <div className="flex space-x-1">
-            {categories.map((category) => (
-              <Button
-                key={category}
-                variant={activeCategory === category ? "default" : "outline"}
-                size="sm"
-                className={`px-3 py-1 h-8 text-xs ${
-                  activeCategory === category 
-                    ? `${CATEGORY_COLORS[category].bg} ${CATEGORY_COLORS[category].hover} text-white` 
-                    : cn(
-                      "bg-transparent",
-                      isDark 
-                        ? `border-slate-700 ${CATEGORY_COLORS[category].text} hover:text-white` 
-                        : `border-gray-200 ${CATEGORY_COLORS[category].text} hover:text-white`,
-                      `hover:${CATEGORY_COLORS[category].bg}`
-                    )
-                }`}
-                onClick={() => handleCategoryChange(category)}
-              >
-                {CATEGORY_LABELS[category]}
-              </Button>
-            ))}
+          {/* Container com scroll horizontal para telas pequenas */}
+          <div className="w-full sm:w-auto overflow-x-auto pb-2 sm:pb-0 -mx-1 px-1">
+            <div className="flex space-x-1 min-w-max">
+              {categories.map((category) => (
+                <Button
+                  key={category}
+                  variant={activeCategory === category ? "default" : "outline"}
+                  size="sm"
+                  className={`px-2 sm:px-3 py-1 h-8 text-xs ${
+                    activeCategory === category 
+                      ? `${CATEGORY_COLORS[category].bg} ${CATEGORY_COLORS[category].hover} text-white` 
+                      : cn(
+                        "bg-transparent",
+                        isDark 
+                          ? `border-slate-700 ${CATEGORY_COLORS[category].text} hover:text-white` 
+                          : `border-gray-200 ${CATEGORY_COLORS[category].text} hover:text-white`,
+                        `hover:${CATEGORY_COLORS[category].bg}`
+                      )
+                  }`}
+                  onClick={() => handleCategoryChange(category)}
+                >
+                  {CATEGORY_LABELS[category]}
+                </Button>
+              ))}
+            </div>
           </div>
         </div>
       </CardHeader>
@@ -164,7 +167,7 @@ export function EfficiencyKPIsCard({ kpis }: EfficiencyKPIsCardProps) {
         {filteredKPIs.length > 0 ? (
           <>
             <div className="flex-grow pt-3">
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {paginatedKPIs.map((kpi) => (
                   <div 
                     key={kpi.name} 

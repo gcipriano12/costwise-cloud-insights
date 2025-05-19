@@ -136,9 +136,10 @@ export function CostEventCalendarCard({ events }: CostEventCalendarCardProps) {
   };
   
   return (
-    <Card className="h-full flex flex-col">
+    <Card className="h-full flex flex-col overflow-hidden">
       <CardHeader className="pb-2 flex-shrink-0">
-        <div className="flex items-center justify-between w-full">
+        {/* Layout modificado para ser mais responsivo em dispositivos móveis */}
+        <div className="flex flex-col space-y-3 sm:flex-row sm:justify-between sm:items-center sm:space-y-0">
           <CardTitle className="flex items-center text-lg font-medium">
             <CalendarIcon className={cn(
               "h-5 w-5 mr-2",
@@ -147,8 +148,8 @@ export function CostEventCalendarCard({ events }: CostEventCalendarCardProps) {
             Calendário de Planejamento
           </CardTitle>
           
-          {/* Controles de navegação do calendário */}
-          <div className="flex items-center space-x-2">
+          {/* Controles de navegação do calendário - reorganizados para mobile */}
+          <div className="flex items-center justify-between sm:justify-end w-full sm:w-auto">
             <button 
               onClick={goToPreviousMonth}
               className={cn(
@@ -162,13 +163,14 @@ export function CostEventCalendarCard({ events }: CostEventCalendarCardProps) {
                 isDark ? "text-slate-400" : "text-gray-500"
               )} />
             </button>
-            <div className="flex items-center space-x-2">
+            
+            <div className="flex items-center gap-1 sm:gap-2 flex-1 sm:flex-none justify-center">
               <Select
                 value={selectedMonth.toString()}
                 onValueChange={(value) => setSelectedMonth(parseInt(value))}
               >
-                <SelectTrigger className="w-[100px] h-8 text-sm">
-                  <SelectValue placeholder="Selecione o mês" />
+                <SelectTrigger className="w-[90px] sm:w-[100px] h-8 text-sm">
+                  <SelectValue placeholder="Mês" />
                 </SelectTrigger>
                 <SelectContent>
                   {months.map((month, index) => (
@@ -182,8 +184,8 @@ export function CostEventCalendarCard({ events }: CostEventCalendarCardProps) {
                 value={selectedYear.toString()}
                 onValueChange={(value) => setSelectedYear(parseInt(value))}
               >
-                <SelectTrigger className="w-[80px] h-8 text-sm">
-                  <SelectValue placeholder="Selecione o ano" />
+                <SelectTrigger className="w-[70px] sm:w-[80px] h-8 text-sm">
+                  <SelectValue placeholder="Ano" />
                 </SelectTrigger>
                 <SelectContent>
                   {years.map((year) => (
@@ -194,6 +196,7 @@ export function CostEventCalendarCard({ events }: CostEventCalendarCardProps) {
                 </SelectContent>
               </Select>
             </div>
+            
             <button 
               onClick={goToNextMonth}
               className={cn(
