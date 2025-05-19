@@ -4,6 +4,8 @@ import { EnvironmentComparisonCard } from '../EnvironmentComparisonCard';
 import { CostBenchmarksCard } from '../CostBenchmarksCard';
 import { NewServicesCard } from '../NewServicesCard';
 import { RegionHeatmapCard } from '../RegionHeatmapCard';
+import { Card, CardHeader, CardTitle } from '@/components/ui/card';
+import { Reference } from 'lucide-react';
 
 interface ComparisonSectionProps {
   environmentsData: {
@@ -48,29 +50,33 @@ export function ComparisonSection({
 }: ComparisonSectionProps) {
   return (
     <div className="mb-6">
-      <h2 className="text-lg font-semibold mb-4">Comparativos e Referências</h2>
+      <div className="flex items-center mb-4">
+        <Reference className="h-5 w-5 mr-2 text-purple-600" />
+        <h2 className="text-lg font-semibold">Comparativos e Referências</h2>
+      </div>
+      
       <div className="grid grid-cols-12 gap-4">
-        <div className="col-span-12 sm:col-span-6 lg:col-span-3">
+        <div className="col-span-12 sm:col-span-6 xl:col-span-3">
           <EnvironmentComparisonCard 
             environments={environmentsData}
             currency={currency}
           />
         </div>
         
-        <div className="col-span-12 sm:col-span-6 lg:col-span-3">
+        <div className="col-span-12 sm:col-span-6 xl:col-span-3">
           <CostBenchmarksCard 
             benchmarks={benchmarksData}
             currency={currency}
           />
         </div>
         
-        <div className="col-span-12 sm:col-span-6 lg:col-span-3">
+        <div className="col-span-12 sm:col-span-6 xl:col-span-3">
           <NewServicesCard 
             services={newServicesData}
           />
         </div>
         
-        <div className="col-span-12 sm:col-span-6 lg:col-span-3">
+        <div className="col-span-12 sm:col-span-6 xl:col-span-3">
           <RegionHeatmapCard 
             data={regionHeatmapData}
             currency={currency}
