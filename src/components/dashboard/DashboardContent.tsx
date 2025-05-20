@@ -4,6 +4,7 @@ import { ServicesSection } from './sections/ServicesSection';
 import { TrendsSection } from './sections/TrendsSection';
 import { KpiSection } from './sections/KpiSection';
 import { ComparisonSection } from './sections/ComparisonSection';
+import { TimeFilter } from './TimeFilter';
 import type { 
   SpendSummary,
   ProviderDistribution,
@@ -71,46 +72,53 @@ export const DashboardContent: React.FC<DashboardContentProps> = ({
   const { isDark } = useTheme();
 
   return (
-    <main className={cn(
-      "pt-4 pb-12 transition-colors duration-200",
+    <div className={cn(
+      "pt-0 pb-12 transition-colors duration-200 w-full h-full",
       isDark ? "bg-slate-950" : "bg-gray-50"
     )}>
-      <div className="container mx-auto px-4">
-      <SummarySection 
-        spendSummaryData={spendSummaryData}
-        providerDistributionData={providerDistributionData}
-        categoryDistributionData={categoryDistributionData}
-        anomaliesData={anomaliesData}
-        savingsOpportunitiesData={savingsOpportunitiesData}
-      />
-      
-      <ServicesSection 
-        topServicesData={topServicesData}
-        forecastData={forecastData}
-        currency={currency}
-      />
-      
-      <TrendsSection 
-        spendingCategoriesData={spendingTeamsData}
-        resourcesData={resourcesData}
-        complianceData={complianceData}
-        currency={currency}
-      />
-      
-      <KpiSection 
-        kpiData={kpiData}
-        costEventsData={costEventsData}
-        currentMonth="Maio 2025"
-      />
-      
-      <ComparisonSection 
-        environmentsData={environmentsData}
-        benchmarksData={benchmarksData}
-        newServicesData={newServicesData}
-        regionHeatmapData={regionHeatmapData}
-        currency={currency}
-      />
+      <div className="w-full px-2 sm:px-4">
+        <div className="mb-6 flex items-center justify-end flex-wrap py-4 gap-2">
+          <TimeFilter 
+            value={timeFilter}
+            onChange={onTimeFilterChange}
+          />
+        </div>
+        
+        <SummarySection 
+          spendSummaryData={spendSummaryData}
+          providerDistributionData={providerDistributionData}
+          categoryDistributionData={categoryDistributionData}
+          anomaliesData={anomaliesData}
+          savingsOpportunitiesData={savingsOpportunitiesData}
+        />
+        
+        <ServicesSection 
+          topServicesData={topServicesData}
+          forecastData={forecastData}
+          currency={currency}
+        />
+        
+        <TrendsSection 
+          spendingCategoriesData={spendingTeamsData}
+          resourcesData={resourcesData}
+          complianceData={complianceData}
+          currency={currency}
+        />
+        
+        <KpiSection 
+          kpiData={kpiData}
+          costEventsData={costEventsData}
+          currentMonth="Maio 2025"
+        />
+        
+        <ComparisonSection 
+          environmentsData={environmentsData}
+          benchmarksData={benchmarksData}
+          newServicesData={newServicesData}
+          regionHeatmapData={regionHeatmapData}
+          currency={currency}
+        />
       </div>
-    </main>
+    </div>
   );
 };
