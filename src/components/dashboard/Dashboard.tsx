@@ -16,7 +16,7 @@ import {
   useSidebar,
 } from '../ui/sidebar';
 import { ThemeToggle } from '@/components/theme/ThemeToggle';
-import { Bell, Settings, User, LayoutDashboard, PieChart, BarChart3, LineChart, Activity, XIcon, Sun, Moon } from 'lucide-react';
+import { Bell, Settings, User, LayoutDashboard, PieChart, BarChart3, LineChart, Activity, Sun, Moon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useTheme } from '@/hooks/useTheme';
 import { cn } from '@/lib/utils';
@@ -109,14 +109,17 @@ export default function Dashboard() {
   const SidebarLogo = () => {
     const { state } = useSidebar();
     return (
-      <div className="flex items-center">
-        <XIcon className="h-5 w-5 text-blue-500" />
-        <span className={cn(
-          "text-xl font-bold bg-gradient-to-r from-blue-500 to-indigo-600 text-transparent bg-clip-text whitespace-nowrap ml-2",
-          state === "collapsed" ? "hidden" : "block"
-        )}>
-          Cost
-        </span>
+      <div className="flex items-center justify-center h-5">
+        {/* Logo X estilizado - centralizado com melhor precisão */}
+        <div className="w-5 h-5 flex items-center justify-center">
+          <div className="absolute w-[2.5px] h-[18px] bg-blue-500 transform rotate-45"></div>
+          <div className="absolute w-[2.5px] h-[18px] bg-blue-500 transform -rotate-45"></div>
+        </div>
+        {state !== "collapsed" && (
+          <span className="text-xl font-bold bg-gradient-to-r from-blue-500 to-indigo-600 text-transparent bg-clip-text whitespace-nowrap ml-2">
+            Cost
+          </span>
+        )}
       </div>
     );
   };
@@ -126,7 +129,7 @@ export default function Dashboard() {
       <div className="min-h-screen flex flex-row w-full overflow-hidden">
         <Sidebar variant="sidebar" collapsible="icon">
           <SidebarHeader className="border-b border-sidebar-border">
-            <div className="flex items-center px-3 py-3 justify-between">
+            <div className="flex items-center px-2 py-2 justify-between">
               <SidebarLogo />
               <SidebarToggleButton />
             </div>
@@ -139,7 +142,7 @@ export default function Dashboard() {
                   <SidebarMenuItem key={item.name}>
                     <SidebarMenuButton isActive={item.active} tooltip={item.name}>
                       {item.icon}
-                      <span>{item.name}</span>
+                      <span className="group-data-[collapsible=icon]:hidden">{item.name}</span>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 ))}
@@ -152,7 +155,7 @@ export default function Dashboard() {
               <SidebarMenuItem>
                 <SidebarMenuButton tooltip="Mudar tema" onClick={toggleTheme}>
                   {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-                  <span>Alterar tema</span>
+                  <span className="group-data-[collapsible=icon]:hidden">Alterar tema</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
               
@@ -161,7 +164,7 @@ export default function Dashboard() {
                   <PopoverTrigger asChild>
                     <SidebarMenuButton tooltip="Notificações">
                       <Bell className="h-5 w-5" />
-                      <span>Notificações</span>
+                      <span className="group-data-[collapsible=icon]:hidden">Notificações</span>
                       {unreadCount > 0 && (
                         <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
                       )}
@@ -233,7 +236,7 @@ export default function Dashboard() {
                   <DropdownMenuTrigger asChild>
                     <SidebarMenuButton tooltip="Configurações">
                       <Settings className="h-5 w-5" />
-                      <span>Configurações</span>
+                      <span className="group-data-[collapsible=icon]:hidden">Configurações</span>
                     </SidebarMenuButton>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="w-48">
@@ -252,7 +255,7 @@ export default function Dashboard() {
                   <DropdownMenuTrigger asChild>
                     <SidebarMenuButton tooltip="Minha conta">
                       <User className="h-5 w-5" />
-                      <span>Minha conta</span>
+                      <span className="group-data-[collapsible=icon]:hidden">Minha conta</span>
                     </SidebarMenuButton>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="w-48">

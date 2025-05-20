@@ -60,12 +60,6 @@ export function SummarySection({
 }: SummarySectionProps) {
   return (
     <div className="space-y-4 mb-6">
-      {/* Título da seção */}
-      <div className="flex items-center mb-2">
-        <ChartPie className="h-5 w-5 mr-2 text-blue-600" />
-        <h2 className="text-lg font-semibold">Resumo Financeiro</h2>
-      </div>
-      
       {/* Resumo de Gastos ocupa toda a largura */}
       <div className="w-full">
         <SpendSummaryCard 
