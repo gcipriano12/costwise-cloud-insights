@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { TimeFilter } from './TimeFilter';
 import { DashboardContent } from './DashboardContent';
@@ -17,6 +17,7 @@ import { Button } from "../ui/button";
 import { Bell, Settings, UserCircle } from "lucide-react";
 import { SidebarToggleButton } from './SidebarToggleButton';
 import { cn } from '@/lib/utils';
+import { useDashboardData } from '@/hooks/useDashboardData';
 
 const DashboardHeader = () => {
   const { state } = useSidebar();
@@ -28,7 +29,7 @@ const DashboardHeader = () => {
         <SidebarToggleButton />
         <h1 className="text-2xl font-bold tracking-tight">Dashboard</h1>
       </div>
-      <TimeFilter />
+      {/* TimeFilter will be moved to the main Dashboard component to manage state */}
     </div>
   );
 };
@@ -38,6 +39,30 @@ interface DashboardProps {
 }
 
 const Dashboard: React.FC<DashboardProps> = () => {
+  // Add necessary state and data
+  const [timeFilter, setTimeFilter] = useState('30d');
+  
+  // Use the hook to get dashboard data
+  const {
+    spendSummaryData,
+    providerDistributionData,
+    categoryDistributionData,
+    topServicesData,
+    anomaliesData,
+    savingsOpportunitiesData,
+    spendingTeamsData,
+    forecastData,
+    resourcesData,
+    complianceData,
+    kpiData,
+    costEventsData,
+    environmentsData,
+    benchmarksData,
+    newServicesData,
+    regionHeatmapData,
+    currency
+  } = useDashboardData(timeFilter);
+
   return (
     <SidebarProvider defaultOpen={true}>
       <div className="flex min-h-screen w-full">
@@ -79,8 +104,37 @@ const Dashboard: React.FC<DashboardProps> = () => {
         </Sidebar>
 
         <div className="flex-1 flex flex-col min-w-0">
-          <DashboardHeader />
-          <DashboardContent>
+          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between p-4 pb-0">
+            <div className="flex items-center gap-2">
+              <SidebarToggleButton />
+              <h1 className="text-2xl font-bold tracking-tight">Dashboard</h1>
+            </div>
+            <TimeFilter 
+              value={timeFilter} 
+              onChange={(value) => setTimeFilter(value)} 
+            />
+          </div>
+          <DashboardContent
+            timeFilter={timeFilter}
+            onTimeFilterChange={(value) => setTimeFilter(value)}
+            spendSummaryData={spendSummaryData}
+            providerDistributionData={providerDistributionData}
+            categoryDistributionData={categoryDistributionData}
+            topServicesData={topServicesData}
+            anomaliesData={anomaliesData}
+            savingsOpportunitiesData={savingsOpportunitiesData}
+            spendingTeamsData={spendingTeamsData}
+            forecastData={forecastData}
+            resourcesData={resourcesData}
+            complianceData={complianceData}
+            kpiData={kpiData}
+            costEventsData={costEventsData}
+            environmentsData={environmentsData}
+            benchmarksData={benchmarksData}
+            newServicesData={newServicesData}
+            regionHeatmapData={regionHeatmapData}
+            currency={currency}
+          >
             <Outlet />
           </DashboardContent>
         </div>
