@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { SummarySection } from './sections/SummarySection';
 import { ServicesSection } from './sections/ServicesSection';
@@ -73,7 +74,7 @@ export const DashboardContent: React.FC<DashboardContentProps> = ({
 
   return (
     <div className={cn(
-      "pt-0 pb-12 transition-colors duration-200 w-full h-full",
+      "pt-0 pb-12 transition-colors duration-200 w-full h-full flex-1",
       isDark ? "bg-slate-950" : "bg-gray-50"
     )}>
       <div className="w-full px-2 sm:px-4">

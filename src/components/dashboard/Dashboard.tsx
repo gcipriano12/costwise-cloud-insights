@@ -1,7 +1,9 @@
+
 import { useState } from 'react';
 import { ChatBot } from '../chat/ChatBot';
 import { DashboardContent } from './DashboardContent';
 import { useDashboardData } from '../../hooks/useDashboardData';
+import { SidebarToggleButton } from './SidebarToggleButton';
 import {
   Sidebar,
   SidebarContent,
@@ -12,11 +14,9 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarProvider,
-  SidebarTrigger,
-  useSidebar
 } from '../ui/sidebar';
 import { ThemeToggle } from '@/components/theme/ThemeToggle';
-import { Bell, Settings, User, Menu, LogOut, LayoutDashboard, PieChart, BarChart3, LineChart, Activity, XIcon, Sun, Moon } from 'lucide-react';
+import { Bell, Settings, User, LayoutDashboard, PieChart, BarChart3, LineChart, Activity, XIcon, Sun, Moon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useTheme } from '@/hooks/useTheme';
 import { cn } from '@/lib/utils';
@@ -105,8 +105,8 @@ export default function Dashboard() {
     { name: 'Integrações', href: '/integracoes', icon: <Activity className="h-5 w-5" /> }
   ];
   
-  // Obter o estado atual da barra lateral
-  const SidebarState = () => {
+  // Estado atual da barra lateral
+  const SidebarLogo = () => {
     const { state } = useSidebar();
     return (
       <div className="flex items-center">
@@ -123,12 +123,12 @@ export default function Dashboard() {
   
   return (
     <SidebarProvider defaultOpen={true}>
-      <div className="min-h-screen flex overflow-hidden">
+      <div className="min-h-screen flex flex-row w-full overflow-hidden">
         <Sidebar variant="sidebar" collapsible="icon">
           <SidebarHeader className="border-b border-sidebar-border">
             <div className="flex items-center px-3 py-3 justify-between">
-              <SidebarState />
-              <SidebarTrigger />
+              <SidebarLogo />
+              <SidebarToggleButton />
             </div>
           </SidebarHeader>
           
@@ -270,8 +270,8 @@ export default function Dashboard() {
           </SidebarFooter>
         </Sidebar>
         
-        <div className="flex-1 flex flex-col w-full">
-          <main className="flex-1 bg-gray-50 dark:bg-gray-900 w-full">
+        <div className="flex-1 flex flex-col w-full overflow-hidden">
+          <main className="flex-1 bg-gray-50 dark:bg-gray-900 w-full overflow-auto">
             <DashboardContent
               timeFilter={timeFilter}
               onTimeFilterChange={setTimeFilter}
