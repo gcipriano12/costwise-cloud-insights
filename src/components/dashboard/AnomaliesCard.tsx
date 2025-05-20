@@ -167,7 +167,11 @@ export function AnomaliesCard({ anomalies, currency }: AnomaliesCardProps) {
                       />
                       <span className="font-medium truncate">{anomaly.title}</span>
                     </div>
-                    <span className={`font-medium ml-2 ${getSeverityTextColor(anomaly.severity)}`}>
+                    <span className={cn(
+                      "font-medium ml-2 whitespace-nowrap",
+                      isMobile && "text-[10px]",
+                      getSeverityTextColor(anomaly.severity)
+                    )}>
                       {formatCurrency(anomaly.impact)}
                     </span>
                   </div>

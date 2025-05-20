@@ -249,7 +249,7 @@ export function ChatBot() {
       {/* Botão flutuante do chat */}
       <Button
         className="fixed bottom-4 right-4 rounded-full w-12 h-12 p-0 bg-XCost-blue hover:bg-XCost-blue/90"
-        onClick={() => setIsOpen(true)}
+        onClick={() => setIsOpen(prev => !prev)}
       >
         <MessageCircle className="h-6 w-6" />
       </Button>
