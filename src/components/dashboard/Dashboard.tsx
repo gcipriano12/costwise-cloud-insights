@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { ChatBot } from '../chat/ChatBot';
 import { DashboardContent } from './DashboardContent';
@@ -14,6 +13,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarProvider,
+  useSidebar,
 } from '../ui/sidebar';
 import { ThemeToggle } from '@/components/theme/ThemeToggle';
 import { Bell, Settings, User, LayoutDashboard, PieChart, BarChart3, LineChart, Activity, XIcon, Sun, Moon } from 'lucide-react';
