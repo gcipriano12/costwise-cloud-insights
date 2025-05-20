@@ -1,4 +1,3 @@
-
 import React from 'react';
 import {
   Sidebar,
@@ -23,18 +22,13 @@ export const DashboardSidebar = () => {
           <SidebarLogo />
         </div>
         
-        {/* Posicionamento do botão na linha divisória - visível apenas em desktop */}
-        <div className="absolute right-[-14px] bottom-0 translate-y-[50%] z-50 hidden md:block">
+        {/* Posicionamento do botão na linha divisória - visível em todas as telas */}
+        <div className="absolute right-[-14px] bottom-0 translate-y-[50%] z-50">
           <SidebarToggleButton />
         </div>
       </SidebarHeader>
       
       <SidebarContent className="py-2">
-        {/* Botão de toggle em mobile - posicionado dentro do conteúdo para melhor visibilidade */}
-        <div className="md:hidden px-3 py-2 mb-2 border-b border-sidebar-border">
-          <SidebarToggleButton className="w-full justify-start rounded-md" />
-        </div>
-        
         <SidebarSections />
       </SidebarContent>
       

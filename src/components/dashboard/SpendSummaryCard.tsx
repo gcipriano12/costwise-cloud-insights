@@ -8,6 +8,7 @@ import { Progress } from '@/components/ui/progress';
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip as RechartsTooltip, Sector } from 'recharts';
 import { useTheme } from '@/hooks/useTheme';
 import { cn } from '@/lib/utils';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface ProviderBreakdown {
   name: string;
@@ -44,6 +45,7 @@ export function SpendSummaryCard({
   savingsRealized = totalSpend * 0.08
 }: SpendSummaryProps) {
   const { isDark } = useTheme();
+  const isMobile = useIsMobile();
   const isIncrease = previousPeriodChange > 0;
   const changeAbs = Math.abs(previousPeriodChange);
   const [activeIndex, setActiveIndex] = React.useState<number | null>(null);
@@ -215,13 +217,18 @@ export function SpendSummaryCard({
         <div className="grid grid-cols-12 gap-6">
           <div className="col-span-12 md:col-span-4 space-y-3">
           <div>
-              <p className="text-sm text-muted-foreground mb-1">Gasto Total</p>
+              <p className={`text-sm text-muted-foreground mb-${isMobile ? '0' : '1'}`}>
+                Gasto Total
+              </p>
               <TooltipProvider>
                 <Tooltip delayDuration={0}>
                   <TooltipTrigger asChild>
                     <div className="flex items-baseline cursor-help">
-                      <span className="text-4xl font-bold tracking-tight">
-                        {currency} {totalSpend.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}
+                      <span className={`${isMobile ? 'text-2xl' : 'text-4xl'} font-bold tracking-tight`}>
+                        {currency} {totalSpend.toLocaleString(undefined, {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2
+                        })}
                       </span>
                     </div>
                   </TooltipTrigger>
@@ -234,15 +241,15 @@ export function SpendSummaryCard({
               </TooltipProvider>
               
               <div className={cn(
-                "mt-2 inline-flex items-center px-2 py-1 rounded-md text-sm font-medium", 
+                `mt-2 inline-flex items-center px-2 py-1 rounded-md ${isMobile ? 'text-xs' : 'text-sm'} font-medium`, 
                 isIncrease 
                   ? isDark ? "bg-red-900/50 border border-red-800 text-red-400" : "bg-red-50 text-XCost-red" 
                   : isDark ? "bg-green-900/50 border border-green-800 text-green-400" : "bg-green-50 text-XCost-green"
               )}>
                 {isIncrease ? (
-                  <TrendingUp className="h-4 w-4 mr-1 flex-shrink-0" />
+                  <TrendingUp className={`${isMobile ? 'h-3 w-3' : 'h-4 w-4'} mr-1 flex-shrink-0`} />
                 ) : (
-                  <TrendingDown className="h-4 w-4 mr-1 flex-shrink-0" />
+                  <TrendingDown className={`${isMobile ? 'h-3 w-3' : 'h-4 w-4'} mr-1 flex-shrink-0`} />
                 )}
                 <span>
                   {isIncrease ? '+' : '-'}{changeAbs}% vs período anterior
@@ -255,14 +262,18 @@ export function SpendSummaryCard({
               isDark ? "border-slate-700" : "border-gray-100"
             )}>
               <div>
-                <p className="text-xs text-muted-foreground mb-1">Média Mensal</p>
-                <div className="text-lg font-semibold">
+                <p className="text-xs text-muted-foreground mb-1">
+                  {isMobile ? "Média" : "Média Mensal"}
+                </p>
+                <div className={`${isMobile ? 'text-sm' : 'text-lg'} font-semibold`}>
                   {formatCurrency(monthlyAverage)}
                 </div>
               </div>
               
               <div>
-                <p className="text-xs text-muted-foreground mb-1">Maior Gasto</p>
+                <p className="text-xs text-muted-foreground mb-1">
+                  {isMobile ? "Maior" : "Maior Gasto"}
+                </p>
                 <div className="flex items-center mt-0.5">
                   <Badge className={cn(
                     "mr-1 text-xs py-0",
@@ -270,14 +281,16 @@ export function SpendSummaryCard({
                   )}>{topService.provider}</Badge>
                   <span className="font-medium text-xs">{topService.name}</span>
                 </div>
-                <div className="text-sm font-semibold mt-0.5">
+                <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-semibold mt-0.5`}>
                   {formatCurrency(topService.cost)}
                 </div>
               </div>
               
               <div>
-                <p className="text-xs text-muted-foreground mb-1">Projeção Anual</p>
-                <div className="text-lg font-semibold">
+                <p className="text-xs text-muted-foreground mb-1">
+                  {isMobile ? "Projeção" : "Projeção Anual"}
+                </p>
+                <div className={`${isMobile ? 'text-sm' : 'text-lg'} font-semibold`}>
                   {formatCurrency(forecastYTD)}
                 </div>
                 <div className="text-xs text-muted-foreground">
@@ -291,7 +304,9 @@ export function SpendSummaryCard({
               isDark ? "border-slate-700" : "border-gray-100"
             )}>
               <div className="flex justify-between items-center">
-                <p className="text-sm text-muted-foreground">Limite Orçamentário</p>
+                <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                  {isMobile ? "Orçamento" : "Limite Orçamentário"}
+                </p>
                 <span className={`text-xs font-medium ${getBudgetStatusColor()}`}>{budgetConsumed}%</span>
               </div>
               <div className="mt-1.5">
@@ -337,11 +352,14 @@ export function SpendSummaryCard({
                     ))}
                   </Pie>
                   <Legend 
-                    layout="vertical" 
-                    verticalAlign="middle" 
-                    align="right"
+                    layout={isMobile ? "horizontal" : "vertical"}
+                    verticalAlign={isMobile ? "bottom" : "middle"}
+                    align={isMobile ? "center" : "right"}
                     formatter={(value) => <span className="text-xs">{value}</span>}
-                    wrapperStyle={{ color: isDark ? "#E2E8F0" : undefined }}
+                    wrapperStyle={isMobile ? 
+                      { paddingTop: '10px', color: isDark ? "#E2E8F0" : undefined }
+                      : { color: isDark ? "#E2E8F0" : undefined }
+                    }
                   />
                   <RechartsTooltip 
                     content={<CustomPieTooltip />}

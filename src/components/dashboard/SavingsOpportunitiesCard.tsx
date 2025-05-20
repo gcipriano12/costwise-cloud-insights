@@ -7,6 +7,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 import { Progress } from '@/components/ui/progress';
 import { useTheme } from '@/hooks/useTheme';
 import { cn } from '@/lib/utils';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface Opportunity {
   id: string;
@@ -29,12 +30,13 @@ export function SavingsOpportunitiesCard({
 }: SavingsOpportunitiesProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const { isDark } = useTheme();
+  const isMobile = useIsMobile();
   
   const formatCurrency = (value: number) => {
     if (value >= 1000000) {
-      return `${currency} ${(value / 1000000).toFixed(2)}M`;
+      return `${currency} ${(value / 1000000).toFixed(isMobile ? 1 : 2)}M`;
     } else if (value >= 1000) {
-      return `${currency} ${(value / 1000).toFixed(2)}K`;
+      return `${currency} ${(value / 1000).toFixed(isMobile ? 1 : 2)}K`;
     }
     return `${currency} ${value.toLocaleString()}`;
   };
@@ -102,9 +104,9 @@ export function SavingsOpportunitiesCard({
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center text-lg font-medium">
             <Lightbulb className={cn("mr-2 h-5 w-5", isDark ? "text-green-400" : "text-XCost-green")} />
-            Oportunidades de Economia
+            {isMobile ? "Oportunidades" : "Oportunidades de Economia"}
           </CardTitle>
-          <div className={`text-xl font-bold ${headerTextColorClass}`}>
+          <div className={`${isMobile ? 'text-lg' : 'text-xl'} font-bold ${headerTextColorClass}`}>
             {formatCurrency(totalPotentialSavings)}
           </div>
         </div>
@@ -115,22 +117,22 @@ export function SavingsOpportunitiesCard({
             {/* Card principal */}
             <div className={`flex-shrink-0 p-3 rounded-lg border mb-2 ${getEffortCardColor(opportunities[currentIndex].effort)}`}>
               <div className="flex justify-between items-start">
-                <div className="flex items-center">
-                  <CheckCircle className={`h-5 w-5 ${currentEffortColor} mr-2`} />
-                  <h4 className="font-medium text-sm">{opportunities[currentIndex].title}</h4>
+                <div className="flex items-center flex-1 mr-2">
+                  <CheckCircle className={`${isMobile ? 'h-4 w-4' : 'h-5 w-5'} ${currentEffortColor} mr-2`} />
+                  <h4 className={`font-medium ${isMobile ? 'text-xs' : 'text-sm'}`}>{opportunities[currentIndex].title}</h4>
                 </div>
-                <Badge className={getEffortColor(opportunities[currentIndex].effort)}>
+                <Badge className={`${isMobile ? 'text-[10px] px-1.5 py-0' : ''} ${getEffortColor(opportunities[currentIndex].effort)}`}>
                   {getEffortLabel(opportunities[currentIndex].effort)}
                 </Badge>
               </div>
-              <p className="text-xs text-muted-foreground my-1 line-clamp-2 ml-7">
+              <p className={`${isMobile ? 'text-[10px]' : 'text-xs'} text-muted-foreground my-1 line-clamp-2 ml-${isMobile ? '6' : '7'}`}>
                 {opportunities[currentIndex].description}
               </p>
               
-              <div className="mt-2 mb-1 ml-7">
+              <div className={`mt-2 mb-1 ml-${isMobile ? '6' : '7'}`}>
                 <div className="flex justify-between items-center text-xs mb-0.5">
-                  <span>Contribuição</span>
-                  <span className="font-medium">{calculatePercentage(opportunities[currentIndex].savings).toFixed(1)}%</span>
+                  <span className={isMobile ? 'text-[10px]' : ''}>Contribuição</span>
+                  <span className={`font-medium ${isMobile ? 'text-[10px]' : ''}`}>{calculatePercentage(opportunities[currentIndex].savings).toFixed(1)}%</span>
                 </div>
                 <Progress 
                   value={calculatePercentage(opportunities[currentIndex].savings)}
@@ -138,18 +140,18 @@ export function SavingsOpportunitiesCard({
                 />
               </div>
               
-              <div className="flex justify-between items-center mt-2 ml-7">
+              <div className={`flex justify-between items-center mt-2 ml-${isMobile ? '6' : '7'}`}>
                 <div className="flex items-center">
-                  <span className={`text-sm font-medium ${currentEffortColor}`}>
+                  <span className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium ${currentEffortColor}`}>
                     {formatCurrency(opportunities[currentIndex].savings)}
                   </span>
-                  <span className="text-muted-foreground ml-1 text-xs">/mês</span>
+                  <span className={`text-muted-foreground ml-1 ${isMobile ? 'text-[10px]' : 'text-xs'}`}>/mês</span>
                 </div>
                 
                 <Button 
                   size="sm" 
                   variant="ghost"
-                  className={`h-6 text-xs ${currentEffortColor}`}
+                  className={`h-6 ${isMobile ? 'text-[10px] px-2' : 'text-xs'} ${currentEffortColor}`}
                 >
                   <span className="mr-1">Implementar</span>
                   <ArrowUpRight className="h-3 w-3" />

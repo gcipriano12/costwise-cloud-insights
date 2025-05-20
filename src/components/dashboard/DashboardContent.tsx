@@ -10,6 +10,7 @@ import { SpendSummaryCard } from './SpendSummaryCard';
 import { CategoryDistributionCard } from './CategoryDistributionCard';
 import { AnomaliesCard } from './AnomaliesCard';
 import { SavingsOpportunitiesCard } from './SavingsOpportunitiesCard';
+import { useIsMobile } from '@/hooks/use-mobile';
 import type { 
   SpendSummary,
   ProviderDistribution,
@@ -75,6 +76,7 @@ export const DashboardContent: React.FC<DashboardContentProps> = ({
   currency
 }) => {
   const { isDark } = useTheme();
+  const isMobile = useIsMobile();
 
   return (
     <div className={cn(
@@ -84,8 +86,8 @@ export const DashboardContent: React.FC<DashboardContentProps> = ({
       <div className="w-full px-2 sm:px-4">
         <div className="flex items-center justify-between mb-4 pt-4">
           <div className="flex items-center">
-            <Globe className="h-5 w-5 mr-2 text-blue-600" />
-            <h2 className="text-lg font-semibold">MegaBill</h2>
+            <Globe className={`${isMobile ? 'h-4 w-4' : 'h-5 w-5'} mr-2 text-blue-600`} />
+            <h2 className={`${isMobile ? 'text-base' : 'text-lg'} font-semibold`}>MegaBill</h2>
           </div>
           <div>
             <TimeFilter 

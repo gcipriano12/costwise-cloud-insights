@@ -1,8 +1,8 @@
-
 import React from 'react';
 import { 
   SidebarGroup,
   SidebarMenu,
+  useSidebar
 } from '@/components/ui/sidebar';
 import { 
   Globe, 
@@ -22,6 +22,12 @@ import {
 import { SidebarMenuItemMobile } from './SidebarMenuItemMobile';
 
 export const SidebarSections = () => {
+  const { state, isMobile, openMobile } = useSidebar();
+  
+  // Determinar quando mostrar o texto: em desktop quando não está colapsado,
+  // ou em mobile quando openMobile é true
+  const showText = (isMobile && openMobile) || (!isMobile && state !== "collapsed");
+  
   // Seção Inform
   const informItems = [
     { name: 'MegaBill', href: '/', icon: <Globe className="h-5 w-5" /> },
@@ -51,7 +57,7 @@ export const SidebarSections = () => {
     <>
       {/* Seção Inform */}
       <SidebarGroup>
-        <div className="px-3 py-1.5 text-xs font-semibold text-muted-foreground group-data-[collapsible=icon]:hidden">
+        <div className={`px-3 py-1.5 text-xs font-semibold text-muted-foreground ${showText ? "" : "hidden"}`}>
           Inform
         </div>
         <SidebarMenu>
@@ -63,7 +69,7 @@ export const SidebarSections = () => {
 
       {/* Seção Optimize */}
       <SidebarGroup>
-        <div className="px-3 py-1.5 text-xs font-semibold text-muted-foreground group-data-[collapsible=icon]:hidden">
+        <div className={`px-3 py-1.5 text-xs font-semibold text-muted-foreground ${showText ? "" : "hidden"}`}>
           Optimize
         </div>
         <SidebarMenu>
@@ -75,7 +81,7 @@ export const SidebarSections = () => {
 
       {/* Seção Operate */}
       <SidebarGroup>
-        <div className="px-3 py-1.5 text-xs font-semibold text-muted-foreground group-data-[collapsible=icon]:hidden">
+        <div className={`px-3 py-1.5 text-xs font-semibold text-muted-foreground ${showText ? "" : "hidden"}`}>
           Operate
         </div>
         <SidebarMenu>

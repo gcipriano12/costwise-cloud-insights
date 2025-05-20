@@ -1,4 +1,3 @@
-
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { PanelLeft } from "lucide-react"
@@ -50,18 +49,19 @@ export const Sidebar = React.forwardRef<
         <>
           {/* Sidebar de ícones sempre visível em dispositivos móveis */}
           <div
-            className="fixed left-0 top-0 bottom-0 z-10 w-[--sidebar-width-icon] bg-sidebar border-r border-sidebar-border"
+            className="fixed left-0 top-0 bottom-0 z-10 w-[--sidebar-width-icon] bg-sidebar border-r border-sidebar-border flex flex-col justify-between"
             style={{
               width: SIDEBAR_WIDTH_ICON,
             }}
           >
-            <div className="flex h-full w-full flex-col py-3">
+            <div className="flex flex-col items-center py-3 space-y-4 flex-1">
               {/* Parte da sidebar que sempre será exibida, mesmo em modo ícones */}
               {React.Children.map(children, (child) => {
                 // Clonar apenas os elementos que queremos exibir no modo ícone
                 if (React.isValidElement(child) && child.props['data-sidebar'] !== 'header') {
                   return React.cloneElement(child as React.ReactElement<any>, {
                     'data-mobile-icons': true as any,
+                    className: cn("flex justify-center items-center", (child as React.ReactElement<any>).props.className)
                   });
                 }
                 return child;
@@ -74,7 +74,7 @@ export const Sidebar = React.forwardRef<
             <SheetContent
               data-sidebar="sidebar"
               data-mobile="true"
-              className="w-[85%] max-w-[300px] mt-0 pt-0 bg-sidebar p-0 text-sidebar-foreground [&>button]:block"
+              className="w-[55%] max-w-[300px] mt-0 pt-0 bg-sidebar p-0 text-sidebar-foreground [&>button]:block"
               style={{
                 "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
               } as React.CSSProperties}

@@ -52,11 +52,13 @@ export const SidebarProvider = React.forwardRef<
     ref
   ) => {
     const isMobile = useIsMobile()
+    // Sempre começa fechada no mobile
     const [openMobile, setOpenMobile] = React.useState(false)
 
     // This is the internal state of the sidebar.
     // We use openProp and setOpenProp for control from outside the component.
-    const [_open, _setOpen] = React.useState(defaultOpen)
+    // No mobile, sempre começa fechado
+    const [_open, _setOpen] = React.useState(isMobile ? false : defaultOpen)
     const open = openProp ?? _open
     const setOpen = React.useCallback(
       (value: boolean | ((value: boolean) => boolean)) => {
@@ -123,7 +125,7 @@ export const SidebarProvider = React.forwardRef<
           style={
             {
               "--sidebar-width": "14rem",
-              "--sidebar-width-icon": "3.5rem",
+              "--sidebar-width-icon": isMobile ? "3.5rem" : "3.5rem",
               ...style,
             } as React.CSSProperties
           }
@@ -144,7 +146,7 @@ export const SidebarProvider = React.forwardRef<
 SidebarProvider.displayName = "SidebarProvider"
 
 export const SIDEBAR_WIDTH = "14rem"
-export const SIDEBAR_WIDTH_MOBILE = "16rem"
+export const SIDEBAR_WIDTH_MOBILE = "55%"
 export const SIDEBAR_WIDTH_ICON = "3.5rem"
 
 // Utility function for class names
