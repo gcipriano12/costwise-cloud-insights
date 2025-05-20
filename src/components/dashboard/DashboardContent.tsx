@@ -5,7 +5,7 @@ import { TrendsSection } from './sections/TrendsSection';
 import { KpiSection } from './sections/KpiSection';
 import { ComparisonSection } from './sections/ComparisonSection';
 import { TimeFilter } from './TimeFilter';
-import { ChartPie } from 'lucide-react';
+import { Globe } from 'lucide-react';
 import { SpendSummaryCard } from './SpendSummaryCard';
 import { CategoryDistributionCard } from './CategoryDistributionCard';
 import { AnomaliesCard } from './AnomaliesCard';
@@ -84,8 +84,8 @@ export const DashboardContent: React.FC<DashboardContentProps> = ({
       <div className="w-full px-2 sm:px-4">
         <div className="flex items-center justify-between mb-4 pt-4">
           <div className="flex items-center">
-            <ChartPie className="h-5 w-5 mr-2 text-blue-600" />
-            <h2 className="text-lg font-semibold">Resumo Financeiro</h2>
+            <Globe className="h-5 w-5 mr-2 text-blue-600" />
+            <h2 className="text-lg font-semibold">MegaBill</h2>
           </div>
           <div>
             <TimeFilter 
@@ -95,7 +95,7 @@ export const DashboardContent: React.FC<DashboardContentProps> = ({
           </div>
         </div>
         
-        <SummarySectionContent 
+        <SummarySection
           spendSummaryData={spendSummaryData}
           providerDistributionData={providerDistributionData}
           categoryDistributionData={categoryDistributionData}
@@ -129,56 +129,6 @@ export const DashboardContent: React.FC<DashboardContentProps> = ({
           regionHeatmapData={regionHeatmapData}
           currency={currency}
         />
-      </div>
-    </div>
-  );
-};
-
-const SummarySectionContent: React.FC<SummarySectionProps> = ({ 
-  spendSummaryData, 
-  providerDistributionData,
-  categoryDistributionData, 
-  anomaliesData, 
-  savingsOpportunitiesData 
-}) => {
-  return (
-    <div className="space-y-4 mb-6">      
-      <div className="w-full">
-        <SpendSummaryCard 
-          totalSpend={spendSummaryData.totalSpend}
-          currency={spendSummaryData.currency}
-          previousPeriodChange={spendSummaryData.previousPeriodChange}
-          sparklineData={spendSummaryData.sparklineData}
-          providerBreakdown={spendSummaryData.providerBreakdown}
-          wastedSpend={spendSummaryData.wastedSpend}
-          budgetLimit={spendSummaryData.budgetLimit}
-          budgetConsumed={spendSummaryData.budgetConsumed}
-          savingsRealized={spendSummaryData.savingsRealized}
-        />
-      </div>
-      
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <div className="col-span-1">
-          <CategoryDistributionCard 
-            data={categoryDistributionData}
-            currency="R$"
-          />
-        </div>
-        
-        <div className="col-span-1">
-          <AnomaliesCard 
-            anomalies={anomaliesData}
-            currency="R$"
-          />
-        </div>
-
-        <div className="col-span-1">
-          <SavingsOpportunitiesCard 
-            opportunities={savingsOpportunitiesData.opportunities}
-            totalPotentialSavings={savingsOpportunitiesData.totalPotentialSavings}
-            currency={savingsOpportunitiesData.currency}
-          />
-        </div>
       </div>
     </div>
   );

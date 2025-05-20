@@ -16,7 +16,27 @@ import {
   useSidebar,
 } from '../ui/sidebar';
 import { ThemeToggle } from '@/components/theme/ThemeToggle';
-import { Bell, Settings, User, LayoutDashboard, PieChart, BarChart3, LineChart, Activity, Sun, Moon } from 'lucide-react';
+import { 
+  Bell, 
+  Settings, 
+  User, 
+  LayoutDashboard, 
+  Tags, 
+  DollarSign, 
+  LineChart, 
+  Clock, 
+  LayoutGrid, 
+  Database,
+  ShieldCheck, 
+  CalendarCheck, 
+  ClipboardList, 
+  AlertTriangle, 
+  FileText, 
+  GanttChart, 
+  Sun, 
+  Globe, 
+  Moon 
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useTheme } from '@/hooks/useTheme';
 import { cn } from '@/lib/utils';
@@ -97,23 +117,45 @@ export default function Dashboard() {
     currency
   } = useDashboardData();
 
-  const navItems = [
-    { name: 'Visão Geral', href: '/', active: true, icon: <LayoutDashboard className="h-5 w-5" /> },
-    { name: 'Análise', href: '/analise', icon: <PieChart className="h-5 w-5" /> },
-    { name: 'Alocação', href: '/alocacao', icon: <BarChart3 className="h-5 w-5" /> },
-    { name: 'Recomendações', href: '/recomendacoes', icon: <LineChart className="h-5 w-5" /> },
-    { name: 'Integrações', href: '/integracoes', icon: <Activity className="h-5 w-5" /> }
+  // Seções da barra lateral
+  
+  // Seção Inform
+  const informItems = [
+    { name: 'MegaBill', href: '/', icon: <Globe className="h-5 w-5" /> },
+    { name: 'Virtual Tags', href: '/tags', icon: <Tags className="h-5 w-5" /> },
+    { name: 'Dashboards', href: '/dashboards', icon: <LayoutDashboard className="h-5 w-5" /> },
+    { name: 'Budgets', href: '/budgets', icon: <LineChart className="h-5 w-5" /> },
+    { name: 'Financial Plans', href: '/plans', icon: <Clock className="h-5 w-5" /> },
+    { name: 'Resources', href: '/resources', icon: <LayoutGrid className="h-5 w-5" /> },
+    { name: 'Data Explorer', href: '/explorer', icon: <Database className="h-5 w-5" /> }
+  ];
+
+  // Seção Optimize
+  const optimizeItems = [
+    { name: 'CostGuard', href: '/costguard', icon: <ShieldCheck className="h-5 w-5" /> },
+    { name: 'My Commitments', href: '/my-commitments', icon: <CalendarCheck className="h-5 w-5" /> },
+    { name: 'Commitments Log', href: '/commitments-log', icon: <ClipboardList className="h-5 w-5" /> },
+    { name: 'Anomalies', href: '/anomalies', icon: <AlertTriangle className="h-5 w-5" /> }
+  ];
+
+  // Seção Operate
+  const operateItems = [
+    { name: 'Reports', href: '/reports', icon: <FileText className="h-5 w-5" /> },
+    { name: 'Governance', href: '/governance', icon: <GanttChart className="h-5 w-5" />, badge: 'New' }
   ];
   
   // Estado atual da barra lateral
   const SidebarLogo = () => {
     const { state } = useSidebar();
     return (
-      <div className="flex items-center justify-center h-5">
-        {/* Logo X estilizado - centralizado com melhor precisão */}
-        <div className="w-5 h-5 flex items-center justify-center">
-          <div className="absolute w-[2.5px] h-[18px] bg-blue-500 transform rotate-45"></div>
-          <div className="absolute w-[2.5px] h-[18px] bg-blue-500 transform -rotate-45"></div>
+      <div className={cn(
+        "flex items-center h-8 w-full",
+        state !== "collapsed" ? "justify-center" : "justify-center"
+      )}>
+        {/* Logo X estilizado para se parecer com uma marca e não um botão de fechar */}
+        <div className="relative w-6 h-6 flex items-center justify-center bg-blue-500 rounded-sm">
+          <div className="absolute w-[2.5px] h-[14px] bg-white transform rotate-45"></div>
+          <div className="absolute w-[2.5px] h-[14px] bg-white transform -rotate-45"></div>
         </div>
         {state !== "collapsed" && (
           <span className="text-xl font-bold bg-gradient-to-r from-blue-500 to-indigo-600 text-transparent bg-clip-text whitespace-nowrap ml-2">
@@ -129,20 +171,65 @@ export default function Dashboard() {
       <div className="min-h-screen flex flex-row w-full overflow-hidden">
         <Sidebar variant="sidebar" collapsible="icon">
           <SidebarHeader className="border-b border-sidebar-border">
-            <div className="flex items-center px-2 py-2 justify-between">
+            <div className="flex items-center px-2 py-3 justify-between">
               <SidebarLogo />
-              <SidebarToggleButton />
+              <SidebarToggleButton className="hover:bg-gray-200 dark:hover:bg-slate-700 p-1.5 rounded-md" />
             </div>
           </SidebarHeader>
           
           <SidebarContent>
+            {/* Seção Inform */}
             <SidebarGroup>
+              <div className="px-3 py-1.5 text-xs font-semibold text-muted-foreground group-data-[collapsible=icon]:hidden">
+                Inform
+              </div>
               <SidebarMenu>
-                {navItems.map((item) => (
+                {informItems.map((item) => (
                   <SidebarMenuItem key={item.name}>
-                    <SidebarMenuButton isActive={item.active} tooltip={item.name}>
+                    <SidebarMenuButton tooltip={item.name}>
                       {item.icon}
                       <span className="group-data-[collapsible=icon]:hidden">{item.name}</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroup>
+
+            {/* Seção Optimize */}
+            <SidebarGroup>
+              <div className="px-3 py-1.5 text-xs font-semibold text-muted-foreground group-data-[collapsible=icon]:hidden">
+                Optimize
+              </div>
+              <SidebarMenu>
+                {optimizeItems.map((item) => (
+                  <SidebarMenuItem key={item.name}>
+                    <SidebarMenuButton tooltip={item.name}>
+                      {item.icon}
+                      <span className="group-data-[collapsible=icon]:hidden">{item.name}</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroup>
+
+            {/* Seção Operate */}
+            <SidebarGroup>
+              <div className="px-3 py-1.5 text-xs font-semibold text-muted-foreground group-data-[collapsible=icon]:hidden">
+                Operate
+              </div>
+              <SidebarMenu>
+                {operateItems.map((item) => (
+                  <SidebarMenuItem key={item.name}>
+                    <SidebarMenuButton tooltip={item.name}>
+                      {item.icon}
+                      <span className="group-data-[collapsible=icon]:hidden">
+                        {item.name}
+                        {item.badge && (
+                          <span className="ml-2 text-xs bg-white text-black px-1.5 py-0.5 rounded-full">
+                            {item.badge}
+                          </span>
+                        )}
+                      </span>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 ))}
@@ -155,7 +242,7 @@ export default function Dashboard() {
               <SidebarMenuItem>
                 <SidebarMenuButton tooltip="Mudar tema" onClick={toggleTheme}>
                   {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-                  <span className="group-data-[collapsible=icon]:hidden">Alterar tema</span>
+                  <span className="group-data-[collapsible=icon]:hidden">{isDark ? 'Modo Claro' : 'Modo Escuro'}</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
               
@@ -253,9 +340,9 @@ export default function Dashboard() {
               <SidebarMenuItem>
                 <DropdownMenu open={userMenuOpen} onOpenChange={setUserMenuOpen}>
                   <DropdownMenuTrigger asChild>
-                    <SidebarMenuButton tooltip="Minha conta">
+                    <SidebarMenuButton tooltip="Minha Conta">
                       <User className="h-5 w-5" />
-                      <span className="group-data-[collapsible=icon]:hidden">Minha conta</span>
+                      <span className="group-data-[collapsible=icon]:hidden">Minha Conta</span>
                     </SidebarMenuButton>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="w-48">

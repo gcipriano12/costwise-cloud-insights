@@ -1,32 +1,26 @@
 import React from 'react';
-import { Button } from "@/components/ui/button";
-import { ChevronLeft } from "lucide-react";
-import { useSidebar } from "@/components/ui/sidebar";
+import { Button } from '@/components/ui/button';
+import { ChevronRight } from 'lucide-react';
+import { useSidebar } from '@/components/ui/sidebar';
 import { cn } from '@/lib/utils';
 
 export const SidebarToggleButton: React.FC<React.ComponentProps<typeof Button>> = ({ className, ...props }) => {
   const { state, toggleSidebar } = useSidebar();
-  const isCollapsed = state === "collapsed";
-
+  
   return (
     <Button
       variant="ghost"
       size="icon"
+      onClick={toggleSidebar}
+      aria-label={state === "collapsed" ? "Expandir barra lateral" : "Recolher barra lateral"}
       className={cn(
-        "h-6 w-6 rounded-full p-0 hover:bg-slate-800/40",
+        "p-2 rounded-md w-8 h-8 flex items-center justify-center transition-all", 
+        state === "collapsed" ? "rotate-0" : "rotate-180",
         className
       )}
-      onClick={toggleSidebar}
-      aria-label={isCollapsed ? "Expandir barra lateral" : "Recolher barra lateral"}
-      title={isCollapsed ? "Expandir barra lateral" : "Recolher barra lateral"}
       {...props}
     >
-      <ChevronLeft 
-        className={cn(
-          "h-4 w-4 transition-transform duration-200", 
-          isCollapsed ? "rotate-180" : ""
-        )} 
-      />
+      <ChevronRight className="h-5 w-5" />
     </Button>
   );
 };
