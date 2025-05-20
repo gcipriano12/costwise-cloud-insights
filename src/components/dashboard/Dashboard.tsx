@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { ChatBot } from '../chat/ChatBot';
 import { DashboardContent } from './DashboardContent';
@@ -95,6 +96,7 @@ export default function Dashboard() {
     ));
   };
   
+  // Obter os dados do dashboard
   const {
     timeFilter,
     setTimeFilter,
@@ -149,7 +151,6 @@ export default function Dashboard() {
     const { state } = useSidebar();
     return (
       <div className="flex items-center justify-center h-8 w-full">
-        {/* Logo X estilizado para se parecer com uma marca e não um botão de fechar */}
         <div className="relative w-6 h-6 flex items-center justify-center bg-blue-500 rounded-sm">
           <div className="absolute w-[2.5px] h-[14px] bg-white transform rotate-45"></div>
           <div className="absolute w-[2.5px] h-[14px] bg-white transform -rotate-45"></div>
@@ -375,8 +376,8 @@ export default function Dashboard() {
           </SidebarFooter>
         </Sidebar>
         
-        {/* Conteúdo principal */}
-        <div className="flex-1 flex flex-col w-full overflow-hidden relative pl-[3.5rem] md:pl-0">
+        {/* Conteúdo principal - ajustado para remover o padding lateral em dispositivos móveis */}
+        <div className="flex-1 flex flex-col w-full overflow-hidden relative">
           <main className="flex-1 bg-gray-50 dark:bg-gray-900 w-full overflow-auto">
             <DashboardContent
               timeFilter={timeFilter}

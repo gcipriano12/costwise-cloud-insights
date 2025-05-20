@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react"
 
 export function useIsMobile() {
@@ -6,7 +7,7 @@ export function useIsMobile() {
   useEffect(() => {
     // Função para verificar se é mobile baseado no tamanho da tela
     const checkIsMobile = () => {
-      setIsMobile(window.innerWidth < 768)
+      setIsMobile(window.innerWidth <= 768)
     }
     
     // Verificar inicialmente
