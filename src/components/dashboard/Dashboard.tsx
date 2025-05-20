@@ -42,7 +42,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
   // Add necessary state and data
   const [timeFilter, setTimeFilter] = useState('30d');
   
-  // Use the hook to get dashboard data
+  // Use the hook to get dashboard data - fix by not passing any arguments
   const {
     spendSummaryData,
     providerDistributionData,
@@ -61,7 +61,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
     newServicesData,
     regionHeatmapData,
     currency
-  } = useDashboardData(timeFilter);
+  } = useDashboardData();
 
   return (
     <SidebarProvider defaultOpen={true}>
@@ -114,6 +114,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
               onChange={(value) => setTimeFilter(value)} 
             />
           </div>
+          {/* Remove the Outlet as a child of DashboardContent */}
           <DashboardContent
             timeFilter={timeFilter}
             onTimeFilterChange={(value) => setTimeFilter(value)}
@@ -134,9 +135,8 @@ const Dashboard: React.FC<DashboardProps> = () => {
             newServicesData={newServicesData}
             regionHeatmapData={regionHeatmapData}
             currency={currency}
-          >
-            <Outlet />
-          </DashboardContent>
+          />
+          <Outlet />
         </div>
       </div>
     </SidebarProvider>
