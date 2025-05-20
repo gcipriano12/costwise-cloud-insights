@@ -11,8 +11,8 @@ export const SidebarLogo = () => {
   
   return (
     <div className={cn(
-      "flex items-center h-8 w-full",
-      isMobile ? "justify-center" : "justify-center"
+      "flex items-center w-full",
+      isMobile ? "h-3 justify-center" : "h-5 justify-center"
     )}>
       <div className={cn(
         "relative flex items-center justify-center bg-blue-500 rounded-sm",

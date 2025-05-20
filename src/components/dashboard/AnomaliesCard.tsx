@@ -5,6 +5,7 @@ import { AlertTriangle, ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-r
 import { Badge } from '@/components/ui/badge';
 import { useTheme } from '@/hooks/useTheme';
 import { cn } from '@/lib/utils';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface Anomaly {
   id: string;
@@ -22,6 +23,7 @@ interface AnomaliesCardProps {
 export function AnomaliesCard({ anomalies, currency }: AnomaliesCardProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const { isDark } = useTheme();
+  const isMobile = useIsMobile();
   
   const formatCurrency = (value: number) => {
     if (value >= 1000000) {
@@ -92,12 +94,12 @@ export function AnomaliesCard({ anomalies, currency }: AnomaliesCardProps) {
     <Card className="h-full flex flex-col">
       <CardHeader className="pb-1 flex-shrink-0">
         <div className="flex items-center justify-between">
-          <CardTitle className="flex items-center text-lg font-medium">
+          <CardTitle className="flex items-center text-lg font-medium whitespace-nowrap">
             <AlertTriangle className="mr-2 h-5 w-5 text-amber-500" />
-            Anomalias Detectadas
+            {isMobile ? 'Anomalias' : 'Anomalias Detectadas'}
           </CardTitle>
           <div className="text-sm font-medium text-muted-foreground">
-            {anomalies.length} anomalias
+            <span className="text-xl font-bold text-amber-500">{anomalies.length}</span> anomalias
           </div>
         </div>
       </CardHeader>

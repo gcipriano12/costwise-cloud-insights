@@ -13,8 +13,11 @@ import { SidebarNotifications } from './SidebarNotifications';
 import { SidebarSettings } from './SidebarSettings';
 import { SidebarUserMenu } from './SidebarUserMenu';
 import { SidebarThemeToggle } from './SidebarThemeToggle';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { cn } from '@/lib/utils';
 
 export const DashboardSidebar = () => {
+  const isMobile = useIsMobile();
   return (
     <Sidebar variant="sidebar" collapsible="icon">
       <SidebarHeader className="border-b border-sidebar-border relative">
@@ -23,7 +26,10 @@ export const DashboardSidebar = () => {
         </div>
         
         {/* Posicionamento do botão na linha divisória - visível em todas as telas */}
-        <div className="absolute right-[-14px] bottom-0 translate-y-[50%] z-50">
+        <div className={cn(
+          "absolute bottom-0 translate-y-[50%] z-50",
+          isMobile ? "right-[-23px]" : "right-[-14px]"
+        )}>
           <SidebarToggleButton />
         </div>
       </SidebarHeader>
@@ -36,7 +42,6 @@ export const DashboardSidebar = () => {
         <SidebarMenu>
           <SidebarThemeToggle />
           <SidebarNotifications />
-          <SidebarSettings />
           <SidebarUserMenu />
         </SidebarMenu>
       </SidebarFooter>

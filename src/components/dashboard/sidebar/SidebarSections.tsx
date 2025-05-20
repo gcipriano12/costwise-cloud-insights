@@ -20,6 +20,7 @@ import {
   GanttChart, 
 } from 'lucide-react';
 import { SidebarMenuItemMobile } from './SidebarMenuItemMobile';
+import { cn } from '@/lib/utils';
 
 export const SidebarSections = () => {
   const { state, isMobile, openMobile } = useSidebar();
@@ -56,8 +57,8 @@ export const SidebarSections = () => {
   return (
     <>
       {/* Seção Inform */}
-      <SidebarGroup>
-        <div className={`px-3 py-1.5 text-xs font-semibold text-muted-foreground ${showText ? "" : "hidden"}`}>
+      <SidebarGroup className={cn(isMobile && openMobile && 'mobile-expanded-group-spacing')}>
+        <div className={`px-3 py-1.5 text-xs font-semibold text-[#0080af] ${showText ? "" : "hidden"}`}>
           Inform
         </div>
         <SidebarMenu>
@@ -68,8 +69,8 @@ export const SidebarSections = () => {
       </SidebarGroup>
 
       {/* Seção Optimize */}
-      <SidebarGroup>
-        <div className={`px-3 py-1.5 text-xs font-semibold text-muted-foreground ${showText ? "" : "hidden"}`}>
+      <SidebarGroup className={cn(isMobile && openMobile && 'mobile-expanded-group-spacing')}>
+        <div className={`px-3 py-1.5 text-xs font-semibold text-[#bd3bfd] ${showText ? "" : "hidden"}`}>
           Optimize
         </div>
         <SidebarMenu>
@@ -80,8 +81,8 @@ export const SidebarSections = () => {
       </SidebarGroup>
 
       {/* Seção Operate */}
-      <SidebarGroup>
-        <div className={`px-3 py-1.5 text-xs font-semibold text-muted-foreground ${showText ? "" : "hidden"}`}>
+      <SidebarGroup className={cn(isMobile && openMobile && 'mobile-expanded-group-spacing')}>
+        <div className={`px-3 py-1.5 text-xs font-semibold text-[#00c693] ${showText ? "" : "hidden"}`}>
           Operate
         </div>
         <SidebarMenu>

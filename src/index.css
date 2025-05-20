@@ -137,3 +137,19 @@
     @apply transition-colors duration-200;
   }
 }
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Existing code */
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+.mobile-expanded-group-spacing {
+  padding-top: 0.125rem; /* equivalente a p-0.5 */
+  padding-bottom: 0.125rem; /* equivalente a p-0.5 */
+  /* Manter padding horizontal padrão de p-1.5 */
+  padding-left: 0.375rem;
+  padding-right: 0.375rem;
+}

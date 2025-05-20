@@ -106,7 +106,7 @@ export function SavingsOpportunitiesCard({
             <Lightbulb className={cn("mr-2 h-5 w-5", isDark ? "text-green-400" : "text-XCost-green")} />
             {isMobile ? "Oportunidades" : "Oportunidades de Economia"}
           </CardTitle>
-          <div className={`${isMobile ? 'text-lg' : 'text-xl'} font-bold ${headerTextColorClass}`}>
+          <div className={`whitespace-nowrap ${isMobile ? 'text-lg' : 'text-xl'} font-bold ${headerTextColorClass}`}>
             {formatCurrency(totalPotentialSavings)}
           </div>
         </div>
