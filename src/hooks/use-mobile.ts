@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react"
 
 export function useIsMobile() {
@@ -13,12 +12,21 @@ export function useIsMobile() {
     // Verificar inicialmente
     checkIsMobile()
     
-    // Adicionar listener para redimensionamento
+    // Adicionar listeners para redimensionamento e mudança de orientação
     window.addEventListener("resize", checkIsMobile)
+    window.addEventListener("orientationchange", checkIsMobile)
     
-    // Limpar listener quando componente desmontar
+    // Verificar também após um pequeno atraso para garantir a interpretação correta
+    // após mudanças de orientação
+    const orientationTimer = setTimeout(() => {
+      checkIsMobile()
+    }, 300)
+    
+    // Limpar listeners quando componente desmontar
     return () => {
       window.removeEventListener("resize", checkIsMobile)
+      window.removeEventListener("orientationchange", checkIsMobile)
+      clearTimeout(orientationTimer)
     }
   }, [])
 

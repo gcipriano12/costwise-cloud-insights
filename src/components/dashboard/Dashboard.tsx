@@ -148,10 +148,7 @@ export default function Dashboard() {
   const SidebarLogo = () => {
     const { state } = useSidebar();
     return (
-      <div className={cn(
-        "flex items-center h-8 w-full",
-        state !== "collapsed" ? "justify-center" : "justify-center"
-      )}>
+      <div className="flex items-center justify-center h-8 w-full">
         {/* Logo X estilizado para se parecer com uma marca e não um botão de fechar */}
         <div className="relative w-6 h-6 flex items-center justify-center bg-blue-500 rounded-sm">
           <div className="absolute w-[2.5px] h-[14px] bg-white transform rotate-45"></div>
@@ -165,19 +162,58 @@ export default function Dashboard() {
       </div>
     );
   };
+
+  // Criar componente de item da Sidebar que fecha o menu mobile quando clicado
+  const SidebarMenuItemMobile = ({ item, onClick = null }) => {
+    const { isMobile, setOpenMobile } = useSidebar();
+    
+    const handleClick = () => {
+      // Em dispositivos móveis, fechar a sidebar quando um item é clicado
+      if (isMobile) {
+        setOpenMobile(false);
+      }
+      // Chamar o onClick personalizado se fornecido
+      if (onClick) onClick();
+    };
+    
+    return (
+      <SidebarMenuItem key={item.name}>
+        <SidebarMenuButton tooltip={item.name} onClick={handleClick}>
+          {item.icon}
+          <span className="group-data-[collapsible=icon]:hidden">
+            {item.name}
+            {item.badge && (
+              <span className="ml-2 text-xs bg-white text-black px-1.5 py-0.5 rounded-full">
+                {item.badge}
+              </span>
+            )}
+          </span>
+        </SidebarMenuButton>
+      </SidebarMenuItem>
+    );
+  };
   
   return (
     <SidebarProvider defaultOpen={true}>
       <div className="min-h-screen flex flex-row w-full overflow-hidden">
         <Sidebar variant="sidebar" collapsible="icon">
-          <SidebarHeader className="border-b border-sidebar-border">
-            <div className="flex items-center px-2 py-3 justify-between">
+          <SidebarHeader className="border-b border-sidebar-border relative">
+            <div className="flex flex-col items-center py-3">
               <SidebarLogo />
-              <SidebarToggleButton className="hover:bg-gray-200 dark:hover:bg-slate-700 p-1.5 rounded-md" />
+            </div>
+            
+            {/* Posicionamento do botão na linha divisória - visível apenas em desktop */}
+            <div className="absolute right-[-14px] bottom-0 translate-y-[50%] z-50 hidden md:block">
+              <SidebarToggleButton />
             </div>
           </SidebarHeader>
           
-          <SidebarContent>
+          <SidebarContent className="py-2">
+            {/* Botão de toggle em mobile - posicionado dentro do conteúdo para melhor visibilidade */}
+            <div className="md:hidden px-3 py-2 mb-2 border-b border-sidebar-border">
+              <SidebarToggleButton className="w-full justify-start rounded-md" />
+            </div>
+            
             {/* Seção Inform */}
             <SidebarGroup>
               <div className="px-3 py-1.5 text-xs font-semibold text-muted-foreground group-data-[collapsible=icon]:hidden">
@@ -185,12 +221,7 @@ export default function Dashboard() {
               </div>
               <SidebarMenu>
                 {informItems.map((item) => (
-                  <SidebarMenuItem key={item.name}>
-                    <SidebarMenuButton tooltip={item.name}>
-                      {item.icon}
-                      <span className="group-data-[collapsible=icon]:hidden">{item.name}</span>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
+                  <SidebarMenuItemMobile key={item.name} item={item} />
                 ))}
               </SidebarMenu>
             </SidebarGroup>
@@ -202,12 +233,7 @@ export default function Dashboard() {
               </div>
               <SidebarMenu>
                 {optimizeItems.map((item) => (
-                  <SidebarMenuItem key={item.name}>
-                    <SidebarMenuButton tooltip={item.name}>
-                      {item.icon}
-                      <span className="group-data-[collapsible=icon]:hidden">{item.name}</span>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
+                  <SidebarMenuItemMobile key={item.name} item={item} />
                 ))}
               </SidebarMenu>
             </SidebarGroup>
@@ -219,19 +245,7 @@ export default function Dashboard() {
               </div>
               <SidebarMenu>
                 {operateItems.map((item) => (
-                  <SidebarMenuItem key={item.name}>
-                    <SidebarMenuButton tooltip={item.name}>
-                      {item.icon}
-                      <span className="group-data-[collapsible=icon]:hidden">
-                        {item.name}
-                        {item.badge && (
-                          <span className="ml-2 text-xs bg-white text-black px-1.5 py-0.5 rounded-full">
-                            {item.badge}
-                          </span>
-                        )}
-                      </span>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
+                  <SidebarMenuItemMobile key={item.name} item={item} />
                 ))}
               </SidebarMenu>
             </SidebarGroup>
@@ -239,12 +253,13 @@ export default function Dashboard() {
           
           <SidebarFooter className="border-t border-sidebar-border mt-auto">
             <SidebarMenu>
-              <SidebarMenuItem>
-                <SidebarMenuButton tooltip="Mudar tema" onClick={toggleTheme}>
-                  {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-                  <span className="group-data-[collapsible=icon]:hidden">{isDark ? 'Modo Claro' : 'Modo Escuro'}</span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
+              <SidebarMenuItemMobile 
+                item={{
+                  name: isDark ? 'Modo Claro' : 'Modo Escuro',
+                  icon: isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />
+                }}
+                onClick={toggleTheme}
+              />
               
               <SidebarMenuItem>
                 <Popover open={notificationsOpen} onOpenChange={setNotificationsOpen}>
@@ -253,7 +268,7 @@ export default function Dashboard() {
                       <Bell className="h-5 w-5" />
                       <span className="group-data-[collapsible=icon]:hidden">Notificações</span>
                       {unreadCount > 0 && (
-                        <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
+                        <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full group-data-[collapsible=icon]:right-[unset] group-data-[collapsible=icon]:top-0 group-data-[collapsible=icon]:translate-x-1.5"></span>
                       )}
                     </SidebarMenuButton>
                   </PopoverTrigger>
@@ -360,7 +375,8 @@ export default function Dashboard() {
           </SidebarFooter>
         </Sidebar>
         
-        <div className="flex-1 flex flex-col w-full overflow-hidden">
+        {/* Conteúdo principal */}
+        <div className="flex-1 flex flex-col w-full overflow-hidden relative pl-[3.5rem] md:pl-0">
           <main className="flex-1 bg-gray-50 dark:bg-gray-900 w-full overflow-auto">
             <DashboardContent
               timeFilter={timeFilter}

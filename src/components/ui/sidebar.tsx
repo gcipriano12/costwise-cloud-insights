@@ -21,7 +21,7 @@ const SIDEBAR_COOKIE_NAME = "sidebar:state"
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
 const SIDEBAR_WIDTH = "14rem"
 const SIDEBAR_WIDTH_MOBILE = "16rem"
-const SIDEBAR_WIDTH_ICON = "2.5rem"
+const SIDEBAR_WIDTH_ICON = "3.5rem"
 const SIDEBAR_KEYBOARD_SHORTCUT = "b"
 
 type SidebarContext = {
@@ -89,10 +89,14 @@ const SidebarProvider = React.forwardRef<
 
     // Helper to toggle the sidebar.
     const toggleSidebar = React.useCallback(() => {
-      return isMobile
-        ? setOpenMobile((open) => !open)
-        : setOpen((open) => !open)
-    }, [isMobile, setOpen, setOpenMobile])
+      if (isMobile) {
+        // Em dispositivos móveis, diretamente controlamos openMobile
+        setOpenMobile(prev => !prev);
+      } else {
+        // Em desktop, controlamos o estado open normal
+        setOpen(prev => !prev);
+      }
+    }, [isMobile, setOpen, setOpenMobile]);
 
     // Adds a keyboard shortcut to toggle the sidebar.
     React.useEffect(() => {
@@ -192,21 +196,45 @@ const Sidebar = React.forwardRef<
 
     if (isMobile) {
       return (
-        <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
-          <SheetContent
-            data-sidebar="sidebar"
-            data-mobile="true"
-            className="w-[--sidebar-width] bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden"
-            style={
-              {
-                "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
-              } as React.CSSProperties
-            }
-            side={side}
+        <>
+          {/* Sidebar de ícones sempre visível em dispositivos móveis */}
+          <div
+            className="fixed left-0 top-0 bottom-0 z-10 w-[--sidebar-width-icon] bg-sidebar border-r border-sidebar-border"
+            style={{
+              width: SIDEBAR_WIDTH_ICON,
+            }}
           >
-            <div className="flex h-full w-full flex-col">{children}</div>
-          </SheetContent>
-        </Sheet>
+            <div className="flex h-full w-full flex-col py-3">
+              {/* Parte da sidebar que sempre será exibida, mesmo em modo ícones */}
+              {React.Children.map(children, (child) => {
+                // Clonar apenas os elementos que queremos exibir no modo ícone
+                if (React.isValidElement(child) && child.props['data-sidebar'] !== 'header') {
+                  return React.cloneElement(child as React.ReactElement<any>, {
+                    'data-mobile-icons': true as any,
+                  });
+                }
+                return child;
+              })}
+            </div>
+          </div>
+          
+          {/* Conteúdo expandido da sidebar em dispositivos móveis */}
+          <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
+            <SheetContent
+              data-sidebar="sidebar"
+              data-mobile="true"
+              className="w-[85%] max-w-[300px] mt-0 pt-0 bg-sidebar p-0 text-sidebar-foreground [&>button]:block"
+              style={{
+                "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
+              } as React.CSSProperties}
+              side={side}
+            >
+              <div className="flex h-full w-full flex-col">
+                {children}
+              </div>
+            </SheetContent>
+          </Sheet>
+        </>
       )
     }
 
@@ -419,7 +447,7 @@ const SidebarGroup = React.forwardRef<
     <div
       ref={ref}
       data-sidebar="group"
-      className={cn("relative flex w-full min-w-0 flex-col p-1.5", className)}
+      className={cn("relative flex w-full min-w-0 flex-col p-1.5 group-data-[collapsible=icon]:items-center", className)}
       {...props}
     />
   )
@@ -490,7 +518,7 @@ const SidebarMenu = React.forwardRef<
   <ul
     ref={ref}
     data-sidebar="menu"
-    className={cn("flex w-full min-w-0 flex-col gap-0.5", className)}
+    className={cn("flex w-full min-w-0 flex-col gap-0.5 group-data-[collapsible=icon]:items-center", className)}
     {...props}
   />
 ))
@@ -503,14 +531,18 @@ const SidebarMenuItem = React.forwardRef<
   <li
     ref={ref}
     data-sidebar="menu-item"
-    className={cn("group/menu-item relative", className)}
+    className={cn(
+      "group/menu-item relative group-data-[collapsible=icon]:flex group-data-[collapsible=icon]:justify-center", 
+      "[&[data-mobile-icons]]:flex [&[data-mobile-icons]]:justify-center [&[data-mobile-icons]]:items-center",
+      className
+    )}
     {...props}
   />
 ))
 SidebarMenuItem.displayName = "SidebarMenuItem"
 
 const sidebarMenuButtonVariants = cva(
-  "peer/menu-button flex w-full items-center gap-1.5 overflow-hidden rounded-md p-1.5 text-left text-sm outline-none ring-sidebar-ring transition-[width,height,padding] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-1.5 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0",
+  "peer/menu-button flex w-full items-center gap-1.5 overflow-hidden rounded-md p-1.5 text-left text-sm outline-none ring-sidebar-ring transition-[width,height,padding] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-1.5 group-data-[collapsible=icon]:flex-col group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:mx-auto group-data-[collapsible=icon]:w-8 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 [&[data-mobile-icons]]:!size-8 [&[data-mobile-icons]]:!p-1.5 [&[data-mobile-icons]]:flex-col [&[data-mobile-icons]]:justify-center [&[data-mobile-icons]]:mx-auto [&[data-mobile-icons]]:w-8",
   {
     variants: {
       variant: {
@@ -554,13 +586,20 @@ const SidebarMenuButton = React.forwardRef<
     const Comp = asChild ? Slot : "button"
     const { isMobile, state } = useSidebar()
 
+    // Verificar se este botão está dentro de um item que tem data-mobile-icons
+    const isMobileIconsParent = (props as any)['data-mobile-icons'] === true || 
+                               (props as any).parent?.getAttribute('data-mobile-icons') === 'true'
+
     const button = (
       <Comp
         ref={ref}
         data-sidebar="menu-button"
         data-size={size}
         data-active={isActive}
-        className={cn(sidebarMenuButtonVariants({ variant, size }), className)}
+        className={cn(
+          sidebarMenuButtonVariants({ variant, size }), 
+          className
+        )}
         {...props}
       />
     )
