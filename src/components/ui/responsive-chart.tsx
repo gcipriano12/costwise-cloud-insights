@@ -44,15 +44,23 @@ export function ResponsiveChart({
   }, [isMobile, isTablet]);
   
   // Fixed: Properly handle children for ResponsiveContainer
+  // ResponsiveContainer requires a valid React element as its child
+  const renderChart = () => {
+    if (React.isValidElement(children)) {
+      // If it's a valid element, we can clone it and pass props
+      return React.cloneElement(children, {
+        // Only pass fontSize prop if it's a chart component
+        ...(children.type.toString().includes('Chart') ? { fontSize } : {})
+      });
+    }
+    // If it's not a valid element, wrap it in a div
+    return <div>{children}</div>;
+  };
+  
   const chartContainer = (
     <div style={{ height: chartHeight, width: '100%' }} className={cn(className)}>
       <ResponsiveContainer width="100%" height="100%">
-        {React.isValidElement(children) ? 
-          React.cloneElement(children, {
-            // Only pass fontSize prop if it's a chart component
-            ...(children.type.toString().includes('Chart') ? { fontSize } : {})
-          })
-        : children}
+        {renderChart()}
       </ResponsiveContainer>
     </div>
   );
