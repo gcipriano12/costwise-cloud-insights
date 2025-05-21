@@ -1,0 +1,15 @@
+
+{
+  "common": {
+    "megabill": "MegaBill",
+    "virtualTags": "Tags Virtuais",
+    "dashboard": "Painel de Controle",
+    "costGuard": "Guardião de Custos",
+    "anomalies": "Anomalias"
+  },
+  "categories": {
+    "inform": "Informar",
+    "optimize": "Otimizar",
+    "operate": "Operar"
+  }
+}
