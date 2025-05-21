@@ -83,20 +83,7 @@ export const DashboardContent: React.FC<DashboardContentProps> = ({
       "pb-12 transition-colors duration-200 w-full h-full flex-1",
       isDark ? "bg-slate-950" : "bg-gray-50"
     )}>
-      <div className="w-full px-2 sm:px-4">
-        <div className="flex items-center justify-between mb-4 pt-4">
-          <div className="flex items-center">
-            <Globe className={`${isMobile ? 'h-4 w-4' : 'h-5 w-5'} mr-2 text-blue-600`} />
-            <h2 className={`${isMobile ? 'text-base' : 'text-lg'} font-semibold`}>MegaBill</h2>
-          </div>
-          <div>
-            <TimeFilter 
-              value={timeFilter}
-              onChange={onTimeFilterChange}
-            />
-          </div>
-        </div>
-        
+      <div className="w-full">
         <SummarySection
           spendSummaryData={spendSummaryData}
           providerDistributionData={providerDistributionData}

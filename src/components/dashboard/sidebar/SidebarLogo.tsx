@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSidebar } from '@/components/ui/sidebar';
 import { cn } from '@/lib/utils';
+import { Link } from 'react-router-dom';
 
 export const SidebarLogo = () => {
   const { state, isMobile, openMobile } = useSidebar();
@@ -10,10 +11,7 @@ export const SidebarLogo = () => {
   const showText = (isMobile && openMobile) || (!isMobile && state !== "collapsed");
   
   return (
-    <div className={cn(
-      "flex items-center w-full",
-      isMobile ? "h-3 justify-center" : "h-5 justify-center"
-    )}>
+    <Link to="/" className="flex items-center w-full justify-center cursor-pointer">
       <div className={cn(
         "relative flex items-center justify-center bg-blue-500 rounded-sm",
         isMobile ? "w-5 h-5" : "w-6 h-6"
@@ -32,6 +30,6 @@ export const SidebarLogo = () => {
           Cost
         </span>
       )}
-    </div>
+    </Link>
   );
 };

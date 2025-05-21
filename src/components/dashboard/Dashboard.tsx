@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { ChatBot } from '../chat/ChatBot';
 import { DashboardContent } from './DashboardContent';
@@ -6,6 +5,8 @@ import { useDashboardData } from '../../hooks/useDashboardData';
 import { SidebarProvider } from '@/components/ui/sidebar';
 import { DashboardSidebar } from './sidebar/DashboardSidebar';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useTheme } from '@/hooks/useTheme';
+import { cn } from '@/lib/utils';
 
 interface DashboardProps {
   children?: React.ReactNode;
@@ -13,6 +14,7 @@ interface DashboardProps {
 
 export default function Dashboard({ children }: DashboardProps) {
   const isMobile = useIsMobile();
+  const { isDark } = useTheme();
   
   // Obter os dados do dashboard
   const {
@@ -44,8 +46,13 @@ export default function Dashboard({ children }: DashboardProps) {
         
         {/* Conteúdo principal - adicionando margem esquerda para dispositivos móveis */}
         <div className={`flex-1 flex flex-col w-full overflow-hidden relative ${isMobile ? 'ml-[3.5rem]' : ''}`}>
-          <main className="flex-1 bg-gray-50 dark:bg-gray-900 w-full overflow-auto">
-            {children || (
+          <main className={cn(
+            "flex-1 w-full overflow-auto transition-colors duration-200",
+            isDark ? "bg-slate-950" : "bg-gray-50"
+          )}>
+            {children ? (
+              children
+            ) : (
               <DashboardContent
                 timeFilter={timeFilter}
                 onTimeFilterChange={setTimeFilter}

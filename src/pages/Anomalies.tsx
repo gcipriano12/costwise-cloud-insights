@@ -17,6 +17,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { format } from 'date-fns';
 import { AnomalyDetails } from "@/components/dashboard/anomalies/AnomalyDetails";
 import { useSearchParams } from 'react-router-dom';
+import { useDashboardData } from '@/hooks/useDashboardData';
 
 // Mock Anomaly Data
 interface Anomaly {
@@ -155,6 +156,7 @@ const formatCurrency = (value: number) => {
 
 const Anomalies = () => {
   const { isDark } = useTheme();
+  const { timeFilter, setTimeFilter } = useDashboardData();
   const [searchParams] = useSearchParams();
   const anomalyIdFromUrl = searchParams.get('id');
   const [selectedAnomaly, setSelectedAnomaly] = React.useState<Anomaly | null>(null); // Inicia como null para que o useEffect defina o inicial
@@ -191,6 +193,8 @@ const Anomalies = () => {
           title="Anomalies" 
           description="Detect and resolve unexpected cost patterns."
           color="text-amber-500"
+          timeFilter={timeFilter}
+          onTimeFilterChange={setTimeFilter}
         />
         
         <div className="p-4">

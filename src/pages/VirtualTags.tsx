@@ -13,6 +13,7 @@ import { Label } from '@/components/ui/label';
 import { Select } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
 import { useTheme } from '@/hooks/useTheme';
+import { useDashboardData } from '@/hooks/useDashboardData';
 
 // Mock data for Virtual Tags
 const mockTags = [
@@ -75,6 +76,7 @@ const mockTags = [
 
 const VirtualTags = () => {
   const { isDark } = useTheme();
+  const { timeFilter, setTimeFilter } = useDashboardData();
   const [open, setOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredTags, setFilteredTags] = useState(mockTags);
@@ -104,6 +106,8 @@ const VirtualTags = () => {
           title="Virtual Tags" 
           description="Create and manage virtual tags to organize and categorize resources."
           color="text-[#0080af]"
+          timeFilter={timeFilter}
+          onTimeFilterChange={setTimeFilter}
           actions={
             <Dialog open={open} onOpenChange={setOpen}>
               <DialogTrigger asChild>

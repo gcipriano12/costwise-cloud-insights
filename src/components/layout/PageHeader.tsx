@@ -14,6 +14,8 @@ interface PageHeaderProps {
   color?: string;
   showTimeFilter?: boolean;
   actions?: React.ReactNode;
+  timeFilter?: string;
+  onTimeFilterChange?: (value: string) => void;
 }
 
 export const PageHeader: React.FC<PageHeaderProps> = ({
@@ -22,7 +24,9 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
   description,
   color = 'text-blue-600',
   showTimeFilter = true,
-  actions
+  actions,
+  timeFilter = '30d',
+  onTimeFilterChange = () => {}
 }) => {
   const { isDark } = useTheme();
   const isMobile = useIsMobile();
@@ -50,8 +54,8 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
         <div className="flex items-center gap-2 self-end">
           {showTimeFilter && (
             <TimeFilter
-              value="last-30-days"
-              onChange={() => {}}
+              value={timeFilter}
+              onChange={onTimeFilterChange}
             />
           )}
           
