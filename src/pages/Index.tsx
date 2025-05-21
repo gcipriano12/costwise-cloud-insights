@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import Dashboard from '../components/dashboard/Dashboard';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { Globe } from 'lucide-react';
@@ -6,6 +7,7 @@ import { DashboardContent } from '@/components/dashboard/DashboardContent';
 import { useDashboardData } from '@/hooks/useDashboardData';
 
 const Index = () => {
+  const { t } = useTranslation();
   // Obter os dados do dashboard
   const {
     timeFilter,
@@ -34,7 +36,7 @@ const Index = () => {
       <div className="flex-1 w-full">
         <PageHeader 
           icon={Globe} 
-          title="MegaBill" 
+          title={t('common.megabill')}
           description="Plataforma centralizada de FinOps para gerenciamento de custos na nuvem"
           color="text-blue-600"
           showTimeFilter={true}

@@ -80,7 +80,7 @@ export const DashboardContent: React.FC<DashboardContentProps> = ({
 
   return (
     <div className={cn(
-      "pb-12 transition-colors duration-200 w-full h-full flex-1",
+      "pb-12 w-full h-full flex-1",
       isDark ? "bg-slate-950" : "bg-gray-50"
     )}>
       <div className="w-full">

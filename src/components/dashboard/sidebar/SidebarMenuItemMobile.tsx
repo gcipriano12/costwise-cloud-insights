@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { SidebarMenuItem, SidebarMenuButton } from '@/components/ui/sidebar';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
@@ -20,6 +20,7 @@ interface SidebarMenuItemMobileProps {
 
 export const SidebarMenuItemMobile: React.FC<SidebarMenuItemMobileProps> = ({ item, onClick }) => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { isDark } = useTheme();
   const { state, isMobile, openMobile, setOpenMobile } = useSidebar();
   
@@ -29,6 +30,11 @@ export const SidebarMenuItemMobile: React.FC<SidebarMenuItemMobileProps> = ({ it
   const handleClick = () => {
     if (onClick) {
       onClick(); // Call the provided onClick handler if it exists
+    }
+    
+    // Navegar para a página inicial se for o item MegaBill
+    if (item.name === 'MegaBill') {
+      navigate('/');
     }
     
     if (isMobile && openMobile) {

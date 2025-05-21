@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Bell, MailOpen, Mail } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { 
   SidebarMenuItem, 
   SidebarMenuButton, 
@@ -18,6 +19,7 @@ export const SidebarNotifications = () => {
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const { isDark } = useTheme();
   const { state, isMobile, openMobile } = useSidebar();
+  const { t } = useTranslation();
   
   // Determinar quando mostrar o texto: em desktop quando não está colapsado,
   // ou em mobile quando openMobile é true
@@ -47,7 +49,7 @@ export const SidebarNotifications = () => {
     <SidebarMenuItem data-mobile-icons={isMobile} className="my-0.5 px-2">
       <Popover open={notificationsOpen} onOpenChange={setNotificationsOpen}>
         <PopoverTrigger asChild>
-          <SidebarMenuButton tooltip="Notificações">
+          <SidebarMenuButton tooltip={t('common.notifications')}>
             <div className={cn(
               "flex items-center justify-center",
               isMobile && openMobile ? "h-6 w-6" : "h-5 w-5"
@@ -55,7 +57,7 @@ export const SidebarNotifications = () => {
               <Bell className="h-5 w-5" />
             </div>
             <span className={showText ? "" : "hidden"}>
-              Notificações
+              {t('common.notifications')}
             </span>
             {unreadCount > 0 && (
               <span className={cn(
@@ -78,7 +80,7 @@ export const SidebarNotifications = () => {
               "font-semibold text-sm",
               isDark ? "text-white" : "text-gray-900"
             )}>
-              Notificações
+              {t('common.notifications')}
             </h3>
           </div>
           <div className={cn(

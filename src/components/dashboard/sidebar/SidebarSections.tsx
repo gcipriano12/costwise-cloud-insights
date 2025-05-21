@@ -1,5 +1,5 @@
-
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { 
   SidebarGroup,
   SidebarMenu,
@@ -25,6 +25,7 @@ import { cn } from '@/lib/utils';
 
 export const SidebarSections = () => {
   const { state, isMobile, openMobile } = useSidebar();
+  const { t } = useTranslation();
   
   // Determinar quando mostrar o texto: em desktop quando não está colapsado,
   // ou em mobile quando openMobile é true
@@ -32,9 +33,9 @@ export const SidebarSections = () => {
   
   // Seção Inform
   const informItems = [
-    { name: 'MegaBill', href: '/', icon: <Globe className="h-5 w-5" /> },
-    { name: 'Virtual Tags', href: '/virtual-tags', icon: <Tags className="h-5 w-5" /> },
-    { name: 'Dashboards', href: '/dashboards', icon: <LayoutDashboard className="h-5 w-5" /> },
+    { name: t('common.megabill'), href: '/', icon: <Globe className="h-5 w-5" /> },
+    { name: t('common.virtualTags'), href: '/virtual-tags', icon: <Tags className="h-5 w-5" /> },
+    { name: t('common.dashboard'), href: '/dashboards', icon: <LayoutDashboard className="h-5 w-5" /> },
     { name: 'Budgets', href: '/budgets', icon: <LineChart className="h-5 w-5" /> },
     { name: 'Financial Plans', href: '/financial-plans', icon: <Clock className="h-5 w-5" /> },
     { name: 'Resources', href: '/resources', icon: <LayoutGrid className="h-5 w-5" /> },
@@ -43,10 +44,10 @@ export const SidebarSections = () => {
 
   // Seção Optimize
   const optimizeItems = [
-    { name: 'CostGuard', href: '/costguard', icon: <ShieldCheck className="h-5 w-5" /> },
+    { name: t('common.costGuard'), href: '/costguard', icon: <ShieldCheck className="h-5 w-5" /> },
     { name: 'My Commitments', href: '/my-commitments', icon: <CalendarCheck className="h-5 w-5" /> },
     { name: 'Commitments Log', href: '/commitments-log', icon: <ClipboardList className="h-5 w-5" /> },
-    { name: 'Anomalies', href: '/anomalies', icon: <AlertTriangle className="h-5 w-5" /> }
+    { name: t('common.anomalies'), href: '/anomalies', icon: <AlertTriangle className="h-5 w-5" /> }
   ];
 
   // Seção Operate
@@ -60,7 +61,7 @@ export const SidebarSections = () => {
       {/* Seção Inform */}
       <SidebarGroup className={cn(isMobile && openMobile && 'mobile-expanded-group-spacing')}>
         <div className={`px-3 py-1.5 text-xs font-semibold text-[#0080af] ${showText ? "" : "hidden"}`}>
-          Inform
+          {t('categories.inform')}
         </div>
         <SidebarMenu>
           {informItems.map((item) => (
@@ -72,7 +73,7 @@ export const SidebarSections = () => {
       {/* Seção Optimize */}
       <SidebarGroup className={cn(isMobile && openMobile && 'mobile-expanded-group-spacing')}>
         <div className={`px-3 py-1.5 text-xs font-semibold text-[#bd3bfd] ${showText ? "" : "hidden"}`}>
-          Optimize
+          {t('categories.optimize')}
         </div>
         <SidebarMenu>
           {optimizeItems.map((item) => (
@@ -84,7 +85,7 @@ export const SidebarSections = () => {
       {/* Seção Operate */}
       <SidebarGroup className={cn(isMobile && openMobile && 'mobile-expanded-group-spacing')}>
         <div className={`px-3 py-1.5 text-xs font-semibold text-[#00c693] ${showText ? "" : "hidden"}`}>
-          Operate
+          {t('categories.operate')}
         </div>
         <SidebarMenu>
           {operateItems.map((item) => (

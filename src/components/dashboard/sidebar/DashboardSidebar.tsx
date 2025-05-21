@@ -13,6 +13,7 @@ import { SidebarNotifications } from './SidebarNotifications';
 import { SidebarSettings } from './SidebarSettings';
 import { SidebarUserMenu } from './SidebarUserMenu';
 import { SidebarThemeToggle } from './SidebarThemeToggle';
+import { LanguageSwitcher } from '@/components/ui/language-switcher';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 
@@ -40,6 +41,7 @@ export const DashboardSidebar = () => {
       
       <SidebarFooter className="border-t border-sidebar-border mt-auto">
         <SidebarMenu>
+          <LanguageSwitcher />
           <SidebarThemeToggle />
           <SidebarNotifications />
           <SidebarUserMenu />

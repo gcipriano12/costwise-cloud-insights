@@ -47,7 +47,7 @@ export default function Dashboard({ children }: DashboardProps) {
         {/* Conteúdo principal - adicionando margem esquerda para dispositivos móveis */}
         <div className={`flex-1 flex flex-col w-full overflow-hidden relative ${isMobile ? 'ml-[3.5rem]' : ''}`}>
           <main className={cn(
-            "flex-1 w-full overflow-auto transition-colors duration-200",
+            "flex-1 w-full overflow-auto",
             isDark ? "bg-slate-950" : "bg-gray-50"
           )}>
             {children ? (

@@ -12,6 +12,7 @@ import {
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { useTheme } from '@/hooks/useTheme';
 import { cn } from '@/lib/utils';
+import { useTranslation } from 'react-i18next';
 
 type KPICategory = 'eficiencia' | 'tarifacao' | 'planejamento' | 'governanca';
 
@@ -65,13 +66,6 @@ const createCategoryColors = (isDark: boolean) => {
   } as const;
 };
 
-const CATEGORY_LABELS: Record<KPICategory, string> = {
-  eficiencia: 'Eficiência',
-  tarifacao: 'Tarifação',
-  planejamento: 'Planejamento',
-  governanca: 'Governança'
-};
-
 export function EfficiencyKPIsCard({ kpis }: EfficiencyKPIsCardProps) {
   const { isDark } = useTheme();
   const [activeCategory, setActiveCategory] = useState<KPICategory>('eficiencia');
@@ -79,6 +73,15 @@ export function EfficiencyKPIsCard({ kpis }: EfficiencyKPIsCardProps) {
   const [activeKpiInfo, setActiveKpiInfo] = useState<KPI | null>(null);
   const [showMobileDialog, setShowMobileDialog] = useState(false);
   const itemsPerPage = 4;
+  const { t } = useTranslation();
+
+  // Definir labels para as categorias usando i18n
+  const CATEGORY_LABELS: Record<KPICategory, string> = {
+    eficiencia: t('sections.eficiencia'),
+    tarifacao: t('sections.tarifacao'),
+    planejamento: t('sections.planejamento'),
+    governanca: t('sections.governanca')
+  };
 
   // Gerar cores de categoria com base no tema atual
   const CATEGORY_COLORS = createCategoryColors(isDark);
@@ -147,7 +150,7 @@ export function EfficiencyKPIsCard({ kpis }: EfficiencyKPIsCardProps) {
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
           <CardTitle className="flex items-center text-lg font-medium mb-2 sm:mb-0">
             <BarChart2 className={`h-5 w-5 mr-2 ${activeColor.text}`} />
-            KPIs de Eficiência
+            {t('sections.kpis')}
           </CardTitle>
           
           {/* Container com scroll horizontal para telas pequenas */}
@@ -285,7 +288,7 @@ export function EfficiencyKPIsCard({ kpis }: EfficiencyKPIsCardProps) {
           </>
         ) : (
           <div className="flex items-center justify-center h-full">
-            <p className="text-muted-foreground">Nenhum KPI disponível para esta categoria</p>
+            <p className="text-muted-foreground">{t('sections.noKpisForCategory')}</p>
           </div>
         )}
       </CardContent>

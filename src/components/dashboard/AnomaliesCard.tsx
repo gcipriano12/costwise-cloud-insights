@@ -7,6 +7,7 @@ import { useTheme } from '@/hooks/useTheme';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 interface Anomaly {
   id: string;
@@ -26,6 +27,7 @@ export function AnomaliesCard({ anomalies, currency }: AnomaliesCardProps) {
   const { isDark } = useTheme();
   const isMobile = useIsMobile();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   
   const formatCurrency = (value: number) => {
     if (value >= 1000000) {
@@ -65,10 +67,10 @@ export function AnomaliesCard({ anomalies, currency }: AnomaliesCardProps) {
 
   const getSeverityLabel = (severity: string) => {
     switch(severity) {
-      case 'high': return 'Alta';
-      case 'medium': return 'Média';
-      case 'low': return 'Baixa';
-      default: return '';
+      case 'high': return t('severities.high');
+      case 'medium': return t('severities.medium');
+      case 'low': return t('severities.low');
+      default: return t('severities.unknown');
     }
   };
 
@@ -98,10 +100,10 @@ export function AnomaliesCard({ anomalies, currency }: AnomaliesCardProps) {
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center text-lg font-medium whitespace-nowrap">
             <AlertTriangle className="mr-2 h-5 w-5 text-amber-500" />
-            {isMobile ? 'Anomalias' : 'Anomalias Detectadas'}
+            {isMobile ? t('common.anomalies') : t('anomalies.detected')}
           </CardTitle>
           <div className="text-sm font-medium text-muted-foreground">
-            <span className="text-xl font-bold text-amber-500">{anomalies.length}</span> anomalias
+            <span className="text-xl font-bold text-amber-500">{anomalies.length}</span> {t('anomalies.anomalies')}
           </div>
         </div>
       </CardHeader>
@@ -130,7 +132,7 @@ export function AnomaliesCard({ anomalies, currency }: AnomaliesCardProps) {
               
               <div className="flex justify-between items-center mt-2 ml-7">
                 <div className="flex items-center text-xs">
-                  <span className="text-muted-foreground mr-1">Impacto:</span>
+                  <span className="text-muted-foreground mr-1">{t('anomalies.impact')}:</span>
                   <span className={`font-medium ${getSeverityTextColor(anomalies[currentIndex].severity)}`}>
                     {formatCurrency(anomalies[currentIndex].impact)}
                   </span>
@@ -142,7 +144,7 @@ export function AnomaliesCard({ anomalies, currency }: AnomaliesCardProps) {
                   className={`h-6 text-xs ${getSeverityTextColor(anomalies[currentIndex].severity)}`}
                   onClick={() => navigate(`/anomalies?id=${anomalies[currentIndex].id}`)}
                 >
-                  <span className="mr-1">Investigar</span>
+                  <span className="mr-1">{t('anomalies.investigate')}</span>
                   <ArrowUpRight className="h-3 w-3" />
                 </Button>
               </div>
@@ -217,7 +219,7 @@ export function AnomaliesCard({ anomalies, currency }: AnomaliesCardProps) {
             "h-full flex items-center justify-center border rounded-lg",
             isDark ? "border-slate-700 border-dashed" : "border-dashed"
           )}>
-            <p className="text-muted-foreground text-sm">Nenhuma anomalia detectada no período selecionado.</p>
+            <p className="text-muted-foreground text-sm">{t('anomalies.noAnomaliesDetected')}</p>
           </div>
         )}
       </CardContent>

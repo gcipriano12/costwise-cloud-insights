@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { TimeFilter } from '@/components/dashboard/TimeFilter';
 import { cn } from '@/lib/utils';
 import { LucideIcon } from 'lucide-react';
@@ -30,6 +31,7 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
 }) => {
   const { isDark } = useTheme();
   const isMobile = useIsMobile();
+  const { t } = useTranslation();
   
   return (
     <div className={cn(
@@ -37,7 +39,7 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
       isDark ? "border-b border-slate-800" : "border-b border-slate-200",
     )}>
       <div className="flex flex-col sm:flex-row justify-between gap-4 px-4">
-        <div className="flex flex-col">
+        <div className="flex flex-col pl-4">
           <div className="flex items-center">
             <div className={cn("flex items-center mr-2", color)}>
               <Icon className="h-4 w-4 sm:h-5 sm:w-5" />
