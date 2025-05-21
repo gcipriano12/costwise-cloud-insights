@@ -220,25 +220,14 @@ export function SpendSummaryCard({
               <p className={`text-sm text-muted-foreground mb-${isMobile ? '0' : '1'}`}>
                 Gasto Total
               </p>
-              <TooltipProvider>
-                <Tooltip delayDuration={0}>
-                  <TooltipTrigger asChild>
-                    <div className="flex items-baseline cursor-help">
-                      <span className={`${isMobile ? 'text-2xl' : 'text-4xl'} font-bold tracking-tight`}>
-                        {currency} {totalSpend.toLocaleString(undefined, {
-                          minimumFractionDigits: 2,
-                          maximumFractionDigits: 2
-                        })}
-                      </span>
-                    </div>
-                  </TooltipTrigger>
-                  <TooltipContent className={cn(
-                    isDark ? "bg-slate-800 border-slate-700 text-white" : "bg-white border-gray-200 text-slate-900"
-                  )}>
-                    <p>Gasto total: {currency} {totalSpend.toLocaleString()}</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+              <div className="flex items-baseline">
+                <span className={`${isMobile ? 'text-2xl' : 'text-4xl'} font-bold tracking-tight`}>
+                  {currency} {totalSpend.toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                  })}
+                </span>
+              </div>
               
               <div className={cn(
                 `mt-2 inline-flex items-center px-2 py-1 rounded-md ${isMobile ? 'text-xs' : 'text-sm'} font-medium`, 
