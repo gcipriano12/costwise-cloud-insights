@@ -6,10 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip"
 export {
   useSidebar,
   SidebarProvider,
-  type SidebarProviderProps,
-  SIDEBAR_WIDTH,
-  SIDEBAR_WIDTH_MOBILE,
-  SIDEBAR_WIDTH_ICON
+  type SidebarProviderProps
 } from './context'
 
 // Export from main-components

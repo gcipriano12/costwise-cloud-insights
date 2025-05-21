@@ -6,8 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
 import { Sheet, SheetContent } from "@/components/ui/sheet"
-import { useSidebar, SIDEBAR_WIDTH_MOBILE, SIDEBAR_WIDTH_ICON } from "./context"
-import { cn } from "@/lib/utils"
+import { cn, useSidebar, SIDEBAR_WIDTH_MOBILE, SIDEBAR_WIDTH_ICON } from "./context"
 
 export const Sidebar = React.forwardRef<
   HTMLDivElement,
