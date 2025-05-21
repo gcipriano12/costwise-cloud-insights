@@ -16,9 +16,10 @@ interface SidebarItem {
 
 interface SidebarMenuItemMobileProps {
   item: SidebarItem;
+  onClick?: () => void; // Add optional onClick handler
 }
 
-export const SidebarMenuItemMobile: React.FC<SidebarMenuItemMobileProps> = ({ item }) => {
+export const SidebarMenuItemMobile: React.FC<SidebarMenuItemMobileProps> = ({ item, onClick }) => {
   const location = useLocation();
   const { isDark } = useTheme();
   const { state, isMobile, openMobile, setOpenMobile } = useSidebar();
@@ -27,6 +28,10 @@ export const SidebarMenuItemMobile: React.FC<SidebarMenuItemMobileProps> = ({ it
   const showText = (isMobile && openMobile) || (!isMobile && state !== "collapsed");
   
   const handleClick = () => {
+    if (onClick) {
+      onClick(); // Call the provided onClick handler if it exists
+    }
+    
     if (isMobile && openMobile) {
       setTimeout(() => {
         setOpenMobile(false);

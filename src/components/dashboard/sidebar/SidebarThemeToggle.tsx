@@ -11,7 +11,8 @@ export const SidebarThemeToggle = () => {
     <SidebarMenuItemMobile 
       item={{
         name: isDark ? 'Modo Claro' : 'Modo Escuro',
-        icon: isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />
+        icon: isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />,
+        href: "#" // Adding the required href property
       }}
       onClick={toggleTheme}
     />
