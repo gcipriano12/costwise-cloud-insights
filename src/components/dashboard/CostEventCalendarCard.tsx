@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useTheme } from '@/hooks/useTheme';
 import { cn } from '@/lib/utils';
+import { useTranslation } from 'react-i18next';
 
 interface CostEvent {
   id: string;
@@ -22,6 +23,8 @@ interface CostEventCalendarCardProps {
 
 export function CostEventCalendarCard({ events }: CostEventCalendarCardProps) {
   const { isDark } = useTheme();
+  const { t } = useTranslation();
+  
   // Estado para controlar o mês e ano selecionados
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
@@ -29,7 +32,7 @@ export function CostEventCalendarCard({ events }: CostEventCalendarCardProps) {
   const currentDate = new Date();
   
   // Lista de meses para o seletor
-  const months = [
+  const months = t('calendar.months', { returnObjects: true }) as string[] || [
     'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 
     'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
   ];
@@ -135,6 +138,11 @@ export function CostEventCalendarCard({ events }: CostEventCalendarCardProps) {
     );
   };
   
+  // Função para traduzir o tipo de evento
+  const getEventTypeLabel = (type: string) => {
+    return t(`calendar.eventTypes.${type}`);
+  };
+  
   return (
     <Card className="h-full flex flex-col overflow-hidden">
       <CardHeader className="pb-2 flex-shrink-0">
@@ -145,7 +153,7 @@ export function CostEventCalendarCard({ events }: CostEventCalendarCardProps) {
               "h-5 w-5 mr-2",
               isDark ? "text-blue-400" : "text-XCost-blue"
             )} />
-            Calendário de Planejamento
+            {t('calendar.title')}
           </CardTitle>
           
           {/* Controles de navegação do calendário - reorganizados para mobile */}
@@ -156,7 +164,7 @@ export function CostEventCalendarCard({ events }: CostEventCalendarCardProps) {
                 "p-1 rounded-full",
                 isDark ? "hover:bg-slate-700" : "hover:bg-gray-100"
               )}
-              aria-label="Mês anterior"
+              aria-label={t('calendar.previousMonth')}
             >
               <ChevronLeft className={cn(
                 "h-5 w-5",
@@ -170,7 +178,7 @@ export function CostEventCalendarCard({ events }: CostEventCalendarCardProps) {
                 onValueChange={(value) => setSelectedMonth(parseInt(value))}
               >
                 <SelectTrigger className="w-[90px] sm:w-[100px] h-8 text-sm">
-                  <SelectValue placeholder="Mês" />
+                  <SelectValue placeholder={t('calendar.month')} />
                 </SelectTrigger>
                 <SelectContent>
                   {months.map((month, index) => (
@@ -185,7 +193,7 @@ export function CostEventCalendarCard({ events }: CostEventCalendarCardProps) {
                 onValueChange={(value) => setSelectedYear(parseInt(value))}
               >
                 <SelectTrigger className="w-[80px] sm:w-[90px] h-8 text-sm">
-                  <SelectValue placeholder="Ano" className="pr-2" />
+                  <SelectValue placeholder={t('calendar.year')} className="pr-2" />
                 </SelectTrigger>
                 <SelectContent>
                   {years.map((year) => (
@@ -203,7 +211,7 @@ export function CostEventCalendarCard({ events }: CostEventCalendarCardProps) {
                 "p-1 rounded-full",
                 isDark ? "hover:bg-slate-700" : "hover:bg-gray-100"
               )}
-              aria-label="Próximo mês"
+              aria-label={t('calendar.nextMonth')}
             >
               <ChevronRight className={cn(
                 "h-5 w-5",
@@ -243,13 +251,13 @@ export function CostEventCalendarCard({ events }: CostEventCalendarCardProps) {
                       </div>
                       {event.impact && event.currency && (
                         <div className="text-xs text-muted-foreground">
-                          Impacto: {event.currency} {event.impact.toLocaleString()}
+                          {t('calendar.impact')}: {event.currency} {event.impact.toLocaleString()}
                         </div>
                       )}
                     </div>
                   </div>
                   <Badge className={getEventTypeColor(event.type)}>
-                    {event.type.charAt(0).toUpperCase() + event.type.slice(1)}
+                    {getEventTypeLabel(event.type)}
                   </Badge>
                 </div>
               );
@@ -259,7 +267,7 @@ export function CostEventCalendarCard({ events }: CostEventCalendarCardProps) {
               "flex items-center justify-center h-full",
               isDark ? "text-slate-400" : "text-muted-foreground"
             )}>
-              Nenhum evento para {months[selectedMonth]} de {selectedYear}
+              {t('calendar.noEvents', { month: months[selectedMonth], year: selectedYear })}
             </div>
           )}
         </div>

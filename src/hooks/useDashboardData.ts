@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 // Types for dashboard data
 export type SpendSummary = {
@@ -170,6 +171,7 @@ export type DashboardData = {
 
 export const useDashboardData = () => {
   const [timeFilter, setTimeFilter] = useState('30d');
+  const { t } = useTranslation();
   
   // Mock data for the dashboard
   const dashboardData: DashboardData = {
@@ -200,11 +202,11 @@ export const useDashboardData = () => {
     ],
     
     categoryDistributionData: [
-      { name: 'Computação', value: 623210.50, color: '#60A5FA' },
-      { name: 'Armazenamento', value: 274567.80, color: '#F97316' },
-      { name: 'Rede', value: 184567.40, color: '#10B981' },
-      { name: 'Banco de Dados', value: 114567.20, color: '#8B5CF6' },
-      { name: 'Outros', value: 48765.90, color: '#EC4899' },
+      { name: t('mockData.categories.computation'), value: 623210.50, color: '#60A5FA' },
+      { name: t('mockData.categories.storage'), value: 274567.80, color: '#F97316' },
+      { name: t('mockData.categories.network'), value: 184567.40, color: '#10B981' },
+      { name: t('mockData.categories.database'), value: 114567.20, color: '#8B5CF6' },
+      { name: t('mockData.categories.others'), value: 48765.90, color: '#EC4899' },
     ],
     
     topServicesData: [
@@ -219,56 +221,56 @@ export const useDashboardData = () => {
       {
         id: 'a3',
         severity: 'low',
-        title: 'Snapshots expirados',
-        description: 'Detectamos 27 snapshots mais antigos que 90 dias',
+        title: t('mockData.anomalyTitles.expiredSnapshots'),
+        description: t('mockData.anomalyDescriptions.expiredSnapshots'),
         impact: 3450.20,
         dateDetected: '2023-10-20'
       },
       {
         id: 'a1',
         severity: 'high',
-        title: 'Aumento súbito em custos de VM',
-        description: 'Detectamos um aumento de 350% nos custos de VMs no projeto "data-pipeline"',
+        title: t('mockData.anomalyTitles.vmCostIncrease'),
+        description: t('mockData.anomalyDescriptions.vmCostIncrease'),
         impact: 23450.60,
         dateDetected: '2023-10-26'
       },
       {
         id: 'a2',
         severity: 'medium',
-        title: 'Recursos ociosos',
-        description: 'Mais de 15 instâncias com utilização abaixo de 10% no último mês',
+        title: t('mockData.anomalyTitles.idleResources'),
+        description: t('mockData.anomalyDescriptions.idleResources'),
         impact: 12300.80,
         dateDetected: '2023-10-25'
       },
       {
         id: 'a4',
         severity: 'high',
-        title: 'GPU não otimizadas',
-        description: 'Instâncias GPU com menos de 30% de utilização',
+        title: t('mockData.anomalyTitles.unoptimizedGPUs'),
+        description: t('mockData.anomalyDescriptions.unoptimizedGPUs'),
         impact: 19850.75,
         dateDetected: '2023-10-24'
       },
       {
         id: 'a5',
         severity: 'medium',
-        title: 'Balanceadores ociosos',
-        description: '3 balanceadores de carga sem tráfego significativo nos últimos 30 dias',
+        title: t('mockData.anomalyTitles.idleBalancers'),
+        description: t('mockData.anomalyDescriptions.idleBalancers'),
         impact: 4560.30,
         dateDetected: '2023-10-23'
       },
       {
         id: 'a6',
         severity: 'low',
-        title: 'Banco de dados sobredimensionado',
-        description: 'RDS com menos de 25% de armazenamento utilizado',
+        title: t('mockData.anomalyTitles.oversizedDatabase'),
+        description: t('mockData.anomalyDescriptions.oversizedDatabase'),
         impact: 2960.45,
         dateDetected: '2023-10-22'
       },
       {
         id: 'a7',
         severity: 'high',
-        title: 'IPs elásticos não associados',
-        description: '12 IPs elásticos sem associação a instâncias',
+        title: t('mockData.anomalyTitles.unassociatedIPs'),
+        description: t('mockData.anomalyDescriptions.unassociatedIPs'),
         impact: 1870.20,
         dateDetected: '2023-10-21'
       }
@@ -278,50 +280,50 @@ export const useDashboardData = () => {
       opportunities: [
         {
           id: 'op1',
-          title: 'Reserved Instances',
-          description: 'Convertendo 74 instâncias on-demand para RIs',
+          title: t('mockData.savingsOpportunities.reservedInstances'),
+          description: t('mockData.savingsDescriptions.reservedInstances'),
           savings: 67890.50,
           effort: 'low'
         },
         {
           id: 'op2',
-          title: 'Rightsizing',
-          description: 'Redimensionar 32 instâncias para tamanhos mais adequados',
+          title: t('mockData.savingsOpportunities.rightsizing'),
+          description: t('mockData.savingsDescriptions.rightsizing'),
           savings: 23456.70,
           effort: 'medium'
         },
         {
           id: 'op3',
-          title: 'Storage Lifecycle',
-          description: 'Configurar regras de ciclo de vida para buckets S3',
+          title: t('mockData.savingsOpportunities.storageLifecycle'),
+          description: t('mockData.savingsDescriptions.storageLifecycle'),
           savings: 12345.60,
           effort: 'low'
         },
         {
           id: 'op4',
-          title: 'Savings Plans',
-          description: 'Adquirir Savings Plans para funções Lambda e Fargate',
+          title: t('mockData.savingsOpportunities.savingsPlans'),
+          description: t('mockData.savingsDescriptions.savingsPlans'),
           savings: 18750.30,
           effort: 'low'
         },
         {
           id: 'op5',
-          title: 'Volumes não utilizados',
-          description: 'Remover 47 volumes EBS não anexados a instâncias',
+          title: t('mockData.savingsOpportunities.unusedVolumes'),
+          description: t('mockData.savingsDescriptions.unusedVolumes'),
           savings: 5960.75,
           effort: 'low'
         },
         {
           id: 'op6',
-          title: 'Clusters Kubernetes',
-          description: 'Otimizar a escala de nós em clusters Kubernetes',
+          title: t('mockData.savingsOpportunities.kubernetesClusters'),
+          description: t('mockData.savingsDescriptions.kubernetesClusters'),
           savings: 14850.60,
           effort: 'medium'
         },
         {
           id: 'op7',
-          title: 'Camadas de armazenamento',
-          description: 'Migrar dados para classes de armazenamento mais econômicas',
+          title: t('mockData.savingsOpportunities.storageTiers'),
+          description: t('mockData.savingsDescriptions.storageTiers'),
           savings: 9320.40,
           effort: 'medium'
         }
@@ -332,37 +334,37 @@ export const useDashboardData = () => {
 
     // Dados para a seção de categorias e tendências
     spendingTeamsData: [
-      { name: 'Desenvolvimento', value: 495000.50, color: '#4B5563' },
-      { name: 'Infraestrutura', value: 358000.80, color: '#1D4ED8' },
-      { name: 'Data Science', value: 276500.40, color: '#9333EA' },
-      { name: 'Marketing', value: 116177.20, color: '#16A34A' },
+      { name: t('mockData.teams.development'), value: 495000.50, color: '#4B5563' },
+      { name: t('mockData.teams.infrastructure'), value: 358000.80, color: '#1D4ED8' },
+      { name: t('mockData.teams.dataScience'), value: 276500.40, color: '#9333EA' },
+      { name: t('mockData.teams.marketing'), value: 116177.20, color: '#16A34A' },
     ],
 
     forecastData: [
-      { month: 'Jan', actual: 320000, forecast: undefined, budget: 350000 },
-      { month: 'Fev', actual: 340000, forecast: undefined, budget: 350000 },
-      { month: 'Mar', actual: 360000, forecast: undefined, budget: 350000 },
-      { month: 'Abr', actual: 330000, forecast: undefined, budget: 350000 },
-      { month: 'Mai', actual: 345000, forecast: undefined, budget: 350000 },
-      { month: 'Jun', actual: undefined, forecast: 350000, budget: 350000 },
-      { month: 'Jul', actual: undefined, forecast: 355000, budget: 350000 },
+      { month: t('mockData.months.jan'), actual: 320000, forecast: undefined, budget: 350000 },
+      { month: t('mockData.months.feb'), actual: 340000, forecast: undefined, budget: 350000 },
+      { month: t('mockData.months.mar'), actual: 360000, forecast: undefined, budget: 350000 },
+      { month: t('mockData.months.apr'), actual: 330000, forecast: undefined, budget: 350000 },
+      { month: t('mockData.months.may'), actual: 345000, forecast: undefined, budget: 350000 },
+      { month: t('mockData.months.jun'), actual: undefined, forecast: 350000, budget: 350000 },
+      { month: t('mockData.months.jul'), actual: undefined, forecast: 355000, budget: 350000 },
     ],
 
     resourcesData: [
-      { name: 'vCPUs', usage: 280, totalAvailable: 320, warningThreshold: 85 },
-      { name: 'Memória RAM', usage: 620, totalAvailable: 768, warningThreshold: 90 },
-      { name: 'Armazenamento', usage: 5.8, totalAvailable: 8, warningThreshold: 80 },
-      { name: 'Licenças SQL', usage: 42, totalAvailable: 50, warningThreshold: 95 },
-      { name: 'Volumes EBS', usage: 125, totalAvailable: 150, warningThreshold: 90 },
-      { name: 'Largura de Banda', usage: 18, totalAvailable: 25, warningThreshold: 85 },
+      { name: t('mockData.resources.vcpus'), usage: 280, totalAvailable: 320, warningThreshold: 85 },
+      { name: t('mockData.resources.ram'), usage: 620, totalAvailable: 768, warningThreshold: 90 },
+      { name: t('mockData.resources.storage'), usage: 5.8, totalAvailable: 8, warningThreshold: 80 },
+      { name: t('mockData.resources.sqlLicenses'), usage: 42, totalAvailable: 50, warningThreshold: 95 },
+      { name: t('mockData.resources.ebsVolumes'), usage: 125, totalAvailable: 150, warningThreshold: 90 },
+      { name: t('mockData.resources.bandwidth'), usage: 18, totalAvailable: 25, warningThreshold: 85 },
     ],
 
     complianceData: [
-      { id: 'c1', name: 'Instâncias com tags', status: 'compliant', description: 'Todas as instâncias devem ter tags de projeto e ambiente.' },
-      { id: 'c2', name: 'Volumes encriptados', status: 'compliant', description: 'Todos os volumes de armazenamento devem ser encriptados.' },
-      { id: 'c3', name: 'Relatórios de custos', status: 'compliant', description: 'Relatórios detalhados de custos devem ser gerados mensalmente.' },
-      { id: 'c4', name: 'Políticas de retenção', status: 'non-compliant', description: 'Políticas de retenção de dados devem ser definidas para todos os buckets de armazenamento.' },
-      { id: 'c5', name: 'Alocação de custos', status: 'non-compliant', description: 'Todos os custos devem ser alocados a um centro de custo.' },
+      { id: 'c1', name: t('mockData.compliance.instanceTags'), status: 'compliant', description: t('mockData.complianceDescriptions.instanceTags') },
+      { id: 'c2', name: t('mockData.compliance.encryptedVolumes'), status: 'compliant', description: t('mockData.complianceDescriptions.encryptedVolumes') },
+      { id: 'c3', name: t('mockData.compliance.costReports'), status: 'compliant', description: t('mockData.complianceDescriptions.costReports') },
+      { id: 'c4', name: t('mockData.compliance.retentionPolicies'), status: 'non-compliant', description: t('mockData.complianceDescriptions.retentionPolicies') },
+      { id: 'c5', name: t('mockData.compliance.costAllocation'), status: 'non-compliant', description: t('mockData.complianceDescriptions.costAllocation') },
     ],
 
     kpiData: [
@@ -582,9 +584,9 @@ export const useDashboardData = () => {
     ],
 
     environmentsData: [
-      { name: 'Produção', cost: 890450.60, previousPeriodCost: 850340.20, efficiency: 82 },
-      { name: 'Homologação', cost: 234560.30, previousPeriodCost: 220450.10, efficiency: 65 },
-      { name: 'Desenvolvimento', cost: 120667.80, previousPeriodCost: 145890.40, efficiency: 58 },
+      { name: t('mockData.environments.production'), cost: 890450.60, previousPeriodCost: 850340.20, efficiency: 82 },
+      { name: t('mockData.environments.staging'), cost: 234560.30, previousPeriodCost: 220450.10, efficiency: 65 },
+      { name: t('mockData.environments.development'), cost: 120667.80, previousPeriodCost: 145890.40, efficiency: 58 },
     ],
 
     regionHeatmapData: [
@@ -615,22 +617,22 @@ export const useDashboardData = () => {
 
     benchmarksData: [
       { 
-        serviceType: 'Instâncias Compute',
+        serviceType: t('mockData.benchmarks.computeInstances'),
         yourCost: 12.50,
         industryAverage: 18.75,
         bestInClass: 8.25,
         percentile: 35
       },
       { 
-        serviceType: 'Storage (por GB)',
+        serviceType: t('mockData.benchmarks.storagePerGB'),
         yourCost: 0.085,
         industryAverage: 0.095,
         bestInClass: 0.065,
         percentile: 25
       },
       { 
-        serviceType: 'Banco de Dados',
-        yourCost:42.30,
+        serviceType: t('mockData.benchmarks.database'),
+        yourCost: 42.30,
         industryAverage: 45.20,
         bestInClass: 39.10,
         percentile: 85

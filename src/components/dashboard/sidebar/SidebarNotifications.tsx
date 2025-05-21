@@ -26,9 +26,9 @@ export const SidebarNotifications = () => {
   const showText = (isMobile && openMobile) || (!isMobile && state !== "collapsed");
   
   const [notifications, setNotifications] = useState([
-    { id: '1', title: 'Nova anomalia de custo', isRead: false },
-    { id: '2', title: 'Orçamento excedido', isRead: false },
-    { id: '3', title: 'Oportunidade de economia', isRead: true },
+    { id: '1', title: t('mockData.notificationTitles.costAnomaly'), isRead: false },
+    { id: '2', title: t('mockData.notificationTitles.budgetExceeded'), isRead: false },
+    { id: '3', title: t('mockData.notificationTitles.savingsOpportunity'), isRead: true },
   ]);
 
   const unreadCount = notifications.filter(n => !n.isRead).length;
@@ -115,12 +115,12 @@ export const SidebarNotifications = () => {
               </div>
             ))}
             {notifications.length === 0 && (
-              <div className="text-center py-2">Sem notificações</div>
+              <div className="text-center py-2">{t('common.noNotifications')}</div>
             )}
             
             {unreadCount > 0 && (
               <Button variant="ghost" size="sm" onClick={markAllAsRead}>
-                Marcar todas como lidas
+                {t('common.markAllAsRead')}
               </Button>
             )}
           </div>

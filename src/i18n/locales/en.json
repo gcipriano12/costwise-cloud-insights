@@ -1,4 +1,3 @@
-
 {
   "common": {
     "megabill": "MegaBill",
@@ -6,12 +5,50 @@
     "dashboard": "Dashboard",
     "costGuard": "Cost Guard",
     "anomalies": "Anomalies",
-    "period": "Period"
+    "period": "Period",
+    "budgets": "Budgets",
+    "financialPlans": "Financial Plans",
+    "resources": "Resources",
+    "dataExplorer": "Data Explorer",
+    "myCommitments": "My Commitments",
+    "commitmentsLog": "Commitments Log",
+    "reports": "Reports",
+    "governance": "Governance",
+    "new": "New",
+    "notifications": "Notifications",
+    "noNotifications": "No notifications",
+    "markAllAsRead": "Mark all as read",
+    "myAccount": "My Account",
+    "lightMode": "Light Mode",
+    "darkMode": "Dark Mode",
+    "switchToLightMode": "Switch to Light Mode",
+    "switchToDarkMode": "Switch to Dark Mode",
+    "profile": "Profile",
+    "settings": "Settings",
+    "support": "Support",
+    "logout": "Logout",
+    "platformDescription": "Centralized FinOps platform for cloud cost management"
   },
   "categories": {
     "inform": "Inform",
     "optimize": "Optimize",
     "operate": "Operate"
+  },
+  "calendar": {
+    "title": "Planning Calendar",
+    "previousMonth": "Previous month",
+    "nextMonth": "Next month",
+    "month": "Month",
+    "year": "Year",
+    "impact": "Impact",
+    "noEvents": "No events for {{month}} {{year}}",
+    "months": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+    "eventTypes": {
+      "billing": "Billing",
+      "contract": "Contract",
+      "budget": "Budget",
+      "other": "Other"
+    }
   },
   "timeFilter": {
     "last7days": "Last 7 days",
@@ -20,5 +57,139 @@
     "lastYear": "Last year",
     "custom": "Custom range",
     "selectPeriod": "Select period"
+  },
+  "anomalies": {
+    "detected": "Detected Anomalies",
+    "anomalies": "anomalies",
+    "impact": "Impact",
+    "investigate": "Investigate",
+    "noAnomaliesDetected": "No anomalies detected"
+  },
+  "severities": {
+    "high": "High",
+    "medium": "Medium",
+    "low": "Low",
+    "unknown": "Unknown"
+  },
+  "benchmarks": {
+    "title": "Cost Benchmarks",
+    "top": "Top",
+    "bottom": "Bottom",
+    "best": "Best",
+    "you": "You",
+    "average": "Average"
+  },
+  "sections": {
+    "eficiencia": "Efficiency",
+    "tarifacao": "Pricing",
+    "planejamento": "Planning",
+    "governanca": "Governance",
+    "kpis": "Performance KPIs",
+    "noKpisForCategory": "No KPIs available for this category"
+  },
+  "mockData": {
+    "notificationTitles": {
+      "costAnomaly": "New cost anomaly",
+      "budgetExceeded": "Budget exceeded",
+      "savingsOpportunity": "Savings opportunity"
+    },
+    "categories": {
+      "computation": "Computation",
+      "storage": "Storage",
+      "network": "Network",
+      "database": "Database",
+      "others": "Others"
+    },
+    "anomalyTitles": {
+      "expiredSnapshots": "Expired snapshots",
+      "vmCostIncrease": "Sudden increase in VM costs",
+      "idleResources": "Idle resources",
+      "unoptimizedGPUs": "Unoptimized GPUs",
+      "idleBalancers": "Idle load balancers",
+      "oversizedDatabase": "Oversized database",
+      "unassociatedIPs": "Unassociated Elastic IPs"
+    },
+    "anomalyDescriptions": {
+      "expiredSnapshots": "We detected 27 snapshots older than 90 days",
+      "vmCostIncrease": "We detected a 350% increase in VM costs in the \"data-pipeline\" project",
+      "idleResources": "More than 15 instances with utilization below 10% in the last month",
+      "unoptimizedGPUs": "GPU instances with less than 30% utilization",
+      "idleBalancers": "3 load balancers without significant traffic in the last 30 days",
+      "oversizedDatabase": "RDS with less than 25% storage used",
+      "unassociatedIPs": "12 Elastic IPs not associated with instances"
+    },
+    "savingsOpportunities": {
+      "reservedInstances": "Reserved Instances",
+      "rightsizing": "Rightsizing",
+      "storageLifecycle": "Storage Lifecycle",
+      "savingsPlans": "Savings Plans",
+      "unusedVolumes": "Unused Volumes",
+      "kubernetesClusters": "Kubernetes Clusters",
+      "storageTiers": "Storage Tiers"
+    },
+    "savingsDescriptions": {
+      "reservedInstances": "Converting 74 on-demand instances to RIs",
+      "rightsizing": "Resize 32 instances to more appropriate sizes",
+      "storageLifecycle": "Configure lifecycle rules for S3 buckets",
+      "savingsPlans": "Purchase Savings Plans for Lambda functions and Fargate",
+      "unusedVolumes": "Remove 47 EBS volumes not attached to instances",
+      "kubernetesClusters": "Optimize node scaling in Kubernetes clusters",
+      "storageTiers": "Migrate data to more cost-effective storage classes"
+    },
+    "teams": {
+      "development": "Development",
+      "infrastructure": "Infrastructure",
+      "dataScience": "Data Science",
+      "marketing": "Marketing"
+    },
+    "months": {
+      "jan": "Jan",
+      "feb": "Feb",
+      "mar": "Mar",
+      "apr": "Apr",
+      "may": "May",
+      "jun": "Jun",
+      "jul": "Jul"
+    },
+    "resources": {
+      "vcpus": "vCPUs",
+      "ram": "RAM Memory",
+      "storage": "Storage",
+      "sqlLicenses": "SQL Licenses",
+      "ebsVolumes": "EBS Volumes",
+      "bandwidth": "Bandwidth"
+    },
+    "compliance": {
+      "instanceTags": "Instance tags",
+      "encryptedVolumes": "Encrypted volumes",
+      "costReports": "Cost reports",
+      "retentionPolicies": "Retention policies",
+      "costAllocation": "Cost allocation"
+    },
+    "complianceDescriptions": {
+      "instanceTags": "All instances must have project and environment tags.",
+      "encryptedVolumes": "All storage volumes must be encrypted.",
+      "costReports": "Detailed cost reports must be generated monthly.",
+      "retentionPolicies": "Retention policies must be defined for all storage buckets.",
+      "costAllocation": "All costs must be allocated to a cost center."
+    },
+    "environments": {
+      "production": "Production",
+      "staging": "Staging",
+      "development": "Development"
+    },
+    "benchmarks": {
+      "computeInstances": "Compute Instances",
+      "storagePerGB": "Storage (per GB)",
+      "database": "Database"
+    },
+    "tags": {
+      "serverless": "serverless",
+      "newProject": "new-project",
+      "devops": "devops",
+      "cicd": "ci-cd",
+      "analytics": "analytics",
+      "bigData": "big-data"
+    }
   }
 }

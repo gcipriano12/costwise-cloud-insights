@@ -36,24 +36,24 @@ export const SidebarSections = () => {
     { name: t('common.megabill'), href: '/', icon: <Globe className="h-5 w-5" /> },
     { name: t('common.virtualTags'), href: '/virtual-tags', icon: <Tags className="h-5 w-5" /> },
     { name: t('common.dashboard'), href: '/dashboards', icon: <LayoutDashboard className="h-5 w-5" /> },
-    { name: 'Budgets', href: '/budgets', icon: <LineChart className="h-5 w-5" /> },
-    { name: 'Financial Plans', href: '/financial-plans', icon: <Clock className="h-5 w-5" /> },
-    { name: 'Resources', href: '/resources', icon: <LayoutGrid className="h-5 w-5" /> },
-    { name: 'Data Explorer', href: '/data-explorer', icon: <Search className="h-5 w-5" /> }
+    { name: t('common.budgets'), href: '/budgets', icon: <LineChart className="h-5 w-5" /> },
+    { name: t('common.financialPlans'), href: '/financial-plans', icon: <Clock className="h-5 w-5" /> },
+    { name: t('common.resources'), href: '/resources', icon: <LayoutGrid className="h-5 w-5" /> },
+    { name: t('common.dataExplorer'), href: '/data-explorer', icon: <Search className="h-5 w-5" /> }
   ];
 
   // Seção Optimize
   const optimizeItems = [
     { name: t('common.costGuard'), href: '/costguard', icon: <ShieldCheck className="h-5 w-5" /> },
-    { name: 'My Commitments', href: '/my-commitments', icon: <CalendarCheck className="h-5 w-5" /> },
-    { name: 'Commitments Log', href: '/commitments-log', icon: <ClipboardList className="h-5 w-5" /> },
+    { name: t('common.myCommitments'), href: '/my-commitments', icon: <CalendarCheck className="h-5 w-5" /> },
+    { name: t('common.commitmentsLog'), href: '/commitments-log', icon: <ClipboardList className="h-5 w-5" /> },
     { name: t('common.anomalies'), href: '/anomalies', icon: <AlertTriangle className="h-5 w-5" /> }
   ];
 
   // Seção Operate
   const operateItems = [
-    { name: 'Reports', href: '/reports', icon: <FileText className="h-5 w-5" /> },
-    { name: 'Governance', href: '/governance', icon: <GanttChart className="h-5 w-5" />, badge: 'New' }
+    { name: t('common.reports'), href: '/reports', icon: <FileText className="h-5 w-5" /> },
+    { name: t('common.governance'), href: '/governance', icon: <GanttChart className="h-5 w-5" />, badge: t('common.new') }
   ];
 
   return (

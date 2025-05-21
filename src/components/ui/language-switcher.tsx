@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { 
   SidebarMenuItem,
@@ -7,12 +6,6 @@ import {
 } from '@/components/ui/sidebar';
 import { useTranslation } from 'react-i18next';
 import { Globe } from 'lucide-react';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
 import { toast } from '@/components/ui/use-toast';
 
@@ -24,52 +17,37 @@ export const LanguageSwitcher = () => {
   // or in mobile when openMobile is true
   const showText = (isMobile && openMobile) || (!isMobile && state !== "collapsed");
 
-  const changeLanguage = (lng: string) => {
+  const toggleLanguage = () => {
     const currentLang = i18n.language;
-    if (currentLang !== lng) {
-      i18n.changeLanguage(lng);
-      localStorage.setItem('i18nextLng', lng);
-      
-      // Show toast notification
-      toast({
-        title: lng === 'en' ? 'Language changed' : 'Idioma alterado',
-        description: lng === 'en' ? 'English is now active' : 'Português agora está ativo',
-        duration: 2000,
-      });
-    }
+    const newLang = currentLang === 'en' ? 'pt' : 'en';
+    
+    i18n.changeLanguage(newLang);
+    localStorage.setItem('i18nextLng', newLang);
+    
+    // Show toast notification
+    toast({
+      title: newLang === 'en' ? 'Language changed' : 'Idioma alterado',
+      description: newLang === 'en' ? 'English is now active' : 'Português agora está ativo',
+      duration: 2000,
+    });
   };
 
   return (
     <SidebarMenuItem data-mobile-icons={isMobile} className="my-0.5 px-2">
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <SidebarMenuButton tooltip={i18n.language === 'en' ? 'Language' : 'Idioma'}>
-            <div className={cn(
-              "flex items-center justify-center",
-              isMobile && openMobile ? "h-6 w-6" : "h-5 w-5"
-            )}>
-              <Globe className="h-5 w-5" />
-            </div>
-            <span className={showText ? "" : "hidden"}>
-              {i18n.language === 'en' ? 'English' : 'Português'}
-            </span>
-          </SidebarMenuButton>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-40">
-          <DropdownMenuItem 
-            onClick={() => changeLanguage('en')}
-            className={i18n.language === 'en' ? 'bg-accent' : ''}
-          >
-            English
-          </DropdownMenuItem>
-          <DropdownMenuItem 
-            onClick={() => changeLanguage('pt')}
-            className={i18n.language === 'pt' ? 'bg-accent' : ''}
-          >
-            Português
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+      <SidebarMenuButton 
+        tooltip={i18n.language === 'en' ? 'Mudar para Português' : 'Change to English'}
+        onClick={toggleLanguage}
+      >
+        <div className={cn(
+          "flex items-center justify-center",
+          isMobile && openMobile ? "h-6 w-6" : "h-5 w-5"
+        )}>
+          <Globe className="h-5 w-5" />
+        </div>
+        <span className={showText ? "" : "hidden"}>
+          {i18n.language === 'en' ? 'Portuguese' : 'Inglês'}
+        </span>
+      </SidebarMenuButton>
     </SidebarMenuItem>
   );
 };

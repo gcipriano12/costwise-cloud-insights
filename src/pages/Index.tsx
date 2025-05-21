@@ -37,7 +37,7 @@ const Index = () => {
         <PageHeader 
           icon={Globe} 
           title={t('common.megabill')}
-          description="Plataforma centralizada de FinOps para gerenciamento de custos na nuvem"
+          description={t('common.platformDescription')}
           color="text-blue-600"
           showTimeFilter={true}
           timeFilter={timeFilter}

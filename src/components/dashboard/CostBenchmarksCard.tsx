@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Search } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
+import { useTranslation } from 'react-i18next';
 
 interface Benchmark {
   serviceType: string;
@@ -18,15 +19,17 @@ interface CostBenchmarksCardProps {
 }
 
 export function CostBenchmarksCard({ benchmarks, currency }: CostBenchmarksCardProps) {
+  const { t } = useTranslation();
+  
   const getPercentileBadge = (percentile: number) => {
     if (percentile <= 25) {
-      return <Badge className="bg-green-500 text-white text-[10px] px-2 py-0.5 h-5 min-w-[48px] flex items-center justify-center">Top {percentile}%</Badge>;
+      return <Badge className="bg-green-500 text-white text-[10px] px-2 py-0.5 h-5 min-w-[48px] flex items-center justify-center">{t('benchmarks.top')} {percentile}%</Badge>;
     } else if (percentile <= 50) {
-      return <Badge className="bg-blue-500 text-white text-[10px] px-2 py-0.5 h-5 min-w-[48px] flex items-center justify-center">Top {percentile}%</Badge>;
+      return <Badge className="bg-blue-500 text-white text-[10px] px-2 py-0.5 h-5 min-w-[48px] flex items-center justify-center">{t('benchmarks.top')} {percentile}%</Badge>;
     } else if (percentile <= 75) {
-      return <Badge className="bg-amber-500 text-white text-[10px] px-2 py-0.5 h-5 min-w-[48px] flex items-center justify-center">Bottom {100-percentile}%</Badge>;
+      return <Badge className="bg-amber-500 text-white text-[10px] px-2 py-0.5 h-5 min-w-[48px] flex items-center justify-center">{t('benchmarks.bottom')} {100-percentile}%</Badge>;
     } else {
-      return <Badge className="bg-red-500 text-white text-[10px] px-2 py-0.5 h-5 min-w-[48px] flex items-center justify-center">Bottom {100-percentile}%</Badge>;
+      return <Badge className="bg-red-500 text-white text-[10px] px-2 py-0.5 h-5 min-w-[48px] flex items-center justify-center">{t('benchmarks.bottom')} {100-percentile}%</Badge>;
     }
   };
   
@@ -35,7 +38,7 @@ export function CostBenchmarksCard({ benchmarks, currency }: CostBenchmarksCardP
       <CardHeader className="pb-2 flex-shrink-0">
         <CardTitle className="flex items-center text-base font-semibold">
           <Search className="h-5 w-5 mr-2 text-purple-500" />
-          Benchmarks de Custos
+          {t('benchmarks.title')}
         </CardTitle>
       </CardHeader>
       <CardContent className="flex-grow px-4 pt-2 pb-3 overflow-auto">
@@ -51,9 +54,9 @@ export function CostBenchmarksCard({ benchmarks, currency }: CostBenchmarksCardP
               <div className="relative pt-5 pb-1">
                 {/* Valor do seu custo */}
                 <div className="absolute top-0 left-0 w-full flex justify-between text-xs font-medium">
-                  <div className="text-green-500">Melhor: {currency} {benchmark.bestInClass.toLocaleString('pt-BR', {minimumFractionDigits: benchmark.bestInClass < 1 ? 3 : 1})}</div>
-                  <div>Você: {currency} {benchmark.yourCost.toLocaleString('pt-BR', {minimumFractionDigits: benchmark.yourCost < 1 ? 3 : 1})}</div>
-                  <div className="text-amber-500">Média: {currency} {benchmark.industryAverage.toLocaleString('pt-BR', {minimumFractionDigits: benchmark.industryAverage < 1 ? 3 : 1})}</div>
+                  <div className="text-green-500">{t('benchmarks.best')}: {currency} {benchmark.bestInClass.toLocaleString('pt-BR', {minimumFractionDigits: benchmark.bestInClass < 1 ? 3 : 1})}</div>
+                  <div>{t('benchmarks.you')}: {currency} {benchmark.yourCost.toLocaleString('pt-BR', {minimumFractionDigits: benchmark.yourCost < 1 ? 3 : 1})}</div>
+                  <div className="text-amber-500">{t('benchmarks.average')}: {currency} {benchmark.industryAverage.toLocaleString('pt-BR', {minimumFractionDigits: benchmark.industryAverage < 1 ? 3 : 1})}</div>
                 </div>
                 
                 {/* Barra de fundo */}
