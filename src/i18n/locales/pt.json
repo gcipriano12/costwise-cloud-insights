@@ -5,11 +5,20 @@
     "virtualTags": "Tags Virtuais",
     "dashboard": "Painel de Controle",
     "costGuard": "Guardião de Custos",
-    "anomalies": "Anomalias"
+    "anomalies": "Anomalias",
+    "period": "Período"
   },
   "categories": {
     "inform": "Informar",
     "optimize": "Otimizar",
     "operate": "Operar"
+  },
+  "timeFilter": {
+    "last7days": "Últimos 7 dias",
+    "last30days": "Últimos 30 dias",
+    "last90days": "Últimos 90 dias",
+    "lastYear": "Último ano",
+    "custom": "Período personalizado",
+    "selectPeriod": "Selecione o período"
   }
 }

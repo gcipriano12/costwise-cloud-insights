@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import {
@@ -18,7 +19,7 @@ export function TimeFilter({ value, onChange }: TimeFilterProps) {
   const isMobile = useIsMobile();
   const { t } = useTranslation();
   
-  // Função para mapear os valores para textos legíveis usando i18n
+  // Function to map values to readable text using i18n
   const getTimeFilterLabel = (value: string): string => {
     const options: Record<string, string> = {
       '7d': t('timeFilter.last7days'),
