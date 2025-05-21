@@ -1,3 +1,4 @@
+
 {
   "common": {
     "megabill": "MegaBill",
@@ -6,49 +7,15 @@
     "costGuard": "Cost Guard",
     "anomalies": "Anomalies",
     "period": "Period",
-    "budgets": "Budgets",
-    "financialPlans": "Financial Plans",
-    "resources": "Resources",
-    "dataExplorer": "Data Explorer",
-    "myCommitments": "My Commitments",
-    "commitmentsLog": "Commitments Log",
-    "reports": "Reports",
-    "governance": "Governance",
-    "new": "New",
-    "notifications": "Notifications",
-    "noNotifications": "No notifications",
-    "markAllAsRead": "Mark all as read",
-    "myAccount": "My Account",
     "lightMode": "Light Mode",
     "darkMode": "Dark Mode",
     "switchToLightMode": "Switch to Light Mode",
-    "switchToDarkMode": "Switch to Dark Mode",
-    "profile": "Profile",
-    "settings": "Settings",
-    "support": "Support",
-    "logout": "Logout",
-    "platformDescription": "Centralized FinOps platform for cloud cost management"
+    "switchToDarkMode": "Switch to Dark Mode"
   },
   "categories": {
     "inform": "Inform",
     "optimize": "Optimize",
     "operate": "Operate"
-  },
-  "calendar": {
-    "title": "Planning Calendar",
-    "previousMonth": "Previous month",
-    "nextMonth": "Next month",
-    "month": "Month",
-    "year": "Year",
-    "impact": "Impact",
-    "noEvents": "No events for {{month}} {{year}}",
-    "months": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-    "eventTypes": {
-      "billing": "Billing",
-      "contract": "Contract",
-      "budget": "Budget",
-      "other": "Other"
-    }
   },
   "timeFilter": {
     "last7days": "Last 7 days",
@@ -58,138 +25,85 @@
     "custom": "Custom range",
     "selectPeriod": "Select period"
   },
-  "anomalies": {
-    "detected": "Detected Anomalies",
-    "anomalies": "anomalies",
-    "impact": "Impact",
-    "investigate": "Investigate",
-    "noAnomaliesDetected": "No anomalies detected"
+  "landing": {
+    "login": "Login",
+    "hero": {
+      "title": "Optimize Your Cloud Costs with Precision",
+      "subtitle": "Get complete visibility across all your cloud providers and start saving with actionable recommendations.",
+      "cta": "Get Started",
+      "imageAlt": "Dashboard visualization of cloud cost analytics"
+    },
+    "features": {
+      "title": "Key Features",
+      "subtitle": "Discover how X Cost helps you manage and optimize your cloud expenditure effectively.",
+      "analytics": {
+        "title": "Cost Analytics",
+        "description": "Deep insights into your cloud spending across providers with trend analysis and forecasting."
+      },
+      "optimization": {
+        "title": "Cost Optimization",
+        "description": "Identify savings opportunities and get tailored recommendations to reduce unnecessary spending."
+      },
+      "governance": {
+        "title": "FinOps Governance",
+        "description": "Establish policies, budgets and alerts to maintain financial control of your cloud resources."
+      }
+    },
+    "testimonials": {
+      "title": "What Our Customers Say",
+      "quote1": "X Cost helped us reduce our cloud spend by 34% in just three months while improving resource utilization.",
+      "quote2": "The anomaly detection feature saved us from a massive billing surprise last quarter. Worth every penny."
+    },
+    "footer": {
+      "copyright": "© 2025 X Cost. All rights reserved.",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "contact": "Contact Us"
+    }
   },
-  "severities": {
-    "high": "High",
-    "medium": "Medium",
-    "low": "Low",
-    "unknown": "Unknown"
+  "login": {
+    "backToHome": "Back to home",
+    "title": "Welcome back",
+    "subtitle": "Enter your credentials to access your account",
+    "form": {
+      "email": "Email",
+      "password": "Password",
+      "login": "Login",
+      "loggingIn": "Logging in..."
+    },
+    "forgotPassword": "Forgot your password?",
+    "noAccount": "Don't have an account?",
+    "signUp": "Sign up",
+    "success": {
+      "title": "Login successful",
+      "description": "Welcome back to X Cost!"
+    },
+    "error": {
+      "title": "Login failed",
+      "description": "Invalid email or password. Please try again."
+    }
   },
-  "benchmarks": {
-    "title": "Cost Benchmarks",
-    "top": "Top",
-    "bottom": "Bottom",
-    "best": "Best",
-    "you": "You",
-    "average": "Average"
-  },
-  "sections": {
-    "eficiencia": "Efficiency",
-    "tarifacao": "Pricing",
-    "planejamento": "Planning",
-    "governanca": "Governance",
-    "kpis": "Performance KPIs",
-    "noKpisForCategory": "No KPIs available for this category"
-  },
-  "mockData": {
-    "notificationTitles": {
-      "costAnomaly": "New cost anomaly",
-      "budgetExceeded": "Budget exceeded",
-      "savingsOpportunity": "Savings opportunity"
+  "signup": {
+    "backToHome": "Back to home",
+    "title": "Create an account",
+    "subtitle": "Enter your details to get started with X Cost",
+    "form": {
+      "name": "Full Name",
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm Password",
+      "signUp": "Create Account",
+      "signingUp": "Creating account..."
     },
-    "categories": {
-      "computation": "Computation",
-      "storage": "Storage",
-      "network": "Network",
-      "database": "Database",
-      "others": "Others"
+    "haveAccount": "Already have an account?",
+    "login": "Login",
+    "success": {
+      "title": "Account created",
+      "description": "Welcome to X Cost!"
     },
-    "anomalyTitles": {
-      "expiredSnapshots": "Expired snapshots",
-      "vmCostIncrease": "Sudden increase in VM costs",
-      "idleResources": "Idle resources",
-      "unoptimizedGPUs": "Unoptimized GPUs",
-      "idleBalancers": "Idle load balancers",
-      "oversizedDatabase": "Oversized database",
-      "unassociatedIPs": "Unassociated Elastic IPs"
-    },
-    "anomalyDescriptions": {
-      "expiredSnapshots": "We detected 27 snapshots older than 90 days",
-      "vmCostIncrease": "We detected a 350% increase in VM costs in the \"data-pipeline\" project",
-      "idleResources": "More than 15 instances with utilization below 10% in the last month",
-      "unoptimizedGPUs": "GPU instances with less than 30% utilization",
-      "idleBalancers": "3 load balancers without significant traffic in the last 30 days",
-      "oversizedDatabase": "RDS with less than 25% storage used",
-      "unassociatedIPs": "12 Elastic IPs not associated with instances"
-    },
-    "savingsOpportunities": {
-      "reservedInstances": "Reserved Instances",
-      "rightsizing": "Rightsizing",
-      "storageLifecycle": "Storage Lifecycle",
-      "savingsPlans": "Savings Plans",
-      "unusedVolumes": "Unused Volumes",
-      "kubernetesClusters": "Kubernetes Clusters",
-      "storageTiers": "Storage Tiers"
-    },
-    "savingsDescriptions": {
-      "reservedInstances": "Converting 74 on-demand instances to RIs",
-      "rightsizing": "Resize 32 instances to more appropriate sizes",
-      "storageLifecycle": "Configure lifecycle rules for S3 buckets",
-      "savingsPlans": "Purchase Savings Plans for Lambda functions and Fargate",
-      "unusedVolumes": "Remove 47 EBS volumes not attached to instances",
-      "kubernetesClusters": "Optimize node scaling in Kubernetes clusters",
-      "storageTiers": "Migrate data to more cost-effective storage classes"
-    },
-    "teams": {
-      "development": "Development",
-      "infrastructure": "Infrastructure",
-      "dataScience": "Data Science",
-      "marketing": "Marketing"
-    },
-    "months": {
-      "jan": "Jan",
-      "feb": "Feb",
-      "mar": "Mar",
-      "apr": "Apr",
-      "may": "May",
-      "jun": "Jun",
-      "jul": "Jul"
-    },
-    "resources": {
-      "vcpus": "vCPUs",
-      "ram": "RAM Memory",
-      "storage": "Storage",
-      "sqlLicenses": "SQL Licenses",
-      "ebsVolumes": "EBS Volumes",
-      "bandwidth": "Bandwidth"
-    },
-    "compliance": {
-      "instanceTags": "Instance tags",
-      "encryptedVolumes": "Encrypted volumes",
-      "costReports": "Cost reports",
-      "retentionPolicies": "Retention policies",
-      "costAllocation": "Cost allocation"
-    },
-    "complianceDescriptions": {
-      "instanceTags": "All instances must have project and environment tags.",
-      "encryptedVolumes": "All storage volumes must be encrypted.",
-      "costReports": "Detailed cost reports must be generated monthly.",
-      "retentionPolicies": "Retention policies must be defined for all storage buckets.",
-      "costAllocation": "All costs must be allocated to a cost center."
-    },
-    "environments": {
-      "production": "Production",
-      "staging": "Staging",
-      "development": "Development"
-    },
-    "benchmarks": {
-      "computeInstances": "Compute Instances",
-      "storagePerGB": "Storage (per GB)",
-      "database": "Database"
-    },
-    "tags": {
-      "serverless": "serverless",
-      "newProject": "new-project",
-      "devops": "devops",
-      "cicd": "ci-cd",
-      "analytics": "analytics",
-      "bigData": "big-data"
+    "error": {
+      "title": "Signup failed",
+      "description": "There was a problem creating your account. Please try again."
     }
   }
 }

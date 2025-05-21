@@ -1,3 +1,4 @@
+
 {
   "common": {
     "megabill": "MegaBill",
@@ -6,49 +7,15 @@
     "costGuard": "Guardião de Custos",
     "anomalies": "Anomalias",
     "period": "Período",
-    "budgets": "Orçamentos",
-    "financialPlans": "Planos Financeiros",
-    "resources": "Recursos",
-    "dataExplorer": "Explorador de Dados", 
-    "myCommitments": "Meus Compromissos",
-    "commitmentsLog": "Registro de Compromissos",
-    "reports": "Relatórios",
-    "governance": "Governança",
-    "new": "Novo",
-    "notifications": "Notificações",
-    "noNotifications": "Sem notificações",
-    "markAllAsRead": "Marcar todas como lidas",
-    "myAccount": "Minha Conta",
     "lightMode": "Modo Claro",
     "darkMode": "Modo Escuro",
     "switchToLightMode": "Mudar para Modo Claro",
-    "switchToDarkMode": "Mudar para Modo Escuro",
-    "profile": "Perfil",
-    "settings": "Configurações",
-    "support": "Suporte",
-    "logout": "Sair",
-    "platformDescription": "Plataforma centralizada de FinOps para gerenciamento de custos na nuvem"
+    "switchToDarkMode": "Mudar para Modo Escuro"
   },
   "categories": {
     "inform": "Informar",
     "optimize": "Otimizar",
     "operate": "Operar"
-  },
-  "calendar": {
-    "title": "Calendário de Planejamento",
-    "previousMonth": "Mês anterior",
-    "nextMonth": "Próximo mês",
-    "month": "Mês",
-    "year": "Ano",
-    "impact": "Impacto",
-    "noEvents": "Nenhum evento para {{month}} de {{year}}",
-    "months": ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
-    "eventTypes": {
-      "billing": "Faturamento",
-      "contract": "Contrato",
-      "budget": "Orçamento",
-      "other": "Outro"
-    }
   },
   "timeFilter": {
     "last7days": "Últimos 7 dias",
@@ -58,138 +25,85 @@
     "custom": "Período personalizado",
     "selectPeriod": "Selecione o período"
   },
-  "anomalies": {
-    "detected": "Anomalias Detectadas",
-    "anomalies": "anomalias",
-    "impact": "Impacto",
-    "investigate": "Investigar",
-    "noAnomaliesDetected": "Nenhuma anomalia detectada"
+  "landing": {
+    "login": "Entrar",
+    "hero": {
+      "title": "Otimize Seus Custos na Nuvem com Precisão",
+      "subtitle": "Obtenha visibilidade completa em todos os seus provedores de nuvem e economize com recomendações acionáveis.",
+      "cta": "Começar Agora",
+      "imageAlt": "Visualização do painel de análise de custos na nuvem"
+    },
+    "features": {
+      "title": "Principais Recursos",
+      "subtitle": "Descubra como o X Cost ajuda você a gerenciar e otimizar seus gastos na nuvem de forma eficaz.",
+      "analytics": {
+        "title": "Análise de Custos",
+        "description": "Insights profundos sobre seus gastos na nuvem em todos os provedores com análise de tendências e previsões."
+      },
+      "optimization": {
+        "title": "Otimização de Custos",
+        "description": "Identifique oportunidades de economia e obtenha recomendações personalizadas para reduzir gastos desnecessários."
+      },
+      "governance": {
+        "title": "Governança de FinOps",
+        "description": "Estabeleça políticas, orçamentos e alertas para manter o controle financeiro de seus recursos na nuvem."
+      }
+    },
+    "testimonials": {
+      "title": "O Que Nossos Clientes Dizem",
+      "quote1": "O X Cost nos ajudou a reduzir nossos gastos na nuvem em 34% em apenas três meses, melhorando a utilização de recursos.",
+      "quote2": "O recurso de detecção de anomalias nos salvou de uma surpresa enorme na fatura do último trimestre. Vale cada centavo."
+    },
+    "footer": {
+      "copyright": "© 2025 X Cost. Todos os direitos reservados.",
+      "privacy": "Política de Privacidade",
+      "terms": "Termos de Serviço",
+      "contact": "Fale Conosco"
+    }
   },
-  "severities": {
-    "high": "Alta",
-    "medium": "Média",
-    "low": "Baixa",
-    "unknown": "Desconhecida"
+  "login": {
+    "backToHome": "Voltar para início",
+    "title": "Bem-vindo de volta",
+    "subtitle": "Digite suas credenciais para acessar sua conta",
+    "form": {
+      "email": "E-mail",
+      "password": "Senha",
+      "login": "Entrar",
+      "loggingIn": "Entrando..."
+    },
+    "forgotPassword": "Esqueceu sua senha?",
+    "noAccount": "Não tem uma conta?",
+    "signUp": "Cadastre-se",
+    "success": {
+      "title": "Login bem-sucedido",
+      "description": "Bem-vindo de volta ao X Cost!"
+    },
+    "error": {
+      "title": "Falha no login",
+      "description": "E-mail ou senha inválidos. Por favor, tente novamente."
+    }
   },
-  "benchmarks": {
-    "title": "Benchmarks de Custos",
-    "top": "Top",
-    "bottom": "Bottom",
-    "best": "Melhor",
-    "you": "Você",
-    "average": "Média"
-  },
-  "sections": {
-    "eficiencia": "Eficiência",
-    "tarifacao": "Tarifação",
-    "planejamento": "Planejamento",
-    "governanca": "Governança",
-    "kpis": "KPIs de Desempenho",
-    "noKpisForCategory": "Nenhum KPI disponível para esta categoria"
-  },
-  "mockData": {
-    "notificationTitles": {
-      "costAnomaly": "Nova anomalia de custo",
-      "budgetExceeded": "Orçamento excedido",
-      "savingsOpportunity": "Oportunidade de economia"
+  "signup": {
+    "backToHome": "Voltar para início",
+    "title": "Criar uma conta",
+    "subtitle": "Digite seus dados para começar a usar o X Cost",
+    "form": {
+      "name": "Nome Completo",
+      "email": "E-mail",
+      "password": "Senha",
+      "confirmPassword": "Confirmar Senha",
+      "signUp": "Criar Conta",
+      "signingUp": "Criando conta..."
     },
-    "categories": {
-      "computation": "Computação",
-      "storage": "Armazenamento",
-      "network": "Rede",
-      "database": "Banco de Dados",
-      "others": "Outros"
+    "haveAccount": "Já tem uma conta?",
+    "login": "Entrar",
+    "success": {
+      "title": "Conta criada",
+      "description": "Bem-vindo ao X Cost!"
     },
-    "anomalyTitles": {
-      "expiredSnapshots": "Snapshots expirados",
-      "vmCostIncrease": "Aumento súbito em custos de VM",
-      "idleResources": "Recursos ociosos",
-      "unoptimizedGPUs": "GPU não otimizadas",
-      "idleBalancers": "Balanceadores ociosos",
-      "oversizedDatabase": "Banco de dados sobredimensionado",
-      "unassociatedIPs": "IPs elásticos não associados"
-    },
-    "anomalyDescriptions": {
-      "expiredSnapshots": "Detectamos 27 snapshots mais antigos que 90 dias",
-      "vmCostIncrease": "Detectamos um aumento de 350% nos custos de VMs no projeto \"data-pipeline\"",
-      "idleResources": "Mais de 15 instâncias com utilização abaixo de 10% no último mês",
-      "unoptimizedGPUs": "Instâncias GPU com menos de 30% de utilização",
-      "idleBalancers": "3 balanceadores de carga sem tráfego significativo nos últimos 30 dias",
-      "oversizedDatabase": "RDS com menos de 25% de armazenamento utilizado",
-      "unassociatedIPs": "12 IPs elásticos sem associação a instâncias"
-    },
-    "savingsOpportunities": {
-      "reservedInstances": "Reserved Instances",
-      "rightsizing": "Rightsizing",
-      "storageLifecycle": "Storage Lifecycle",
-      "savingsPlans": "Savings Plans",
-      "unusedVolumes": "Volumes não utilizados",
-      "kubernetesClusters": "Clusters Kubernetes",
-      "storageTiers": "Camadas de armazenamento"
-    },
-    "savingsDescriptions": {
-      "reservedInstances": "Convertendo 74 instâncias on-demand para RIs",
-      "rightsizing": "Redimensionar 32 instâncias para tamanhos mais adequados",
-      "storageLifecycle": "Configurar regras de ciclo de vida para buckets S3",
-      "savingsPlans": "Adquirir Savings Plans para funções Lambda e Fargate",
-      "unusedVolumes": "Remover 47 volumes EBS não anexados a instâncias",
-      "kubernetesClusters": "Otimizar a escala de nós em clusters Kubernetes",
-      "storageTiers": "Migrar dados para classes de armazenamento mais econômicas"
-    },
-    "teams": {
-      "development": "Desenvolvimento",
-      "infrastructure": "Infraestrutura",
-      "dataScience": "Data Science",
-      "marketing": "Marketing"
-    },
-    "months": {
-      "jan": "Jan",
-      "feb": "Fev",
-      "mar": "Mar",
-      "apr": "Abr",
-      "may": "Mai",
-      "jun": "Jun",
-      "jul": "Jul"
-    },
-    "resources": {
-      "vcpus": "vCPUs",
-      "ram": "Memória RAM",
-      "storage": "Armazenamento",
-      "sqlLicenses": "Licenças SQL",
-      "ebsVolumes": "Volumes EBS",
-      "bandwidth": "Largura de Banda"
-    },
-    "compliance": {
-      "instanceTags": "Instâncias com tags",
-      "encryptedVolumes": "Volumes encriptados",
-      "costReports": "Relatórios de custos",
-      "retentionPolicies": "Políticas de retenção",
-      "costAllocation": "Alocação de custos"
-    },
-    "complianceDescriptions": {
-      "instanceTags": "Todas as instâncias devem ter tags de projeto e ambiente.",
-      "encryptedVolumes": "Todos os volumes de armazenamento devem ser encriptados.",
-      "costReports": "Relatórios detalhados de custos devem ser gerados mensalmente.",
-      "retentionPolicies": "Políticas de retenção de dados devem ser definidas para todos os buckets de armazenamento.",
-      "costAllocation": "Todos os custos devem ser alocados a um centro de custo."
-    },
-    "environments": {
-      "production": "Produção",
-      "staging": "Homologação",
-      "development": "Desenvolvimento"
-    },
-    "benchmarks": {
-      "computeInstances": "Instâncias Compute",
-      "storagePerGB": "Storage (por GB)",
-      "database": "Banco de Dados"
-    },
-    "tags": {
-      "serverless": "serverless",
-      "newProject": "novo-projeto",
-      "devops": "devops",
-      "cicd": "ci-cd",
-      "analytics": "analytics",
-      "bigData": "big-data"
+    "error": {
+      "title": "Falha no cadastro",
+      "description": "Houve um problema ao criar sua conta. Por favor, tente novamente."
     }
   }
 }
