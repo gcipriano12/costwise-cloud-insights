@@ -1,0 +1,68 @@
+
+import React from 'react';
+import { TimeFilter } from '@/components/dashboard/TimeFilter';
+import { cn } from '@/lib/utils';
+import { LucideIcon } from 'lucide-react';
+import { useTheme } from '@/hooks/useTheme';
+import { Button } from '@/components/ui/button';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { ChevronRight } from 'lucide-react';
+
+interface PageHeaderProps {
+  icon: LucideIcon;
+  title: string;
+  description?: string;
+  color?: string;
+  showTimeFilter?: boolean;
+  actions?: React.ReactNode;
+}
+
+export const PageHeader: React.FC<PageHeaderProps> = ({
+  icon: Icon,
+  title,
+  description,
+  color = 'text-blue-600',
+  showTimeFilter = true,
+  actions
+}) => {
+  const { isDark } = useTheme();
+  const isMobile = useIsMobile();
+  
+  return (
+    <div className={cn(
+      "w-full pb-4 pt-4",
+      isDark ? "border-b border-slate-800" : "border-b border-slate-200",
+    )}>
+      <div className="flex flex-col sm:flex-row justify-between gap-4 px-4">
+        <div className="flex flex-col">
+          <div className="flex items-center">
+            <div className={cn("flex items-center mr-2", color)}>
+              <a href="/" className="flex items-center text-muted-foreground hover:text-foreground">
+                <span className="sr-only">Home</span>
+                <Icon className="h-4 w-4 sm:h-5 sm:w-5" />
+              </a>
+              <ChevronRight className="h-4 w-4 mx-1 text-muted-foreground" />
+            </div>
+            <h1 className="text-xl sm:text-2xl font-semibold">{title}</h1>
+          </div>
+          {description && (
+            <p className="text-sm text-muted-foreground mt-1 max-w-2xl">
+              {description}
+            </p>
+          )}
+        </div>
+
+        <div className="flex items-center gap-2 self-end">
+          {showTimeFilter && (
+            <TimeFilter
+              value="last-30-days"
+              onChange={() => {}}
+            />
+          )}
+          
+          {actions}
+        </div>
+      </div>
+    </div>
+  );
+};

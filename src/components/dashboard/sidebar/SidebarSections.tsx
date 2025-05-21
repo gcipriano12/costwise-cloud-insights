@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { 
   SidebarGroup,
@@ -32,12 +33,12 @@ export const SidebarSections = () => {
   // Seção Inform
   const informItems = [
     { name: 'MegaBill', href: '/', icon: <Globe className="h-5 w-5" /> },
-    { name: 'Virtual Tags', href: '/tags', icon: <Tags className="h-5 w-5" /> },
+    { name: 'Virtual Tags', href: '/virtual-tags', icon: <Tags className="h-5 w-5" /> },
     { name: 'Dashboards', href: '/dashboards', icon: <LayoutDashboard className="h-5 w-5" /> },
     { name: 'Budgets', href: '/budgets', icon: <LineChart className="h-5 w-5" /> },
-    { name: 'Financial Plans', href: '/plans', icon: <Clock className="h-5 w-5" /> },
+    { name: 'Financial Plans', href: '/financial-plans', icon: <Clock className="h-5 w-5" /> },
     { name: 'Resources', href: '/resources', icon: <LayoutGrid className="h-5 w-5" /> },
-    { name: 'Data Explorer', href: '/explorer', icon: <Database className="h-5 w-5" /> }
+    { name: 'Data Explorer', href: '/data-explorer', icon: <Database className="h-5 w-5" /> }
   ];
 
   // Seção Optimize

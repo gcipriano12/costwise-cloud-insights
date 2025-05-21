@@ -1,61 +1,78 @@
-import React from 'react';
-import { 
-  SidebarMenuItem, 
-  SidebarMenuButton, 
-  useSidebar 
-} from '@/components/ui/sidebar';
 
-interface SidebarMenuItemProps {
-  item: {
-    name: string;
-    href?: string;
-    icon: React.ReactNode;
-    badge?: string;
-  };
-  onClick?: () => void;
+import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { SidebarMenuItem, SidebarMenuButton } from '@/components/ui/sidebar';
+import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
+import { useTheme } from '@/hooks/useTheme';
+import { useSidebar } from '@/components/ui/sidebar';
+
+interface SidebarItem {
+  name: string;
+  href: string;
+  icon: React.ReactNode;
+  badge?: string;
 }
 
-export const SidebarMenuItemMobile: React.FC<SidebarMenuItemProps> = ({ item, onClick = null }) => {
-  const { isMobile, setOpenMobile, state, open, openMobile } = useSidebar();
+interface SidebarMenuItemMobileProps {
+  item: SidebarItem;
+}
+
+export const SidebarMenuItemMobile: React.FC<SidebarMenuItemMobileProps> = ({ item }) => {
+  const location = useLocation();
+  const { isDark } = useTheme();
+  const { state, isMobile, openMobile, setOpenMobile } = useSidebar();
+  
+  const isActive = location.pathname === item.href;
+  const showText = (isMobile && openMobile) || (!isMobile && state !== "collapsed");
   
   const handleClick = () => {
-    // Em dispositivos móveis, fechar a sidebar quando um item é clicado
-    if (isMobile) {
-      setOpenMobile(false);
+    if (isMobile && openMobile) {
+      setTimeout(() => {
+        setOpenMobile(false);
+      }, 150);
     }
-    // Chamar o onClick personalizado se fornecido
-    if (onClick) onClick();
   };
   
-  // Determinar quando mostrar o texto: em desktop quando não está colapsado,
-  // ou em mobile quando openMobile é true
-  const showText = (isMobile && openMobile) || (!isMobile && state !== "collapsed");
-
-  // Reduzir o tamanho do ícone em dispositivos móveis
-  const iconElement = React.isValidElement(item.icon) && isMobile 
-    ? React.cloneElement(item.icon as React.ReactElement, {
-        className: 'h-4 w-4' // Ícone menor para mobile
-      })
-    : item.icon;
+  // Determinar as cores do item ativo/inativo
+  const getActiveStyles = () => {
+    if (isActive) {
+      return isDark
+        ? 'bg-sidebar-accent/20 text-white'
+        : 'bg-sidebar-accent/20 text-sidebar-foreground';
+    }
+    return '';
+  };
   
   return (
-    <SidebarMenuItem key={item.name}>
-      <SidebarMenuButton 
-        tooltip={item.name} 
-        onClick={handleClick}
-        className={isMobile 
-          ? (openMobile ? "" : "flex justify-center items-center mx-auto") 
-          : ""}
-      >
-        {iconElement}
-        <span className={showText ? "" : "hidden"}>
-          {item.name}
-          {item.badge && (
-            <span className={`ml-2 text-xs ${isMobile ? "text-[10px]" : ""} bg-white text-black px-1.5 py-0.5 rounded-full`}>
-              {item.badge}
+    <SidebarMenuItem className="my-0.5 px-2">
+      <SidebarMenuButton asChild>
+        <Link 
+          to={item.href} 
+          className={cn(
+            "w-full justify-start gap-4 p-2 text-sm text-sidebar-foreground hover:bg-sidebar-accent/10 hover:text-sidebar-accent-foreground focus-visible:ring-2 focus-visible:ring-sidebar-ring",
+            getActiveStyles()
+          )}
+          onClick={handleClick}
+        >
+          {item.icon}
+          {showText && (
+            <span className="truncate">
+              {item.name}
             </span>
           )}
-        </span>
+          {item.badge && showText && (
+            <Badge 
+              variant="outline"
+              className={cn(
+                "ml-auto h-5 px-1.5 text-xs",
+                isActive ? 'border-primary text-primary' : 'opacity-70'
+              )}
+            >
+              {item.badge}
+            </Badge>
+          )}
+        </Link>
       </SidebarMenuButton>
     </SidebarMenuItem>
   );
