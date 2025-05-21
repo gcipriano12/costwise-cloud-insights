@@ -44,16 +44,24 @@ export const SidebarNotifications = () => {
   };
 
   return (
-    <SidebarMenuItem>
+    <SidebarMenuItem data-mobile-icons={isMobile} className="my-0.5 px-2">
       <Popover open={notificationsOpen} onOpenChange={setNotificationsOpen}>
         <PopoverTrigger asChild>
           <SidebarMenuButton tooltip="Notificações">
-            <Bell className="h-5 w-5" />
+            <div className={cn(
+              "flex items-center justify-center",
+              isMobile && openMobile ? "h-6 w-6" : "h-5 w-5"
+            )}>
+              <Bell className="h-5 w-5" />
+            </div>
             <span className={showText ? "" : "hidden"}>
               Notificações
             </span>
             {unreadCount > 0 && (
-              <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full group-data-[collapsible=icon]:right-[unset] group-data-[collapsible=icon]:top-0 group-data-[collapsible=icon]:translate-x-1.5"></span>
+              <span className={cn(
+                "absolute w-2 h-2 bg-red-500 rounded-full group-data-[collapsible=icon]:right-[unset] group-data-[collapsible=icon]:top-0 group-data-[collapsible=icon]:translate-x-1.5",
+                showText ? "top-[6px] right-[12px]" : "top-0 right-0"
+              )}></span>
             )}
           </SidebarMenuButton>
         </PopoverTrigger>

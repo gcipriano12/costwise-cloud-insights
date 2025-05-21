@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { useTheme } from '@/hooks/useTheme';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useNavigate } from 'react-router-dom';
 
 interface Anomaly {
   id: string;
@@ -24,6 +25,7 @@ export function AnomaliesCard({ anomalies, currency }: AnomaliesCardProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const { isDark } = useTheme();
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
   
   const formatCurrency = (value: number) => {
     if (value >= 1000000) {
@@ -138,6 +140,7 @@ export function AnomaliesCard({ anomalies, currency }: AnomaliesCardProps) {
                   variant="ghost" 
                   size="sm" 
                   className={`h-6 text-xs ${getSeverityTextColor(anomalies[currentIndex].severity)}`}
+                  onClick={() => navigate(`/anomalies?id=${anomalies[currentIndex].id}`)}
                 >
                   <span className="mr-1">Investigar</span>
                   <ArrowUpRight className="h-3 w-3" />

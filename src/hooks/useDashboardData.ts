@@ -51,6 +51,10 @@ export type Anomaly = {
   title: string;
   description: string;
   impact: number;
+  resource?: string;
+  provider?: string;
+  dateDetected: string;
+  tags?: string[];
 };
 
 export type SavingsOpportunity = {
@@ -217,49 +221,56 @@ export const useDashboardData = () => {
         severity: 'low',
         title: 'Snapshots expirados',
         description: 'Detectamos 27 snapshots mais antigos que 90 dias',
-        impact: 3450.20
+        impact: 3450.20,
+        dateDetected: '2023-10-20'
       },
       {
         id: 'a1',
         severity: 'high',
         title: 'Aumento súbito em custos de VM',
         description: 'Detectamos um aumento de 350% nos custos de VMs no projeto "data-pipeline"',
-        impact: 23450.60
+        impact: 23450.60,
+        dateDetected: '2023-10-26'
       },
       {
         id: 'a2',
         severity: 'medium',
         title: 'Recursos ociosos',
         description: 'Mais de 15 instâncias com utilização abaixo de 10% no último mês',
-        impact: 12300.80
+        impact: 12300.80,
+        dateDetected: '2023-10-25'
       },
       {
         id: 'a4',
         severity: 'high',
         title: 'GPU não otimizadas',
         description: 'Instâncias GPU com menos de 30% de utilização',
-        impact: 19850.75
+        impact: 19850.75,
+        dateDetected: '2023-10-24'
       },
       {
         id: 'a5',
         severity: 'medium',
         title: 'Balanceadores ociosos',
         description: '3 balanceadores de carga sem tráfego significativo nos últimos 30 dias',
-        impact: 4560.30
+        impact: 4560.30,
+        dateDetected: '2023-10-23'
       },
       {
         id: 'a6',
         severity: 'low',
         title: 'Banco de dados sobredimensionado',
         description: 'RDS com menos de 25% de armazenamento utilizado',
-        impact: 2960.45
+        impact: 2960.45,
+        dateDetected: '2023-10-22'
       },
       {
         id: 'a7',
         severity: 'high',
         title: 'IPs elásticos não associados',
         description: '12 IPs elásticos sem associação a instâncias',
-        impact: 1870.20
+        impact: 1870.20,
+        dateDetected: '2023-10-21'
       }
     ],
     

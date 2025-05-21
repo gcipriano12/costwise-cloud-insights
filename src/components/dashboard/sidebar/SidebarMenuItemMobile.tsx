@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { SidebarMenuItem, SidebarMenuButton } from '@/components/ui/sidebar';
@@ -56,11 +55,17 @@ export const SidebarMenuItemMobile: React.FC<SidebarMenuItemMobileProps> = ({ it
           to={item.href} 
           className={cn(
             "w-full justify-start gap-4 p-2 text-sm text-sidebar-foreground hover:bg-sidebar-accent/10 hover:text-sidebar-accent-foreground focus-visible:ring-2 focus-visible:ring-sidebar-ring",
-            getActiveStyles()
+            getActiveStyles(),
+            isMobile && openMobile && "gap-2",
           )}
           onClick={handleClick}
         >
-          {item.icon}
+          <div className={cn(
+            "flex items-center justify-center",
+            isMobile && openMobile ? "h-6 w-6" : "h-5 w-5"
+          )}>
+            {item.icon}
+          </div>
           {showText && (
             <span className="truncate">
               {item.name}
@@ -68,10 +73,9 @@ export const SidebarMenuItemMobile: React.FC<SidebarMenuItemMobileProps> = ({ it
           )}
           {item.badge && showText && (
             <Badge 
-              variant="outline"
               className={cn(
-                "ml-auto h-5 px-1.5 text-xs",
-                isActive ? 'border-primary text-primary' : 'opacity-70'
+                "ml-auto h-5 px-1.5 text-xs text-white",
+                "bg-gradient-to-r from-blue-500 to-indigo-600 border-0",
               )}
             >
               {item.badge}
