@@ -43,19 +43,16 @@ export function ResponsiveChart({
     setFontSize(isMobile ? 10 : isTablet ? 11 : 12);
   }, [isMobile, isTablet]);
   
+  // Fixed: Properly handle children for ResponsiveContainer
   const chartContainer = (
     <div style={{ height: chartHeight, width: '100%' }} className={cn(className)}>
       <ResponsiveContainer width="100%" height="100%">
-        {React.Children.map(children, child => {
-          if (React.isValidElement(child)) {
-            // Clone the chart element and pass fontSize prop if supported
-            return React.cloneElement(child as React.ReactElement<any>, {
-              // Only pass these props to chart components that would use them
-              ...(child.type.toString().includes('Chart') ? { fontSize } : {})
-            });
-          }
-          return child;
-        })}
+        {React.isValidElement(children) ? 
+          React.cloneElement(children, {
+            // Only pass fontSize prop if it's a chart component
+            ...(children.type.toString().includes('Chart') ? { fontSize } : {})
+          })
+        : children}
       </ResponsiveContainer>
     </div>
   );
