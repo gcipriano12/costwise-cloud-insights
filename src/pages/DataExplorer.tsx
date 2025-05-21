@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import Dashboard from '@/components/dashboard/Dashboard';
 import { PageHeader } from '@/components/layout/PageHeader';
@@ -122,7 +121,7 @@ const DataExplorer = () => {
     <Dashboard>
       <div className="flex-1 w-full">
         <PageHeader 
-          icon={Database} 
+          icon={Search} 
           title="Data Explorer" 
           description="Build custom queries to explore your cloud cost and usage data."
           color="text-[#0080af]"

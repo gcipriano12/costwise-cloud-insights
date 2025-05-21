@@ -12,7 +12,7 @@ import {
   LineChart, 
   Clock, 
   LayoutGrid, 
-  Database,
+  Search,
   ShieldCheck, 
   CalendarCheck, 
   ClipboardList, 
@@ -38,7 +38,7 @@ export const SidebarSections = () => {
     { name: 'Budgets', href: '/budgets', icon: <LineChart className="h-5 w-5" /> },
     { name: 'Financial Plans', href: '/financial-plans', icon: <Clock className="h-5 w-5" /> },
     { name: 'Resources', href: '/resources', icon: <LayoutGrid className="h-5 w-5" /> },
-    { name: 'Data Explorer', href: '/data-explorer', icon: <Database className="h-5 w-5" /> }
+    { name: 'Data Explorer', href: '/data-explorer', icon: <Search className="h-5 w-5" /> }
   ];
 
   // Seção Optimize

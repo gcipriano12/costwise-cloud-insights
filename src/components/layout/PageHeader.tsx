@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { TimeFilter } from '@/components/dashboard/TimeFilter';
 import { cn } from '@/lib/utils';
@@ -37,11 +36,7 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
         <div className="flex flex-col">
           <div className="flex items-center">
             <div className={cn("flex items-center mr-2", color)}>
-              <a href="/" className="flex items-center text-muted-foreground hover:text-foreground">
-                <span className="sr-only">Home</span>
-                <Icon className="h-4 w-4 sm:h-5 sm:w-5" />
-              </a>
-              <ChevronRight className="h-4 w-4 mx-1 text-muted-foreground" />
+              <Icon className="h-4 w-4 sm:h-5 sm:w-5" />
             </div>
             <h1 className="text-xl sm:text-2xl font-semibold">{title}</h1>
           </div>
