@@ -39,10 +39,10 @@ export default function Dashboard({ children }: DashboardProps) {
   
   return (
     <SidebarProvider defaultOpen={!isMobile}>
-      <div className="min-h-screen flex flex-row w-full overflow-hidden">
+      <div className="min-h-screen flex flex-col md:flex-row w-full overflow-hidden">
         <DashboardSidebar />
         
-        {/* Conteúdo principal - adicionando margem esquerda para dispositivos móveis */}
+        {/* Main content - adding left margin for mobile devices */}
         <div className={`flex-1 flex flex-col w-full overflow-hidden relative ${isMobile ? 'ml-[3.5rem]' : ''}`}>
           <main className="flex-1 bg-gray-50 dark:bg-gray-900 w-full overflow-auto">
             {children || (
