@@ -11,32 +11,7 @@ const CostGuard = () => {
   const { isDark } = useTheme();
   
   return (
-    <Dashboard>
-      <div className="flex-1 w-full">
-        <PageHeader 
-          icon={ShieldCheck} 
-          title="CostGuard" 
-          description="Proactive cost monitoring and anomaly detection."
-          color="text-[#bd3bfd]"
-        />
-        
-        <div className="p-4">
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg font-medium">Cost Protection Status</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className={cn(
-                "flex items-center justify-center h-64 border rounded-lg",
-                isDark ? "border-slate-700" : "border-slate-200"
-              )}>
-                <p className="text-muted-foreground">CostGuard content will be implemented here</p>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-    </Dashboard>
+    <Dashboard />
   );
 };
 

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Dashboard from '@/components/dashboard/Dashboard';
 import { PageHeader } from '@/components/layout/PageHeader';
@@ -101,7 +100,7 @@ const Dashboards = () => {
   ];
   
   return (
-    <Dashboard>
+    <Dashboard >
       <div className="flex-1 w-full">
         <PageHeader 
           icon={LayoutDashboard} 
