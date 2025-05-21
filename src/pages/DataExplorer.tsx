@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import Dashboard from '@/components/dashboard/Dashboard';
 import { PageHeader } from '@/components/layout/PageHeader';
-import { Database, Search, Download, ChevronRight, FileText, History, Clock } from 'lucide-react';
+import { Database, Search, Download, ChevronRight, FileText, History, Clock, Plus } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useTheme } from '@/hooks/useTheme';
 import { cn } from '@/lib/utils';
