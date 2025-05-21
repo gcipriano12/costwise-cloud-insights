@@ -1,4 +1,3 @@
-
 {
   "common": {
     "megabill": "MegaBill",
@@ -27,11 +26,34 @@
   },
   "landing": {
     "login": "Login",
+    "nav": {
+      "solution": "Solution",
+      "integrations": "Integrations",
+      "pricing": "Pricing",
+      "customerStories": "Customer Stories",
+      "resources": "Resources",
+      "company": "Company"
+    },
+    "cta": {
+      "bookDemo": "Book a demo",
+      "getStarted": "Get Started",
+      "watchDemo": "Watch Demo",
+      "title": "Start Optimizing Your Cloud Costs Today",
+      "subtitle": "Join thousands of companies that trust X Cost to manage their cloud spending"
+    },
     "hero": {
       "title": "Optimize Your Cloud Costs with Precision",
       "subtitle": "Get complete visibility across all your cloud providers and start saving with actionable recommendations.",
       "cta": "Get Started",
-      "imageAlt": "Dashboard visualization of cloud cost analytics"
+      "imageAlt": "Dashboard visualization of cloud cost analytics",
+      "feature1": "No credit card required",
+      "feature2": "14-day free trial",
+      "feature3": "Cancel anytime"
+    },
+    "stats": {
+      "reduction": "Average cost reduction",
+      "companies": "Companies optimized",
+      "saved": "Total cloud spend saved"
     },
     "features": {
       "title": "Key Features",
@@ -49,16 +71,69 @@
         "description": "Establish policies, budgets and alerts to maintain financial control of your cloud resources."
       }
     },
+    "process": {
+      "title": "How It Works",
+      "subtitle": "Get started in minutes and start saving on your cloud costs",
+      "connect": {
+        "title": "Connect Accounts",
+        "description": "Easily connect your AWS, Azure, GCP and other cloud provider accounts in minutes."
+      },
+      "analyze": {
+        "title": "Analyze Spending",
+        "description": "Our platform automatically analyzes your cloud spending patterns and identifies inefficiencies."
+      },
+      "save": {
+        "title": "Save Money",
+        "description": "Implement our recommendations to reduce costs while maintaining or improving your cloud performance."
+      }
+    },
+    "useCases": {
+      "title": "For Businesses of All Sizes",
+      "subtitle": "Tailored solutions for different business needs",
+      "enterprise": {
+        "title": "Enterprise",
+        "description": "Manage complex multi-cloud environments with consolidated billing and department-level cost allocation."
+      },
+      "startups": {
+        "title": "Startups",
+        "description": "Optimize your cloud spending as you scale to extend your runway and focus on growth."
+      },
+      "agencies": {
+        "title": "Agencies",
+        "description": "Manage client cloud costs with separate accounts and detailed reporting for client billing."
+      }
+    },
+    "integrations": {
+      "title": "Seamless Integrations",
+      "subtitle": "Connect with all your favorite cloud providers and tools"
+    },
     "testimonials": {
       "title": "What Our Customers Say",
+      "subtitle": "Hear from businesses that have transformed their cloud cost management",
       "quote1": "X Cost helped us reduce our cloud spend by 34% in just three months while improving resource utilization.",
       "quote2": "The anomaly detection feature saved us from a massive billing surprise last quarter. Worth every penny."
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "subtitle": "Got questions? We have answers",
+      "q1": "How long does it take to set up?",
+      "a1": "Setting up takes just minutes. Connect your cloud accounts through our secure API integrations, and you'll start seeing insights right away.",
+      "q2": "Do you support all cloud providers?",
+      "a2": "We support AWS, Azure, Google Cloud, Oracle Cloud, and more. Our platform is constantly expanding to include additional providers.",
+      "q3": "How much can I expect to save?",
+      "a3": "On average, our customers save 23-37% on their cloud bills. Your results may vary based on your current cloud setup and optimization level.",
+      "q4": "Is my data secure?",
+      "a4": "Absolutely. We use industry-standard encryption and security practices. We never store your cloud credentials and only access the billing data needed for analysis."
     },
     "footer": {
       "copyright": "© 2025 X Cost. All rights reserved.",
       "privacy": "Privacy Policy",
       "terms": "Terms of Service",
-      "contact": "Contact Us"
+      "contact": "Contact Us",
+      "tagline": "Cloud cost optimization made simple and effective",
+      "product": "Product",
+      "company": "Company", 
+      "legal": "Legal"
     }
   },
   "login": {

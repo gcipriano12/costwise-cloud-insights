@@ -1,11 +1,25 @@
-
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ThemeToggle } from '@/components/theme/ThemeToggle';
-import { BarChart3, Cloud, ShieldCheck, ArrowRight } from 'lucide-react';
+import { BarChart3, Cloud, ShieldCheck, ArrowRight, ChevronDown, CheckCircle, BuildingIcon, Server, Globe, Coins, Settings, Activity, DollarSign, LineChart } from 'lucide-react';
+
+// Implementação simplificada do logo para a página de landing
+const Logo = () => {
+  return (
+    <Link to="/" className="flex items-center cursor-pointer">
+      <div className="relative flex items-center justify-center bg-blue-500 rounded-sm w-6 h-6">
+        <div className="absolute bg-white transform rotate-45 w-[2.5px] h-[14px]"></div>
+        <div className="absolute bg-white transform -rotate-45 w-[2.5px] h-[14px]"></div>
+      </div>
+      <span className="text-xl font-bold bg-gradient-to-r from-blue-500 to-indigo-600 text-transparent bg-clip-text whitespace-nowrap ml-2">
+        Cost
+      </span>
+    </Link>
+  );
+};
 
 const Landing = () => {
   const { t } = useTranslation();
@@ -33,6 +47,51 @@ const Landing = () => {
     }
   ];
 
+  const processSteps = [
+    {
+      number: '01',
+      title: t('landing.process.connect.title', 'Connect Accounts'),
+      description: t('landing.process.connect.description', 'Easily connect your AWS, Azure, GCP and other cloud provider accounts in minutes.')
+    },
+    {
+      number: '02',
+      title: t('landing.process.analyze.title', 'Analyze Spending'),
+      description: t('landing.process.analyze.description', 'Our platform automatically analyzes your cloud spending patterns and identifies inefficiencies.')
+    },
+    {
+      number: '03',
+      title: t('landing.process.save.title', 'Save Money'),
+      description: t('landing.process.save.description', 'Implement our recommendations to reduce costs while maintaining or improving your cloud performance.')
+    }
+  ];
+
+  const useCases = [
+    {
+      icon: <BuildingIcon className="h-8 w-8 text-emerald-500" />,
+      title: t('landing.useCases.enterprise.title', 'Enterprise'),
+      description: t('landing.useCases.enterprise.description', 'Manage complex multi-cloud environments with consolidated billing and department-level cost allocation.')
+    },
+    {
+      icon: <Server className="h-8 w-8 text-amber-500" />,
+      title: t('landing.useCases.startups.title', 'Startups'),
+      description: t('landing.useCases.startups.description', 'Optimize your cloud spending as you scale to extend your runway and focus on growth.')
+    },
+    {
+      icon: <Globe className="h-8 w-8 text-blue-500" />,
+      title: t('landing.useCases.agencies.title', 'Agencies'),
+      description: t('landing.useCases.agencies.description', 'Manage client cloud costs with separate accounts and detailed reporting for client billing.')
+    }
+  ];
+
+  const integrations = [
+    { name: 'AWS', logo: '💻' },
+    { name: 'Azure', logo: '☁️' },
+    { name: 'GCP', logo: '🔍' },
+    { name: 'Oracle Cloud', logo: '🚀' },
+    { name: 'Slack', logo: '📱' },
+    { name: 'Jira', logo: '🔄' }
+  ];
+
   const testimonials = [
     {
       quote: t('landing.testimonials.quote1', 'X Cost helped us reduce our cloud spend by 34% in just three months while improving resource utilization.'),
@@ -46,16 +105,70 @@ const Landing = () => {
     }
   ];
 
+  const faqs = [
+    {
+      question: t('landing.faq.q1', 'How long does it take to set up?'),
+      answer: t('landing.faq.a1', 'Setting up takes just minutes. Connect your cloud accounts through our secure API integrations, and you\'ll start seeing insights right away.')
+    },
+    {
+      question: t('landing.faq.q2', 'Do you support all cloud providers?'),
+      answer: t('landing.faq.a2', 'We support AWS, Azure, Google Cloud, Oracle Cloud, and more. Our platform is constantly expanding to include additional providers.')
+    },
+    {
+      question: t('landing.faq.q3', 'How much can I expect to save?'),
+      answer: t('landing.faq.a3', 'On average, our customers save 23-37% on their cloud bills. Your results may vary based on your current cloud setup and optimization level.')
+    },
+    {
+      question: t('landing.faq.q4', 'Is my data secure?'),
+      answer: t('landing.faq.a4', 'Absolutely. We use industry-standard encryption and security practices. We never store your cloud credentials and only access the billing data needed for analysis.')
+    },
+  ];
+
   return (
     <div className="flex flex-col min-h-screen">
       {/* Header */}
       <header className="border-b bg-background">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-500 to-indigo-600 text-transparent bg-clip-text">
-            X Cost
+          <div className="flex items-center">
+            <Logo />
           </div>
+          
+          {/* Menu de navegação principal */}
+          <div className="hidden md:flex items-center space-x-6">
+            <div className="flex items-center gap-1 text-sm hover:text-XCost-blue cursor-pointer">
+              {t('landing.nav.solution')}
+              <ChevronDown className="h-4 w-4" />
+            </div>
+            <div className="flex items-center gap-1 text-sm hover:text-XCost-blue cursor-pointer">
+              {t('landing.nav.integrations')}
+              <ChevronDown className="h-4 w-4" />
+            </div>
+            <Link to="/pricing" className="text-sm hover:text-XCost-blue">
+              {t('landing.nav.pricing')}
+            </Link>
+            <div className="flex items-center gap-1 text-sm hover:text-XCost-blue cursor-pointer">
+              {t('landing.nav.customerStories')}
+              <ChevronDown className="h-4 w-4" />
+            </div>
+            <div className="flex items-center gap-1 text-sm hover:text-XCost-blue cursor-pointer">
+              {t('landing.nav.resources')}
+              <ChevronDown className="h-4 w-4" />
+            </div>
+            <div className="flex items-center gap-1 text-sm hover:text-XCost-blue cursor-pointer">
+              {t('landing.nav.company')}
+              <ChevronDown className="h-4 w-4" />
+            </div>
+          </div>
+          
           <div className="flex items-center gap-4">
             <ThemeToggle />
+            <Button 
+              variant="outline"
+              className="hidden md:flex"
+              onClick={() => navigate('/signup')}
+            >
+              {t('landing.cta.bookDemo')}
+            </Button>
             <Button 
               onClick={handleLoginClick} 
               className="bg-XCost-blue hover:bg-blue-700 transition-colors"
@@ -66,45 +179,79 @@ const Landing = () => {
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section className="py-12 md:py-20 bg-gradient-to-b from-background to-muted">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
-            <div className="flex-1">
-              <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">
-                {t('landing.hero.title', 'Optimize Your Cloud Costs with Precision')}
-              </h1>
-              <p className="text-xl text-muted-foreground mb-8 max-w-xl">
-                {t('landing.hero.subtitle', 'Get complete visibility across all your cloud providers and start saving with actionable recommendations.')}
-              </p>
+      {/* Hero Section - Removido o quadrado grande */}
+      <section className="py-16 md:py-24 bg-gradient-to-b from-background to-muted relative overflow-hidden">
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute -top-48 -right-48 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"></div>
+          <div className="absolute top-1/2 -left-48 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl"></div>
+        </div>
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="max-w-3xl mx-auto text-center">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-indigo-700 dark:from-blue-400 dark:to-indigo-400">
+              {t('landing.hero.title', 'Optimize Your Cloud Costs with Precision')}
+            </h1>
+            <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+              {t('landing.hero.subtitle', 'Get complete visibility across all your cloud providers and start saving with actionable recommendations.')}
+            </p>
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
               <Button 
                 size="lg" 
-                className="bg-XCost-blue hover:bg-blue-700 transition-colors font-semibold"
+                className="bg-XCost-blue hover:bg-blue-700 transition-colors font-semibold text-lg px-8"
                 onClick={() => navigate('/signup')}
               >
-                {t('landing.hero.cta', 'Get Started')} <ArrowRight className="ml-2 h-4 w-4" />
+                {t('landing.cta.getStarted', 'Get Started')} <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+              <Button 
+                size="lg" 
+                variant="outline"
+                className="text-lg px-8"
+              >
+                {t('landing.cta.watchDemo', 'Watch Demo')}
               </Button>
             </div>
-            <div className="flex-1">
-              <div className="relative bg-gradient-to-tr from-blue-100 to-indigo-100 dark:from-blue-950 dark:to-indigo-950 p-4 rounded-xl shadow-lg">
-                <img 
-                  src="/placeholder.svg" 
-                  alt={t('landing.hero.imageAlt', 'Dashboard visualization of cloud cost analytics')} 
-                  className="w-full rounded-lg shadow-md"
-                />
-                <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-XCost-blue/20 rounded-full blur-2xl"></div>
-                <div className="absolute -top-4 -left-4 w-32 h-32 bg-indigo-500/20 rounded-full blur-3xl"></div>
+            <div className="mt-12 flex flex-wrap justify-center gap-8 text-muted-foreground">
+              <div className="flex items-center">
+                <CheckCircle className="h-5 w-5 mr-2 text-green-500" />
+                <span>{t('landing.hero.feature1', 'No credit card required')}</span>
+              </div>
+              <div className="flex items-center">
+                <CheckCircle className="h-5 w-5 mr-2 text-green-500" />
+                <span>{t('landing.hero.feature2', '14-day free trial')}</span>
+              </div>
+              <div className="flex items-center">
+                <CheckCircle className="h-5 w-5 mr-2 text-green-500" />
+                <span>{t('landing.hero.feature3', 'Cancel anytime')}</span>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-12 md:py-20 bg-background">
+      {/* Stats Section - Nova seção */}
+      <section className="py-12 bg-background border-y">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">{t('landing.features.title', 'Key Features')}</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+            <div>
+              <div className="text-4xl font-bold text-XCost-blue mb-2">30%</div>
+              <p className="text-muted-foreground">{t('landing.stats.reduction', 'Average cost reduction')}</p>
+            </div>
+            <div>
+              <div className="text-4xl font-bold text-XCost-blue mb-2">500+</div>
+              <p className="text-muted-foreground">{t('landing.stats.companies', 'Companies optimized')}</p>
+            </div>
+            <div>
+              <div className="text-4xl font-bold text-XCost-blue mb-2">$100M+</div>
+              <p className="text-muted-foreground">{t('landing.stats.saved', 'Total cloud spend saved')}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section className="py-16 md:py-24 bg-background">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">{t('landing.features.title', 'Key Features')}</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               {t('landing.features.subtitle', 'Discover how X Cost helps you manage and optimize your cloud expenditure effectively.')}
             </p>
@@ -126,22 +273,122 @@ const Landing = () => {
         </div>
       </section>
 
-      {/* Testimonials Section */}
-      <section className="py-12 md:py-20 bg-muted">
+      {/* How It Works Section - Nova seção */}
+      <section className="py-16 md:py-24 bg-muted">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">{t('landing.testimonials.title', 'What Our Customers Say')}</h2>
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">{t('landing.process.title', 'How It Works')}</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              {t('landing.process.subtitle', 'Get started in minutes and start saving on your cloud costs')}
+            </p>
           </div>
           
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid md:grid-cols-3 gap-8">
+            {processSteps.map((step, index) => (
+              <div key={index} className="relative">
+                <div className="bg-background rounded-lg p-8 h-full border">
+                  <div className="text-4xl font-bold text-XCost-blue/20 mb-4">{step.number}</div>
+                  <h3 className="text-xl font-bold mb-3">{step.title}</h3>
+                  <p className="text-muted-foreground">{step.description}</p>
+                </div>
+                {index < processSteps.length - 1 && (
+                  <div className="hidden md:block absolute top-1/2 right-0 transform translate-x-1/2 -translate-y-1/2 z-10">
+                    <ArrowRight className="h-6 w-6 text-muted-foreground/50" />
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Use Cases Section - Nova seção */}
+      <section className="py-16 md:py-24 bg-background">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">{t('landing.useCases.title', 'For Businesses of All Sizes')}</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              {t('landing.useCases.subtitle', 'Tailored solutions for different business needs')}
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-3 gap-8">
+            {useCases.map((useCase, index) => (
+              <Card key={index} className="border shadow-sm hover:shadow-md transition-shadow">
+                <CardHeader>
+                  <div className="mb-3">{useCase.icon}</div>
+                  <CardTitle>{useCase.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <CardDescription className="text-base">{useCase.description}</CardDescription>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Integrations Section - Nova seção */}
+      <section className="py-16 md:py-24 bg-muted">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">{t('landing.integrations.title', 'Seamless Integrations')}</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              {t('landing.integrations.subtitle', 'Connect with all your favorite cloud providers and tools')}
+            </p>
+          </div>
+          
+          <div className="flex flex-wrap justify-center gap-8">
+            {integrations.map((integration, index) => (
+              <div key={index} className="flex flex-col items-center">
+                <div className="w-16 h-16 bg-background rounded-full flex items-center justify-center text-3xl mb-2 border">
+                  {integration.logo}
+                </div>
+                <div className="font-medium">{integration.name}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section - Nova seção */}
+      <section className="py-16 md:py-24 bg-blue-500 text-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">{t('landing.cta.title', 'Start Optimizing Your Cloud Costs Today')}</h2>
+            <p className="text-xl mb-8 text-white/80">
+              {t('landing.cta.subtitle', 'Join thousands of companies that trust X Cost to manage their cloud spending')}
+            </p>
+            <Button 
+              size="lg" 
+              className="bg-white text-blue-600 hover:bg-blue-50 transition-colors font-semibold text-lg px-8"
+              onClick={() => navigate('/signup')}
+            >
+              {t('landing.cta.getStarted', 'Get Started For Free')}
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="py-16 md:py-24 bg-background">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">{t('landing.testimonials.title', 'What Our Customers Say')}</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              {t('landing.testimonials.subtitle', 'Hear from businesses that have transformed their cloud cost management')}
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {testimonials.map((testimonial, index) => (
-              <div key={index} className="bg-background shadow-sm rounded-lg p-6 border">
-                <blockquote className="text-lg font-medium mb-4">&ldquo;{testimonial.quote}&rdquo;</blockquote>
+              <div key={index} className="bg-muted shadow-sm rounded-lg p-8 border">
+                <blockquote className="text-lg font-medium mb-6">&ldquo;{testimonial.quote}&rdquo;</blockquote>
                 <div className="flex items-center">
-                  <div className="w-10 h-10 bg-XCost-blue/20 rounded-full flex items-center justify-center text-XCost-blue font-bold">
+                  <div className="w-12 h-12 bg-XCost-blue/20 rounded-full flex items-center justify-center text-XCost-blue font-bold">
                     {testimonial.author.charAt(0)}
                   </div>
-                  <div className="ml-3">
+                  <div className="ml-4">
                     <div className="font-semibold">{testimonial.author}</div>
                     <div className="text-sm text-muted-foreground">{testimonial.company}</div>
                   </div>
@@ -152,29 +399,89 @@ const Landing = () => {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="py-8 border-t mt-auto">
+      {/* FAQ Section - Nova seção */}
+      <section className="py-16 md:py-24 bg-muted">
         <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="mb-6 md:mb-0">
-              <div className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-indigo-600 text-transparent bg-clip-text mb-2">
-                X Cost
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">{t('landing.faq.title', 'Frequently Asked Questions')}</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              {t('landing.faq.subtitle', 'Got questions? We have answers')}
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 gap-x-12 gap-y-8 max-w-4xl mx-auto">
+            {faqs.map((faq, index) => (
+              <div key={index}>
+                <h3 className="text-xl font-bold mb-2">{faq.question}</h3>
+                <p className="text-muted-foreground">{faq.answer}</p>
               </div>
-              <p className="text-muted-foreground text-sm">
-                {t('landing.footer.copyright', '© 2025 X Cost. All rights reserved.')}
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="py-16 border-t mt-auto bg-background">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+            <div>
+              <div className="mb-4">
+                <Logo />
+              </div>
+              <p className="text-muted-foreground text-sm mb-4">
+                {t('landing.footer.tagline', 'Cloud cost optimization made simple and effective')}
               </p>
+              <div className="flex space-x-4">
+                <a href="#" className="text-muted-foreground hover:text-foreground">
+                  <span className="sr-only">Twitter</span>
+                  📱
+                </a>
+                <a href="#" className="text-muted-foreground hover:text-foreground">
+                  <span className="sr-only">LinkedIn</span>
+                  💼
+                </a>
+                <a href="#" className="text-muted-foreground hover:text-foreground">
+                  <span className="sr-only">GitHub</span>
+                  💻
+                </a>
+              </div>
             </div>
-            <div className="flex flex-wrap gap-6">
-              <Link to="/privacy" className="text-muted-foreground hover:text-foreground transition-colors">
-                {t('landing.footer.privacy', 'Privacy Policy')}
-              </Link>
-              <Link to="/terms" className="text-muted-foreground hover:text-foreground transition-colors">
-                {t('landing.footer.terms', 'Terms of Service')}
-              </Link>
-              <Link to="/contact" className="text-muted-foreground hover:text-foreground transition-colors">
-                {t('landing.footer.contact', 'Contact Us')}
-              </Link>
+            
+            <div>
+              <h3 className="font-semibold mb-4">{t('landing.footer.product', 'Product')}</h3>
+              <ul className="space-y-2">
+                <li><Link to="#" className="text-muted-foreground hover:text-foreground">Features</Link></li>
+                <li><Link to="#" className="text-muted-foreground hover:text-foreground">Pricing</Link></li>
+                <li><Link to="#" className="text-muted-foreground hover:text-foreground">Integrations</Link></li>
+                <li><Link to="#" className="text-muted-foreground hover:text-foreground">Changelog</Link></li>
+              </ul>
             </div>
+            
+            <div>
+              <h3 className="font-semibold mb-4">{t('landing.footer.company', 'Company')}</h3>
+              <ul className="space-y-2">
+                <li><Link to="#" className="text-muted-foreground hover:text-foreground">About</Link></li>
+                <li><Link to="#" className="text-muted-foreground hover:text-foreground">Careers</Link></li>
+                <li><Link to="#" className="text-muted-foreground hover:text-foreground">Contact</Link></li>
+                <li><Link to="#" className="text-muted-foreground hover:text-foreground">Blog</Link></li>
+              </ul>
+            </div>
+            
+            <div>
+              <h3 className="font-semibold mb-4">{t('landing.footer.legal', 'Legal')}</h3>
+              <ul className="space-y-2">
+                <li><Link to="/privacy" className="text-muted-foreground hover:text-foreground">Privacy Policy</Link></li>
+                <li><Link to="/terms" className="text-muted-foreground hover:text-foreground">Terms of Service</Link></li>
+                <li><Link to="#" className="text-muted-foreground hover:text-foreground">Security</Link></li>
+                <li><Link to="#" className="text-muted-foreground hover:text-foreground">GDPR</Link></li>
+              </ul>
+            </div>
+          </div>
+          
+          <div className="border-t pt-8">
+            <p className="text-muted-foreground text-sm text-center">
+              {t('landing.footer.copyright', '© 2025 X Cost. All rights reserved.')}
+            </p>
           </div>
         </div>
       </footer>

@@ -1,4 +1,3 @@
-
 {
   "common": {
     "megabill": "MegaBill",
@@ -27,14 +26,37 @@
   },
   "landing": {
     "login": "Entrar",
+    "nav": {
+      "solution": "Solução",
+      "integrations": "Integrações",
+      "pricing": "Preços",
+      "customerStories": "Histórias de Clientes",
+      "resources": "Recursos",
+      "company": "Empresa"
+    },
+    "cta": {
+      "bookDemo": "Agende uma demo",
+      "getStarted": "Começar Agora",
+      "watchDemo": "Assistir Demo",
+      "title": "Comece a Otimizar Seus Custos na Nuvem Hoje",
+      "subtitle": "Junte-se a milhares de empresas que confiam no X Cost para gerenciar seus gastos na nuvem"
+    },
     "hero": {
       "title": "Otimize Seus Custos na Nuvem com Precisão",
       "subtitle": "Obtenha visibilidade completa em todos os seus provedores de nuvem e economize com recomendações acionáveis.",
       "cta": "Começar Agora",
-      "imageAlt": "Visualização do painel de análise de custos na nuvem"
+      "imageAlt": "Visualização do painel de análise de custos na nuvem",
+      "feature1": "Sem necessidade de cartão de crédito",
+      "feature2": "Teste gratuito de 14 dias",
+      "feature3": "Cancele quando quiser"
+    },
+    "stats": {
+      "reduction": "Redução média de custos",
+      "companies": "Empresas otimizadas",
+      "saved": "Total economizado na nuvem"
     },
     "features": {
-      "title": "Principais Recursos",
+      "title": "Recursos Principais",
       "subtitle": "Descubra como o X Cost ajuda você a gerenciar e otimizar seus gastos na nuvem de forma eficaz.",
       "analytics": {
         "title": "Análise de Custos",
@@ -49,16 +71,69 @@
         "description": "Estabeleça políticas, orçamentos e alertas para manter o controle financeiro de seus recursos na nuvem."
       }
     },
+    "process": {
+      "title": "Como Funciona",
+      "subtitle": "Comece em minutos e economize nos seus custos de nuvem",
+      "connect": {
+        "title": "Conecte Suas Contas",
+        "description": "Conecte facilmente suas contas AWS, Azure, GCP e outros provedores de nuvem em minutos."
+      },
+      "analyze": {
+        "title": "Analise Seus Gastos",
+        "description": "Nossa plataforma analisa automaticamente seus padrões de gasto na nuvem e identifica ineficiências."
+      },
+      "save": {
+        "title": "Economize Dinheiro",
+        "description": "Implemente nossas recomendações para reduzir custos enquanto mantém ou melhora o desempenho na nuvem."
+      }
+    },
+    "useCases": {
+      "title": "Para Empresas de Todos os Tamanhos",
+      "subtitle": "Soluções personalizadas para diferentes necessidades de negócios",
+      "enterprise": {
+        "title": "Empresas",
+        "description": "Gerencie ambientes multi-nuvem complexos com faturamento consolidado e alocação de custos por departamento."
+      },
+      "startups": {
+        "title": "Startups",
+        "description": "Otimize seus gastos na nuvem enquanto você escala para estender seu capital e focar no crescimento."
+      },
+      "agencies": {
+        "title": "Agências",
+        "description": "Gerencie custos de nuvem de clientes com contas separadas e relatórios detalhados para faturamento."
+      }
+    },
+    "integrations": {
+      "title": "Integrações Perfeitas",
+      "subtitle": "Conecte-se com todos os seus provedores de nuvem e ferramentas favoritas"
+    },
     "testimonials": {
       "title": "O Que Nossos Clientes Dizem",
+      "subtitle": "Ouça empresas que transformaram seu gerenciamento de custos na nuvem",
       "quote1": "O X Cost nos ajudou a reduzir nossos gastos na nuvem em 34% em apenas três meses, melhorando a utilização de recursos.",
       "quote2": "O recurso de detecção de anomalias nos salvou de uma surpresa enorme na fatura do último trimestre. Vale cada centavo."
+    },
+    "faq": {
+      "title": "Perguntas Frequentes",
+      "subtitle": "Tem perguntas? Temos respostas",
+      "q1": "Quanto tempo leva para configurar?",
+      "a1": "A configuração leva apenas alguns minutos. Conecte suas contas na nuvem através de nossas integrações de API seguras e começará a ver insights imediatamente.",
+      "q2": "Vocês suportam todos os provedores de nuvem?",
+      "a2": "Suportamos AWS, Azure, Google Cloud, Oracle Cloud e outros. Nossa plataforma está em constante expansão para incluir provedores adicionais.",
+      "q3": "Quanto posso esperar economizar?",
+      "a3": "Em média, nossos clientes economizam de 23 a 37% em suas contas de nuvem. Seus resultados podem variar com base na configuração atual da sua nuvem e no nível de otimização.",
+      "q4": "Meus dados estão seguros?",
+      "a4": "Absolutamente. Usamos criptografia e práticas de segurança padrão da indústria. Nunca armazenamos suas credenciais de nuvem e acessamos apenas os dados de faturamento necessários para análise."
     },
     "footer": {
       "copyright": "© 2025 X Cost. Todos os direitos reservados.",
       "privacy": "Política de Privacidade",
       "terms": "Termos de Serviço",
-      "contact": "Fale Conosco"
+      "contact": "Fale Conosco",
+      "tagline": "Otimização de custos na nuvem de forma simples e eficaz",
+      "product": "Produto",
+      "company": "Empresa", 
+      "legal": "Jurídico"
     }
   },
   "login": {
