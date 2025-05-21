@@ -4,12 +4,15 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 
-interface ResponsiveCardProps extends React.ComponentProps<typeof Card> {
+interface ResponsiveCardProps {
   title?: React.ReactNode;
   actions?: React.ReactNode;
   mobileCompact?: boolean;
   mobileFullBleed?: boolean;
   mobileBorderless?: boolean;
+  className?: string;
+  children?: React.ReactNode;
+  [key: string]: any; // To allow spreading other props to Card
 }
 
 export function ResponsiveCard({ 
