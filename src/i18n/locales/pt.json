@@ -24,6 +24,25 @@
     "custom": "Período personalizado",
     "selectPeriod": "Selecione o período"
   },
+  "calendar": {
+    "title": "Calendário de Eventos de Custo",
+    "months": [
+      "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", 
+      "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+    ],
+    "month": "Mês",
+    "year": "Ano",
+    "previousMonth": "Mês Anterior",
+    "nextMonth": "Próximo Mês",
+    "noEvents": "Sem eventos para {{month}} {{year}}",
+    "impact": "Impacto",
+    "eventTypes": {
+      "billing": "Faturamento",
+      "contract": "Contrato",
+      "budget": "Orçamento",
+      "other": "Outro"
+    }
+  },
   "landing": {
     "login": "Entrar",
     "nav": {
