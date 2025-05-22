@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Calendar as CalendarIcon, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -31,10 +32,12 @@ export function CostEventCalendarCard({ events }: CostEventCalendarCardProps) {
   
   const currentDate = new Date();
   
-  // Lista de meses para o seletor
-  const months = t('calendar.months', { returnObjects: true }) as string[] || [
-    'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 
-    'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+  // Lista de meses para o seletor - ensure it's an array
+  const monthsFromTranslation = t('calendar.months', { returnObjects: true });
+  // Fallback to default months if translation doesn't return an array
+  const months = Array.isArray(monthsFromTranslation) ? monthsFromTranslation : [
+    'January', 'February', 'March', 'April', 'May', 'June', 
+    'July', 'August', 'September', 'October', 'November', 'December'
   ];
   
   // Gerar anos para o seletor (2 anos atrás até 2 anos à frente)

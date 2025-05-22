@@ -24,6 +24,25 @@
     "custom": "Custom range",
     "selectPeriod": "Select period"
   },
+  "calendar": {
+    "title": "Cost Events Calendar",
+    "months": [
+      "January", "February", "March", "April", "May", "June", 
+      "July", "August", "September", "October", "November", "December"
+    ],
+    "month": "Month",
+    "year": "Year",
+    "previousMonth": "Previous Month",
+    "nextMonth": "Next Month",
+    "noEvents": "No events for {{month}} {{year}}",
+    "impact": "Impact",
+    "eventTypes": {
+      "billing": "Billing",
+      "contract": "Contract",
+      "budget": "Budget",
+      "other": "Other"
+    }
+  },
   "landing": {
     "login": "Login",
     "nav": {
