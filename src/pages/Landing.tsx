@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useTranslation } from 'react-i18next';
@@ -21,9 +21,73 @@ const Logo = () => {
   );
 };
 
+// Componente de dropdown para o menu de navegação
+const NavDropdown = ({ 
+  title, 
+  children,
+  isOpen,
+  onToggle
+}: { 
+  title: string; 
+  children: React.ReactNode;
+  isOpen: boolean;
+  onToggle: () => void;
+}) => {
+  return (
+    <div className="relative">
+      <button 
+        className="flex items-center gap-1 text-sm hover:text-XCost-blue cursor-pointer"
+        onClick={onToggle}
+      >
+        {title}
+        <ChevronDown className={`h-4 w-4 transition-transform ${isOpen ? 'transform rotate-180' : ''}`} />
+      </button>
+      
+      {isOpen && (
+        <div className="absolute mt-2 top-full left-0 bg-white dark:bg-slate-900 shadow-lg rounded-md border border-gray-200 dark:border-slate-700 min-w-[350px] z-50">
+          {children}
+        </div>
+      )}
+    </div>
+  );
+};
+
+// Componente para seção do dropdown
+const DropdownSection = ({ title, children }: { title: string; children: React.ReactNode }) => (
+  <div className="px-4 py-3">
+    <h3 className="text-xs uppercase tracking-wider font-semibold text-muted-foreground mb-3">{title}</h3>
+    <div className="space-y-3">
+      {children}
+    </div>
+  </div>
+);
+
+// Componente para item do dropdown
+const DropdownItem = ({ icon, title, description, href }: { 
+  icon: React.ReactNode; 
+  title: string; 
+  description: string;
+  href: string;
+}) => (
+  <Link to={href} className="flex items-start p-3 hover:bg-muted rounded-md transition-colors">
+    <div className="mr-3 text-XCost-blue">{icon}</div>
+    <div>
+      <div className="text-sm font-medium">{title}</div>
+      <div className="text-xs text-muted-foreground">{description}</div>
+    </div>
+  </Link>
+);
+
 const Landing = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  
+  // Estado para controlar qual dropdown está aberto
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  
+  const toggleDropdown = (dropdown: string) => {
+    setOpenDropdown(openDropdown === dropdown ? null : dropdown);
+  };
 
   const handleLoginClick = () => {
     navigate('/login');
@@ -127,37 +191,165 @@ const Landing = () => {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Header */}
-      <header className="border-b bg-background">
+      <header className="border-b bg-background sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <div className="flex items-center">
             <Logo />
           </div>
           
-          {/* Menu de navegação principal */}
+          {/* Menu de navegação principal com dropdowns */}
           <div className="hidden md:flex items-center space-x-6">
-            <div className="flex items-center gap-1 text-sm hover:text-XCost-blue cursor-pointer">
-              {t('landing.nav.solution')}
-              <ChevronDown className="h-4 w-4" />
-            </div>
-            <div className="flex items-center gap-1 text-sm hover:text-XCost-blue cursor-pointer">
-              {t('landing.nav.integrations')}
-              <ChevronDown className="h-4 w-4" />
-            </div>
+            {/* Dropdown Solução */}
+            <NavDropdown 
+              title={t('landing.nav.solution')} 
+              isOpen={openDropdown === 'solution'}
+              onToggle={() => toggleDropdown('solution')}
+            >
+              <div className="grid grid-cols-2 gap-5 p-6">
+                <DropdownSection title={t('landing.nav.dropdown.mainFeatures', 'MAIN FEATURES')}>
+                  <DropdownItem 
+                    icon={<BarChart3 className="h-5 w-5" />} 
+                    title={t('common.megabill')} 
+                    description={t('landing.nav.dropdown.megabill', 'One dashboard to manage them all')}
+                    href="/dashboard" 
+                  />
+                  <DropdownItem 
+                    icon={<Server className="h-5 w-5" />} 
+                    title={t('common.virtualTags')} 
+                    description={t('landing.nav.dropdown.virtualTags', 'FinOps cost allocation solved')}
+                    href="/virtual-tags" 
+                  />
+                  <DropdownItem 
+                    icon={<Coins className="h-5 w-5" />} 
+                    title={t('landing.nav.dropdown.sharedCost', 'Shared Cost')} 
+                    description={t('landing.nav.dropdown.sharedCostDesc', 'Refined reallocation of shared expenses')}
+                    href="/financial-plans" 
+                  />
+                </DropdownSection>
+                
+                <DropdownSection title={t('landing.nav.dropdown.costOptimization', 'COST OPTIMIZATION')}>
+                  <DropdownItem 
+                    icon={<ShieldCheck className="h-5 w-5" />} 
+                    title={t('common.costGuard')} 
+                    description={t('landing.nav.dropdown.costGuard', 'Detect and reduce waste from day one')}
+                    href="/costguard" 
+                  />
+                  <DropdownItem 
+                    icon={<Activity className="h-5 w-5" />} 
+                    title={t('landing.nav.dropdown.costGuardScans', 'CostGuard Scans')} 
+                    description={t('landing.nav.dropdown.costGuardScansDesc', 'Cloud cost-saving scans')}
+                    href="/costguard" 
+                  />
+                </DropdownSection>
+              </div>
+            </NavDropdown>
+            
+            {/* Dropdown Integrações */}
+            <NavDropdown 
+              title={t('landing.nav.integrations')} 
+              isOpen={openDropdown === 'integrations'}
+              onToggle={() => toggleDropdown('integrations')}
+            >
+              <div className="p-4 w-64">
+                <DropdownSection title={t('landing.nav.dropdown.cloudIntegrations', 'CLOUD PROVIDERS')}>
+                  <DropdownItem 
+                    icon={<Cloud className="h-4 w-4" />} 
+                    title="AWS" 
+                    description={t('landing.nav.dropdown.aws', 'Amazon Web Services integration')}
+                    href="/integrations" 
+                  />
+                  <DropdownItem 
+                    icon={<Cloud className="h-4 w-4" />} 
+                    title="Azure" 
+                    description={t('landing.nav.dropdown.azure', 'Microsoft Azure integration')}
+                    href="/integrations" 
+                  />
+                  <DropdownItem 
+                    icon={<Cloud className="h-4 w-4" />} 
+                    title="GCP" 
+                    description={t('landing.nav.dropdown.gcp', 'Google Cloud Platform integration')}
+                    href="/integrations" 
+                  />
+                </DropdownSection>
+              </div>
+            </NavDropdown>
+            
+            {/* Link simples Preços */}
             <Link to="/pricing" className="text-sm hover:text-XCost-blue">
               {t('landing.nav.pricing')}
             </Link>
-            <div className="flex items-center gap-1 text-sm hover:text-XCost-blue cursor-pointer">
-              {t('landing.nav.customerStories')}
-              <ChevronDown className="h-4 w-4" />
-            </div>
-            <div className="flex items-center gap-1 text-sm hover:text-XCost-blue cursor-pointer">
-              {t('landing.nav.resources')}
-              <ChevronDown className="h-4 w-4" />
-            </div>
-            <div className="flex items-center gap-1 text-sm hover:text-XCost-blue cursor-pointer">
-              {t('landing.nav.company')}
-              <ChevronDown className="h-4 w-4" />
-            </div>
+            
+            {/* Dropdown Histórias de Clientes */}
+            <NavDropdown 
+              title={t('landing.nav.customerStories')} 
+              isOpen={openDropdown === 'customerStories'}
+              onToggle={() => toggleDropdown('customerStories')}
+            >
+              <div className="p-4 w-64">
+                <DropdownSection title={t('landing.nav.dropdown.featuredStories', 'FEATURED STORIES')}>
+                  <DropdownItem 
+                    icon={<BuildingIcon className="h-4 w-4" />} 
+                    title="TechCloud Inc." 
+                    description={t('landing.nav.dropdown.storyDesc1', '34% reduction in cloud spend')}
+                    href="/stories" 
+                  />
+                  <DropdownItem 
+                    icon={<BuildingIcon className="h-4 w-4" />} 
+                    title="DataFlow Systems" 
+                    description={t('landing.nav.dropdown.storyDesc2', 'Avoided billing surprises')}
+                    href="/stories" 
+                  />
+                </DropdownSection>
+              </div>
+            </NavDropdown>
+            
+            {/* Dropdown Recursos */}
+            <NavDropdown 
+              title={t('landing.nav.resources')} 
+              isOpen={openDropdown === 'resources'}
+              onToggle={() => toggleDropdown('resources')}
+            >
+              <div className="p-4 w-64">
+                <DropdownSection title={t('landing.nav.dropdown.resources', 'RESOURCES')}>
+                  <DropdownItem 
+                    icon={<DollarSign className="h-4 w-4" />} 
+                    title={t('landing.nav.dropdown.blog', 'Blog')} 
+                    description={t('landing.nav.dropdown.blogDesc', 'Latest insights and tips')}
+                    href="/resources" 
+                  />
+                  <DropdownItem 
+                    icon={<LineChart className="h-4 w-4" />} 
+                    title={t('landing.nav.dropdown.reports', 'Reports')} 
+                    description={t('landing.nav.dropdown.reportsDesc', 'Industry benchmarks and analyses')}
+                    href="/reports" 
+                  />
+                </DropdownSection>
+              </div>
+            </NavDropdown>
+            
+            {/* Dropdown Empresa */}
+            <NavDropdown 
+              title={t('landing.nav.company')} 
+              isOpen={openDropdown === 'company'}
+              onToggle={() => toggleDropdown('company')}
+            >
+              <div className="p-4 w-64">
+                <DropdownSection title={t('landing.nav.dropdown.company', 'COMPANY')}>
+                  <DropdownItem 
+                    icon={<BuildingIcon className="h-4 w-4" />} 
+                    title={t('landing.nav.dropdown.about', 'About Us')} 
+                    description={t('landing.nav.dropdown.aboutDesc', 'Our mission and team')}
+                    href="/about" 
+                  />
+                  <DropdownItem 
+                    icon={<Settings className="h-4 w-4" />} 
+                    title={t('landing.nav.dropdown.careers', 'Careers')} 
+                    description={t('landing.nav.dropdown.careersDesc', 'Join our team')}
+                    href="/careers" 
+                  />
+                </DropdownSection>
+              </div>
+            </NavDropdown>
           </div>
           
           <div className="flex items-center gap-4">
