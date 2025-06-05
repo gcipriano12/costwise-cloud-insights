@@ -1,5 +1,8 @@
+
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useAuth } from '@/hooks/useAuth';
+import { Navigate } from 'react-router-dom';
 import Dashboard from '../components/dashboard/Dashboard';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { Globe } from 'lucide-react';
@@ -8,6 +11,22 @@ import { useDashboardData } from '@/hooks/useDashboardData';
 
 const Index = () => {
   const { t } = useTranslation();
+  const { isAuthenticated, loading } = useAuth();
+
+  // Show loading while checking authentication
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
+
+  // Redirect to login if not authenticated
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+
   // Obter os dados do dashboard
   const {
     timeFilter,
@@ -37,7 +56,7 @@ const Index = () => {
         <PageHeader 
           icon={Globe} 
           title={t('common.megabill')}
-          description={t('common.platformDescription')}
+          description="Cloud cost management dashboard"
           color="text-blue-600"
           showTimeFilter={true}
           timeFilter={timeFilter}
