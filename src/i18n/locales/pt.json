@@ -94,7 +94,12 @@
     "perMonth": "/mês"
   },
   "topServices": {
-    "title": "Top Serviços"
+    "title": "Top Serviços",
+    "service": "Serviço",
+    "provider": "Provedor",
+    "currentSpend": "Gasto Atual",
+    "variation": "Variação",
+    "details": "Detalhes"
   },
   
   "categoryDistribution": {
@@ -107,29 +112,86 @@
     "trendsAndUtilization": "Tendências e Utilização", 
     "indicatorsAndEvents": "Indicadores e Eventos",
     "comparisonsAndReferences": "Comparativos e Referências",
-    "eficiencia": "Eficiência",
-    "tarifacao": "Tarifação",
-    "planejamento": "Planejamento",
-    "governanca": "Governança",
-    "kpis": "KPIs"
-  },
-  
-  "environmentComparison": {
-    "title": "Comparação de Ambientes",
-    "efficiency": "Eficiência:"
-  },
-  "categories": {
-    "inform": "Informar",
-    "optimize": "Otimizar",
-    "operate": "Operar"
-  },
-  "sections": {
     "kpis": "Indicadores Chave de Performance",
     "eficiencia": "Eficiência",
     "tarifacao": "Tarifação",
     "planejamento": "Planejamento",
     "governanca": "Governança",
     "noKpisForCategory": "Nenhum KPI disponível para esta categoria"
+  },
+  
+  "kpis": {
+    "target": "Meta",
+    "units": {
+      "podsPerNode": "pods/nó",
+      "currencyPerUnit": "R$/unid"
+    },
+    "names": {
+      "resourceUtilizationRate": "Taxa de utilização de recursos",
+      "cloudWastePercentage": "Percentual de desperdício na nuvem",
+      "powerScheduleAdherence": "Taxa de adesão ao power-schedule",
+      "legacyResourcesPercentage": "Percentual de recursos legados",
+      "reservedInstancesCoverage": "Cobertura de instâncias reservadas",
+      "costEfficiencyPerService": "Eficiência de custos por serviço",
+      "containerDensity": "Densidade de contêineres",
+      "costPerWorkload": "Custo por workload",
+      "effectiveSavingsRate": "Taxa de economia efetiva (ESR)",
+      "commitmentDiscountWaste": "Desperdício de desconto por compromisso",
+      "computeCoveredByCommitments": "Gastos computacionais cobertos por compromissos",
+      "costPerVcpuGpuHour": "Custo por hora de vCPU/GPU",
+      "budgetVsForecastVariation": "Variação orçamento vs. previsão",
+      "cloudSpendVariation": "Variação de gasto na nuvem",
+      "forecastAccuracyRate": "Taxa de precisão da previsão",
+      "unallocatedCostPercentage": "Percentual de custo não alocado",
+      "tagPolicyComplianceRate": "Taxa de conformidade com política de tags",
+      "anomalyDetectionSavings": "Economia por detecção de anomalias"
+    },
+    "descriptions": {
+      "resourceUtilizationRate": "Quanto da CPU, memória, GPU, etc. você realmente utiliza em relação ao que provisionou. Mantém o super-provisionamento visível.",
+      "cloudWastePercentage": "Parcela gasta em VMs ociosas, volumes destacados, snapshots zumbis. Impulsiona ações de interrupção/encerramento.",
+      "powerScheduleAdherence": "Se a automação de iniciar/parar funciona conforme planejado para cargas de trabalho não produtivas (noites/fins de semana).",
+      "legacyResourcesPercentage": "Quantas instâncias ainda estão em famílias antigas e menos eficientes. Útil antes de ondas de migração.",
+      "reservedInstancesCoverage": "Percentual de instâncias cobertas por compromissos de longo prazo como RIs ou Savings Plans.",
+      "costEfficiencyPerService": "Custo normalizado por unidade de serviço entregue (transação, requisição, etc).",
+      "containerDensity": "Número médio de pods/contêineres por nó em clusters Kubernetes. Indica eficiência de empacotamento.",
+      "costPerWorkload": "Custo médio por aplicação ou carga de trabalho, ajuda a identificar aplicações com gastos desproporcionais.",
+      "effectiveSavingsRate": "Economia líquida em comparação com preços sob demanda puros — unifica cobertura e utilização de RI/SP/CUD em um único número.",
+      "commitmentDiscountWaste": "Quanto da capacidade de RI/SP/CUD comprada permanece não utilizada — destaca excesso de compromissos.",
+      "computeCoveredByCommitments": "Profundidade da cobertura de tarifas; valores baixos sinalizam vazamento de instâncias sob demanda.",
+      "costPerVcpuGpuHour": "Normaliza o custo para uma unidade técnica, ideal para comparações de preços entre provedores.",
+      "budgetVsForecastVariation": "Quão próxima sua previsão contínua está do orçamento ano a data. Variância ajustada prova disciplina de planejamento.",
+      "cloudSpendVariation": "O sinal clássico de gasto acima/abaixo do orçado; combina com análises detalhadas de causa raiz.",
+      "forecastAccuracyRate": "Precisão preditiva para capacidade ou valores; orienta ajustes no modelo de previsão.",
+      "unallocatedCostPercentage": "Quanto do gasto ainda não possui uma tag ou proprietário — mantém o chargeback transparente.",
+      "tagPolicyComplianceRate": "Saúde da sua disciplina de tagueamento; valores baixos comprometem todos os outros KPIs.",
+      "anomalyDetectionSavings": "Economia obtida ao detectar picos de gastos antecipadamente com alertas."
+    },
+    "formulas": {
+      "resourceUtilizationRate": "(Capacidade consumida ÷ Capacidade alocada) × 100",
+      "cloudWastePercentage": "(Custo de recursos ociosos ÷ Gasto total na nuvem) × 100",
+      "powerScheduleAdherence": "(Horas de execução planejadas ÷ Horas de execução reais) × 100",
+      "legacyResourcesPercentage": "(Contagem de instâncias legadas ÷ Total de instâncias) × 100",
+      "reservedInstancesCoverage": "(Horas cobertas por reservas ÷ Horas totais de instâncias) × 100",
+      "costEfficiencyPerService": "Custo total do serviço ÷ Número de unidades processadas",
+      "containerDensity": "Total de pods em execução ÷ Total de nós no cluster",
+      "costPerWorkload": "Custo total da infraestrutura ÷ Número de workloads",
+      "effectiveSavingsRate": "(Economias de todos os instrumentos de desconto ÷ Gasto equivalente sob demanda)",
+      "commitmentDiscountWaste": "(Custo de compromisso não utilizado ÷ Custo total de compromisso) × 100",
+      "computeCoveredByCommitments": "(Gastos computacionais com desconto por compromisso ÷ Gastos computacionais totais) × 100",
+      "costPerVcpuGpuHour": "(Custo computacional por hora ÷ Número de vCPUs ou GPUs)",
+      "budgetVsForecastVariation": "((Orçado - Previsto) ÷ Orçado) × 100",
+      "cloudSpendVariation": "((Orçado - Real) ÷ Orçado) × 100",
+      "forecastAccuracyRate": "100 - abs((Previsão - Real) ÷ Previsão) × 100",
+      "unallocatedCostPercentage": "(Custos não alocados ÷ Gasto total na nuvem) × 100",
+      "tagPolicyComplianceRate": "(Recursos corretamente tagueados ÷ Total de recursos) × 100",
+      "anomalyDetectionSavings": "Soma de (Custo previsto do pico - Custo no desligamento)"
+    }
+  },
+  
+  "categories": {
+    "inform": "Informar",
+    "optimize": "Otimizar",
+    "operate": "Operar"
   },
   "benchmarks": {
     "title": "Benchmarks de Custo",

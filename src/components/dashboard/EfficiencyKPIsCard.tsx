@@ -248,7 +248,7 @@ export function EfficiencyKPIsCard({ kpis }: EfficiencyKPIsCardProps) {
                     </div>
                     {kpi.target !== undefined && (
                       <div className="text-xs text-muted-foreground mt-1">
-                        Meta: {kpi.target.toLocaleString()}{kpi.unit}
+                        {t('kpis.target')}: {kpi.target.toLocaleString()}{kpi.unit}
                       </div>
                     )}
                   </div>

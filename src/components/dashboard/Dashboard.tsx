@@ -40,7 +40,7 @@ export default function Dashboard({ children }: DashboardProps) {
   } = useDashboardData();
   
   return (
-    <SidebarProvider defaultOpen={!isMobile}>
+    <SidebarProvider>
       <div className="min-h-screen flex flex-row w-full overflow-hidden">
         <DashboardSidebar />
         
