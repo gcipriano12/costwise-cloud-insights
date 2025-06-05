@@ -333,6 +333,7 @@
     "title": "Welcome back",
     "subtitle": "Enter your credentials to access your account",
     "form": {
+      "username": "Username",
       "email": "Email",
       "password": "Password",
       "login": "Login",

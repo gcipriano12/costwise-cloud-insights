@@ -8,6 +8,8 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAuth } from '@/hooks/useAuth';
 import { useTranslation } from 'react-i18next';
+import { ThemeToggle } from '@/components/theme/ThemeToggle';
+import { Logo } from '@/components/ui/logo';
 
 const Login = () => {
   const { t } = useTranslation();
@@ -44,31 +46,37 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center p-4">
-      <div className="w-full max-w-md space-y-8">
-        <div className="text-center">
-          <Link 
-            to="/" 
-            className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground mb-8 transition-colors"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            {t('login.backToHome')}
-          </Link>
-        </div>
+    <div className="flex min-h-screen bg-muted">
+      <div className="flex flex-col w-full">
+        {/* Header */}
+        <header className="p-4 bg-background border-b">
+          <div className="container mx-auto flex justify-between items-center">
+            <Link to="/" className="flex items-center gap-2 text-foreground hover:opacity-80 transition-opacity">
+              <ArrowLeft className="h-4 w-4" />
+              <span>{t('login.backToHome')}</span>
+            </Link>
+            <ThemeToggle />
+          </div>
+        </header>
 
-        <Card>
-          <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl font-bold text-center">
-              {t('login.title')}
-            </CardTitle>
-            <CardDescription className="text-center">
-              {t('login.subtitle')}
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
+        {/* Main Content */}
+        <main className="flex-1 flex items-center justify-center p-4">
+          <Card className="w-full max-w-md shadow-lg">
+            <CardHeader className="space-y-1">
+              <div className="flex justify-center mb-6">
+                <Logo size="lg" showIcon={false} />
+              </div>
+              <CardTitle className="text-2xl text-center">
+                {t('login.title')}
+              </CardTitle>
+              <CardDescription className="text-center">
+                {t('login.subtitle')}
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="username">Username</Label>
+                <Label htmlFor="username">{t('login.form.username')}</Label>
                 <Input
                   id="username"
                   name="username"
@@ -137,6 +145,7 @@ const Login = () => {
             </div>
           </CardContent>
         </Card>
+        </main>
       </div>
     </div>
   );

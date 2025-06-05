@@ -4,22 +4,9 @@ import { Button } from '@/components/ui/button';
 import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ThemeToggle } from '@/components/theme/ThemeToggle';
+import { Logo } from '@/components/ui/logo';
+import { LanguageSwitcherDropdown } from '@/components/ui/language-switcher-dropdown';
 import { BarChart3, Cloud, ShieldCheck, ArrowRight, ChevronDown, CheckCircle, BuildingIcon, Server, Globe, Coins, Settings, Activity, DollarSign, LineChart } from 'lucide-react';
-
-// Implementação simplificada do logo para a página de landing
-const Logo = () => {
-  return (
-    <Link to="/" className="flex items-center cursor-pointer">
-      <div className="relative flex items-center justify-center bg-blue-500 rounded-sm w-6 h-6">
-        <div className="absolute bg-white transform rotate-45 w-[2.5px] h-[14px]"></div>
-        <div className="absolute bg-white transform -rotate-45 w-[2.5px] h-[14px]"></div>
-      </div>
-      <span className="text-xl font-bold bg-gradient-to-r from-blue-500 to-indigo-600 text-transparent bg-clip-text whitespace-nowrap ml-2">
-        Cost
-      </span>
-    </Link>
-  );
-};
 
 // Componente de dropdown para o menu de navegação
 const NavDropdown = ({ 
@@ -194,7 +181,9 @@ const Landing = () => {
       <header className="border-b bg-background sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <div className="flex items-center">
-            <Logo />
+            <Link to="/" className="flex items-center cursor-pointer">
+              <Logo />
+            </Link>
           </div>
           
           {/* Menu de navegação principal com dropdowns */}
@@ -353,6 +342,7 @@ const Landing = () => {
           </div>
           
           <div className="flex items-center gap-4">
+            <LanguageSwitcherDropdown />
             <ThemeToggle />
             <Button 
               variant="outline"
@@ -618,7 +608,9 @@ const Landing = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
             <div>
               <div className="mb-4">
-                <Logo />
+                <Link to="/" className="flex items-center cursor-pointer">
+                  <Logo />
+                </Link>
               </div>
               <p className="text-muted-foreground text-sm mb-4">
                 {t('landing.footer.tagline', 'Cloud cost optimization made simple and effective')}
@@ -671,9 +663,12 @@ const Landing = () => {
           </div>
           
           <div className="border-t pt-8">
-            <p className="text-muted-foreground text-sm text-center">
-              {t('landing.footer.copyright', '© 2025 X Cost. All rights reserved.')}
-            </p>
+            <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+              <p className="text-muted-foreground text-sm text-center">
+                {t('landing.footer.copyright', '© 2025 X Cost. All rights reserved.')}
+              </p>
+              <LanguageSwitcherDropdown variant="outline" size="sm" />
+            </div>
           </div>
         </div>
       </footer>
