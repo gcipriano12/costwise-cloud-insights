@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useXCostData } from './useXCostData';
 
 // Types for dashboard data
 export type SpendSummary = {
@@ -173,8 +174,20 @@ export const useDashboardData = () => {
   const [timeFilter, setTimeFilter] = useState('30d');
   const { t } = useTranslation();
   
+  // Integração com X Cost API
+  const {
+    spendSummary: apiSpendSummary,
+    providerDistribution: apiProviderDistribution,
+    topServices: apiTopServices,
+    trendData: apiTrendData,
+    serviceCosts: apiServiceCosts,
+    regionCosts: apiRegionCosts,
+    loading: apiLoading,
+    hasCredentials
+  } = useXCostData();
+  
   // Mock data for the dashboard
-  const dashboardData: DashboardData = {
+  const mockDashboardData: DashboardData = {
     currency: 'R$',
     // Dados para a seção de resumo
     spendSummaryData: {
@@ -670,9 +683,20 @@ export const useDashboardData = () => {
     ]
   };
 
+  // Usar dados reais quando disponíveis, senão usar mock data
+  const finalDashboardData: DashboardData = {
+    ...mockDashboardData,
+    // Substituir com dados reais da API quando disponíveis
+    spendSummaryData: apiSpendSummary || mockDashboardData.spendSummaryData,
+    providerDistributionData: apiProviderDistribution.length > 0 ? apiProviderDistribution : mockDashboardData.providerDistributionData,
+    topServicesData: apiTopServices.length > 0 ? apiTopServices : mockDashboardData.topServicesData,
+  };
+
   return {
     timeFilter,
     setTimeFilter,
-    ...dashboardData
+    ...finalDashboardData,
+    isLoadingRealData: apiLoading,
+    hasRealData: hasCredentials
   };
 };

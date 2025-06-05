@@ -1,3 +1,4 @@
+
 {
   "common": {
     "megabill": "MegaBill",
@@ -23,6 +24,111 @@
     "lastYear": "Last year",
     "custom": "Custom range",
     "selectPeriod": "Select period"
+  },
+  "mockData": {
+    "categories": {
+      "computation": "Computation",
+      "storage": "Storage",
+      "network": "Network",
+      "database": "Database",
+      "others": "Others"
+    },
+    "anomalyTitles": {
+      "vmCostIncrease": "VM Cost Increase",
+      "idleResources": "Idle Resources",
+      "expiredSnapshots": "Expired Snapshots",
+      "unoptimizedGPUs": "Unoptimized GPUs",
+      "idleBalancers": "Idle Load Balancers",
+      "oversizedDatabase": "Oversized Database",
+      "unassociatedIPs": "Unassociated IP Addresses"
+    },
+    "anomalyDescriptions": {
+      "vmCostIncrease": "Significant increase in VM costs detected in production environment",
+      "idleResources": "Multiple resources running with low utilization",
+      "expiredSnapshots": "Old snapshots consuming unnecessary storage",
+      "unoptimizedGPUs": "GPU instances running without workload",
+      "idleBalancers": "Load balancers with no active targets",
+      "oversizedDatabase": "Database instance oversized for current workload",
+      "unassociatedIPs": "Elastic IPs not associated with any resource"
+    },
+    "savingsOpportunities": {
+      "reservedInstances": "Reserved Instances",
+      "rightsizing": "Right-sizing Recommendations",
+      "storageLifecycle": "Storage Lifecycle Policies",
+      "savingsPlans": "Savings Plans",
+      "unusedVolumes": "Unused EBS Volumes",
+      "kubernetesClusters": "Kubernetes Optimization",
+      "storageTiers": "Storage Tier Optimization"
+    },
+    "savingsDescriptions": {
+      "reservedInstances": "Switch to reserved instances for predictable workloads",
+      "rightsizing": "Optimize instance sizes based on usage patterns",
+      "storageLifecycle": "Implement automated storage lifecycle management",
+      "savingsPlans": "Commit to compute savings plans for flexible discounts",
+      "unusedVolumes": "Remove unattached EBS volumes",
+      "kubernetesClusters": "Optimize Kubernetes cluster resource allocation",
+      "storageTiers": "Move infrequently accessed data to cheaper storage tiers"
+    },
+    "teams": {
+      "development": "Development",
+      "infrastructure": "Infrastructure", 
+      "dataScience": "Data Science",
+      "marketing": "Marketing"
+    },
+    "months": {
+      "jan": "Jan",
+      "feb": "Feb", 
+      "mar": "Mar",
+      "apr": "Apr",
+      "may": "May",
+      "jun": "Jun",
+      "jul": "Jul"
+    },
+    "resources": {
+      "vcpus": "vCPUs",
+      "ram": "RAM (GB)",
+      "storage": "Storage (TB)",
+      "sqlLicenses": "SQL Licenses",
+      "ebsVolumes": "EBS Volumes",
+      "bandwidth": "Bandwidth (GB/s)"
+    },
+    "compliance": {
+      "instanceTags": "Instance Tagging",
+      "encryptedVolumes": "Encrypted Volumes",
+      "costReports": "Cost Reports",
+      "retentionPolicies": "Retention Policies",
+      "costAllocation": "Cost Allocation"
+    },
+    "complianceDescriptions": {
+      "instanceTags": "All instances properly tagged",
+      "encryptedVolumes": "All volumes encrypted at rest",
+      "costReports": "Monthly cost reports generated",
+      "retentionPolicies": "Data retention policies not configured",
+      "costAllocation": "Cost allocation tags missing"
+    },
+    "environments": {
+      "production": "Production",
+      "staging": "Staging", 
+      "development": "Development"
+    },
+    "benchmarks": {
+      "computeInstances": "Compute Instances",
+      "storagePerGB": "Storage per GB",
+      "database": "Database"
+    }
+  },
+  "severities": {
+    "high": "High",
+    "medium": "Medium", 
+    "low": "Low",
+    "unknown": "Unknown"
+  },
+  "anomalies": {
+    "detected": "Anomalies Detected",
+    "anomalies": "anomalies",
+    "impact": "Impact",
+    "investigate": "Investigate",
+    "noAnomaliesDetected": "No anomalies detected"
   },
   "calendar": {
     "title": "Cost Events Calendar",

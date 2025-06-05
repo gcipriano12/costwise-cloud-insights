@@ -1,3 +1,4 @@
+
 {
   "common": {
     "megabill": "MegaBill",
@@ -23,6 +24,111 @@
     "lastYear": "Último ano",
     "custom": "Período personalizado",
     "selectPeriod": "Selecione o período"
+  },
+  "mockData": {
+    "categories": {
+      "computation": "Computação",
+      "storage": "Armazenamento",
+      "network": "Rede",
+      "database": "Banco de Dados",
+      "others": "Outros"
+    },
+    "anomalyTitles": {
+      "vmCostIncrease": "Aumento de Custo de VMs",
+      "idleResources": "Recursos Ociosos",
+      "expiredSnapshots": "Snapshots Expirados",
+      "unoptimizedGPUs": "GPUs Não Otimizadas",
+      "idleBalancers": "Load Balancers Ociosos",
+      "oversizedDatabase": "Banco de Dados Superdimensionado",
+      "unassociatedIPs": "IPs Não Associados"
+    },
+    "anomalyDescriptions": {
+      "vmCostIncrease": "Aumento significativo detectado nos custos de VMs no ambiente de produção",
+      "idleResources": "Múltiplos recursos executando com baixa utilização",
+      "expiredSnapshots": "Snapshots antigos consumindo armazenamento desnecessário",
+      "unoptimizedGPUs": "Instâncias GPU executando sem carga de trabalho",
+      "idleBalancers": "Load balancers sem targets ativos",
+      "oversizedDatabase": "Instância de banco de dados superdimensionada para a carga atual",
+      "unassociatedIPs": "IPs elásticos não associados a nenhum recurso"
+    },
+    "savingsOpportunities": {
+      "reservedInstances": "Instâncias Reservadas",
+      "rightsizing": "Recomendações de Dimensionamento",
+      "storageLifecycle": "Políticas de Ciclo de Vida",
+      "savingsPlans": "Planos de Economia",
+      "unusedVolumes": "Volumes EBS Não Utilizados",
+      "kubernetesClusters": "Otimização Kubernetes",
+      "storageTiers": "Otimização de Camadas de Armazenamento"
+    },
+    "savingsDescriptions": {
+      "reservedInstances": "Migre para instâncias reservadas para cargas previsíveis",
+      "rightsizing": "Otimize tamanhos de instância baseado em padrões de uso",
+      "storageLifecycle": "Implemente gerenciamento automatizado de ciclo de vida",
+      "savingsPlans": "Comprometa-se com planos de economia para descontos flexíveis",
+      "unusedVolumes": "Remova volumes EBS não anexados",
+      "kubernetesClusters": "Otimize alocação de recursos do cluster Kubernetes",
+      "storageTiers": "Mova dados acessados raramente para armazenamento mais barato"
+    },
+    "teams": {
+      "development": "Desenvolvimento",
+      "infrastructure": "Infraestrutura",
+      "dataScience": "Ciência de Dados",
+      "marketing": "Marketing"
+    },
+    "months": {
+      "jan": "Jan",
+      "feb": "Fev",
+      "mar": "Mar", 
+      "apr": "Abr",
+      "may": "Mai",
+      "jun": "Jun",
+      "jul": "Jul"
+    },
+    "resources": {
+      "vcpus": "vCPUs",
+      "ram": "RAM (GB)",
+      "storage": "Armazenamento (TB)",
+      "sqlLicenses": "Licenças SQL",
+      "ebsVolumes": "Volumes EBS",
+      "bandwidth": "Largura de Banda (GB/s)"
+    },
+    "compliance": {
+      "instanceTags": "Tagueamento de Instâncias",
+      "encryptedVolumes": "Volumes Criptografados",
+      "costReports": "Relatórios de Custo",
+      "retentionPolicies": "Políticas de Retenção",
+      "costAllocation": "Alocação de Custos"
+    },
+    "complianceDescriptions": {
+      "instanceTags": "Todas as instâncias devidamente tagueadas",
+      "encryptedVolumes": "Todos os volumes criptografados em repouso",
+      "costReports": "Relatórios mensais de custo gerados",
+      "retentionPolicies": "Políticas de retenção de dados não configuradas",
+      "costAllocation": "Tags de alocação de custo ausentes"
+    },
+    "environments": {
+      "production": "Produção",
+      "staging": "Homologação",
+      "development": "Desenvolvimento"
+    },
+    "benchmarks": {
+      "computeInstances": "Instâncias de Computação",
+      "storagePerGB": "Armazenamento por GB",
+      "database": "Banco de Dados"
+    }
+  },
+  "severities": {
+    "high": "Alta",
+    "medium": "Média",
+    "low": "Baixa",
+    "unknown": "Desconhecida"
+  },
+  "anomalies": {
+    "detected": "Anomalias Detectadas",
+    "anomalies": "anomalias",
+    "impact": "Impacto",
+    "investigate": "Investigar",
+    "noAnomaliesDetected": "Nenhuma anomalia detectada"
   },
   "calendar": {
     "title": "Calendário de Eventos de Custo",
