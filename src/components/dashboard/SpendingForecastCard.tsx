@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine } from 'recharts';
 import { TrendingUp, AlertCircle } from 'lucide-react';
@@ -19,6 +20,7 @@ interface SpendingForecastCardProps {
 }
 
 export function SpendingForecastCard({ data, currency }: SpendingForecastCardProps) {
+  const { t } = useTranslation();
   const { isDark } = useTheme();
   
   // Verificar se o último valor previsto ultrapassa o orçamento
@@ -89,7 +91,7 @@ export function SpendingForecastCard({ data, currency }: SpendingForecastCardPro
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center text-lg font-medium">
             <TrendingUp className="mr-2 h-5 w-5 text-XCost-blue-light" />
-            Previsão de Gastos
+            {t('spendingForecast.title')}
           </CardTitle>
           
           {budgetExceeded && (
@@ -97,7 +99,7 @@ export function SpendingForecastCard({ data, currency }: SpendingForecastCardPro
               isDark ? "bg-red-900/50 text-red-100 border-red-800" : "bg-red-50 text-red-700 border-red-200"
             )}>
               <AlertCircle className="h-3 w-3 mr-1" />
-              <span className="text-xs">Previsão acima do orçamento</span>
+              <span className="text-xs">{t('spendingForecast.forecastExceedsBudget')}</span>
             </Badge>
           )}
         </div>
@@ -134,11 +136,11 @@ export function SpendingForecastCard({ data, currency }: SpendingForecastCardPro
                 strokeWidth={2}
                 label={{ 
                   position: 'right',
-                  value: 'Orçamento', 
+                  value: t('spendingForecast.budget'), 
                   fill: isDark ? "#f87171" : "#F87171", 
                   fontSize: 11,
                   offset: 10,
-                  formatter: () => 'Orçamento',
+                  formatter: () => t('spendingForecast.budget'),
                   className: isDark ? 'text-red-400' : 'text-red-500'
                 }}
               />
@@ -148,7 +150,7 @@ export function SpendingForecastCard({ data, currency }: SpendingForecastCardPro
                 stroke={isDark ? "#94A3B8" : "#1A2B3C"} 
                 strokeWidth={2} 
                 dot={{ r: 4, fill: isDark ? "#94A3B8" : "#1A2B3C", strokeWidth: 0 }}
-                name="Gasto Real"
+                name={t('spendingForecast.actualSpendChart')}
                 activeDot={{ r: 6, fill: isDark ? "#94A3B8" : "#1A2B3C", stroke: isDark ? "#1e293b" : "white", strokeWidth: 2 }}
               />
               <Line 
@@ -158,7 +160,7 @@ export function SpendingForecastCard({ data, currency }: SpendingForecastCardPro
                 strokeWidth={2} 
                 strokeDasharray="5 5"
                 dot={{ r: 4, fill: isDark ? "#3B82F6" : "#60A5FA", strokeWidth: 0 }}
-                name="Previsão"
+                name={t('spendingForecast.forecastChart')}
                 activeDot={{ r: 6, fill: isDark ? "#3B82F6" : "#60A5FA", stroke: isDark ? "#1e293b" : "white", strokeWidth: 2 }}
               />
             </LineChart>
@@ -171,18 +173,18 @@ export function SpendingForecastCard({ data, currency }: SpendingForecastCardPro
               "w-3 h-3 rounded-full mr-1",
               isDark ? "bg-[#94A3B8]" : "bg-[#1A2B3C]"
             )}></div>
-            <span>Gasto real</span>
+            <span>{t('spendingForecast.actualSpend')}</span>
           </div>
           <div className="flex items-center">
             <div className={cn(
               "w-3 h-3 rounded-full mr-1", 
               isDark ? "bg-[#3B82F6]" : "bg-[#60A5FA]"
             )}></div>
-            <span>Previsão</span>
+            <span>{t('spendingForecast.forecast')}</span>
           </div>
           <div className="flex items-center">
             <div className="w-3 h-3 rounded-full bg-[#F87171] mr-1"></div>
-            <span>Orçamento: {formatCurrency(data[0].budget || 0)}</span>
+            <span>{t('spendingForecast.budget')}: {formatCurrency(data[0].budget || 0)}</span>
           </div>
         </div>
       </CardContent>

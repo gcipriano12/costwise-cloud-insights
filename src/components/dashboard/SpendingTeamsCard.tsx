@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { BarChart3 } from 'lucide-react';
@@ -17,6 +18,7 @@ interface SpendingTeamsCardProps {
 }
 
 export function SpendingTeamsCard({ categories, currency }: SpendingTeamsCardProps) {
+  const { t } = useTranslation();
   const { isDark } = useTheme();
   
   const formatCurrency = (value: number) => {
@@ -36,7 +38,7 @@ export function SpendingTeamsCard({ categories, currency }: SpendingTeamsCardPro
       <CardHeader className="pb-2 flex-shrink-0">
         <CardTitle className="flex items-center text-lg font-medium">
           <BarChart3 className="mr-2 h-5 w-5 text-XCost-blue" />
-          Gastos por Equipe
+          {t('spendingTeams.title')}
         </CardTitle>
       </CardHeader>
       <CardContent className="flex-grow p-1 pb-2 flex flex-col">

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Sparkles } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
@@ -20,6 +21,7 @@ interface NewServicesCardProps {
 }
 
 export function NewServicesCard({ services }: NewServicesCardProps) {
+  const { t } = useTranslation();
   const { isDark } = useTheme();
   
   const formatDate = (dateString: string) => {
@@ -100,7 +102,7 @@ export function NewServicesCard({ services }: NewServicesCardProps) {
             "h-5 w-5 mr-2",
             isDark ? "text-amber-400" : "text-amber-500"
           )} />
-          Novos Serviços
+          {t('newServices.title')}
         </CardTitle>
       </CardHeader>
       <CardContent className="flex-grow px-4 pt-2 pb-3 overflow-auto">

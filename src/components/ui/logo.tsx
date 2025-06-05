@@ -21,15 +21,19 @@ export const Logo = ({ size = 'md', showText = true, showIcon = true, className 
     <div className={cn("flex items-center", className)}>
       {showIcon && (
         <div className={cn(
-          "relative flex items-center justify-center bg-blue-500 rounded-sm",
+          "relative flex items-center justify-center rounded-sm overflow-hidden",
           icon
         )}>
+          {/* Fundo com gradiente */}
+          <div className="absolute inset-0 bg-gradient-to-br from-indigo-600 to-blue-500"></div>
+          
+          {/* X branco */}
           <div className={cn(
-            "absolute bg-white transform rotate-45",
+            "absolute bg-white transform rotate-45 rounded-full",
             line
           )}></div>
           <div className={cn(
-            "absolute bg-white transform -rotate-45",
+            "absolute bg-white transform -rotate-45 rounded-full",
             line
           )}></div>
         </div>
@@ -40,7 +44,7 @@ export const Logo = ({ size = 'md', showText = true, showIcon = true, className 
           showIcon ? "ml-2" : "",
           text
         )}>
-          X Cost
+          Cost
         </span>
       )}
     </div>

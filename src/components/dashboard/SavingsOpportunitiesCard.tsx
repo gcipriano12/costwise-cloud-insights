@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { CheckCircle, Lightbulb, ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -28,6 +29,7 @@ export function SavingsOpportunitiesCard({
   totalPotentialSavings, 
   currency 
 }: SavingsOpportunitiesProps) {
+  const { t } = useTranslation();
   const [currentIndex, setCurrentIndex] = useState(0);
   const { isDark } = useTheme();
   const isMobile = useIsMobile();
@@ -43,9 +45,9 @@ export function SavingsOpportunitiesCard({
 
   const getEffortLabel = (effort: string) => {
     switch(effort) {
-      case 'low': return 'Baixo';
-      case 'medium': return 'Médio';
-      case 'high': return 'Alto';
+      case 'low': return t('savingsOpportunities.effortLow');
+      case 'medium': return t('savingsOpportunities.effortMedium');
+      case 'high': return t('savingsOpportunities.effortHigh');
       default: return '';
     }
   };
@@ -104,7 +106,7 @@ export function SavingsOpportunitiesCard({
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center text-lg font-medium">
             <Lightbulb className={cn("mr-2 h-5 w-5", isDark ? "text-green-400" : "text-XCost-green")} />
-            {isMobile ? "Oportunidades" : "Oportunidades de Economia"}
+            {isMobile ? t('savingsOpportunities.opportunities') : t('savingsOpportunities.title')}
           </CardTitle>
           <div className={`whitespace-nowrap ${isMobile ? 'text-lg' : 'text-xl'} font-bold ${headerTextColorClass}`}>
             {formatCurrency(totalPotentialSavings)}
@@ -131,7 +133,7 @@ export function SavingsOpportunitiesCard({
               
               <div className={`mt-2 mb-1 ml-${isMobile ? '6' : '7'}`}>
                 <div className="flex justify-between items-center text-xs mb-0.5">
-                  <span className={isMobile ? 'text-[10px]' : ''}>Contribuição</span>
+                  <span className={isMobile ? 'text-[10px]' : ''}>{t('savingsOpportunities.contribution')}</span>
                   <span className={`font-medium ${isMobile ? 'text-[10px]' : ''}`}>{calculatePercentage(opportunities[currentIndex].savings).toFixed(1)}%</span>
                 </div>
                 <Progress 
@@ -145,7 +147,7 @@ export function SavingsOpportunitiesCard({
                   <span className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium ${currentEffortColor}`}>
                     {formatCurrency(opportunities[currentIndex].savings)}
                   </span>
-                  <span className={`text-muted-foreground ml-1 ${isMobile ? 'text-[10px]' : 'text-xs'}`}>/mês</span>
+                  <span className={`text-muted-foreground ml-1 ${isMobile ? 'text-[10px]' : 'text-xs'}`}>{t('savingsOpportunities.perMonth')}</span>
                 </div>
                 
                 <Button 
@@ -153,7 +155,7 @@ export function SavingsOpportunitiesCard({
                   variant="ghost"
                   className={`h-6 ${isMobile ? 'text-[10px] px-2' : 'text-xs'} ${currentEffortColor}`}
                 >
-                  <span className="mr-1">Implementar</span>
+                  <span className="mr-1">{t('savingsOpportunities.implement')}</span>
                   <ArrowUpRight className="h-3 w-3" />
                 </Button>
               </div>
@@ -231,7 +233,7 @@ export function SavingsOpportunitiesCard({
             "h-full flex items-center justify-center border rounded-lg",
             isDark ? "border-slate-700 border-dashed" : "border-dashed"
           )}>
-            <p className="text-muted-foreground text-sm">Nenhuma oportunidade de economia encontrada.</p>
+            <p className="text-muted-foreground text-sm">{t('savingsOpportunities.noOpportunitiesFound')}</p>
           </div>
         )}
       </CardContent>

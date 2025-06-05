@@ -634,30 +634,30 @@ const Landing = () => {
             <div>
               <h3 className="font-semibold mb-4">{t('landing.footer.product', 'Product')}</h3>
               <ul className="space-y-2">
-                <li><Link to="#" className="text-muted-foreground hover:text-foreground">Features</Link></li>
-                <li><Link to="#" className="text-muted-foreground hover:text-foreground">Pricing</Link></li>
-                <li><Link to="#" className="text-muted-foreground hover:text-foreground">Integrations</Link></li>
-                <li><Link to="#" className="text-muted-foreground hover:text-foreground">Changelog</Link></li>
+                <li><Link to="#" className="text-muted-foreground hover:text-foreground">{t('landing.footer.features', 'Features')}</Link></li>
+                <li><Link to="#" className="text-muted-foreground hover:text-foreground">{t('landing.footer.pricing', 'Pricing')}</Link></li>
+                <li><Link to="#" className="text-muted-foreground hover:text-foreground">{t('landing.footer.integrations', 'Integrations')}</Link></li>
+                <li><Link to="#" className="text-muted-foreground hover:text-foreground">{t('landing.footer.changelog', 'Changelog')}</Link></li>
               </ul>
             </div>
             
             <div>
               <h3 className="font-semibold mb-4">{t('landing.footer.company', 'Company')}</h3>
               <ul className="space-y-2">
-                <li><Link to="#" className="text-muted-foreground hover:text-foreground">About</Link></li>
-                <li><Link to="#" className="text-muted-foreground hover:text-foreground">Careers</Link></li>
-                <li><Link to="#" className="text-muted-foreground hover:text-foreground">Contact</Link></li>
-                <li><Link to="#" className="text-muted-foreground hover:text-foreground">Blog</Link></li>
+                <li><Link to="#" className="text-muted-foreground hover:text-foreground">{t('landing.footer.about', 'About')}</Link></li>
+                <li><Link to="#" className="text-muted-foreground hover:text-foreground">{t('landing.footer.careers', 'Careers')}</Link></li>
+                <li><Link to="#" className="text-muted-foreground hover:text-foreground">{t('landing.footer.contact', 'Contact')}</Link></li>
+                <li><Link to="#" className="text-muted-foreground hover:text-foreground">{t('landing.footer.blog', 'Blog')}</Link></li>
               </ul>
             </div>
             
             <div>
               <h3 className="font-semibold mb-4">{t('landing.footer.legal', 'Legal')}</h3>
               <ul className="space-y-2">
-                <li><Link to="/privacy" className="text-muted-foreground hover:text-foreground">Privacy Policy</Link></li>
-                <li><Link to="/terms" className="text-muted-foreground hover:text-foreground">Terms of Service</Link></li>
-                <li><Link to="#" className="text-muted-foreground hover:text-foreground">Security</Link></li>
-                <li><Link to="#" className="text-muted-foreground hover:text-foreground">GDPR</Link></li>
+                <li><Link to="/privacy" className="text-muted-foreground hover:text-foreground">{t('landing.footer.privacyPolicy', 'Privacy Policy')}</Link></li>
+                <li><Link to="/terms" className="text-muted-foreground hover:text-foreground">{t('landing.footer.termsOfService', 'Terms of Service')}</Link></li>
+                <li><Link to="#" className="text-muted-foreground hover:text-foreground">{t('landing.footer.security', 'Security')}</Link></li>
+                <li><Link to="#" className="text-muted-foreground hover:text-foreground">{t('landing.footer.gdpr', 'GDPR')}</Link></li>
               </ul>
             </div>
           </div>

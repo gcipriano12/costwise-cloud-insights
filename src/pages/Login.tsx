@@ -64,7 +64,7 @@ const Login = () => {
           <Card className="w-full max-w-md shadow-lg">
             <CardHeader className="space-y-1">
               <div className="flex justify-center mb-6">
-                <Logo size="lg" showIcon={false} />
+                <Logo size="lg" />
               </div>
               <CardTitle className="text-2xl text-center">
                 {t('login.title')}

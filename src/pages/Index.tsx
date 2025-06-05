@@ -56,7 +56,7 @@ const Index = () => {
         <PageHeader 
           icon={Globe} 
           title={t('common.megabill')}
-          description="Cloud cost management dashboard"
+          description={t('common.cloudCostManagementDashboard')}
           color="text-blue-600"
           showTimeFilter={true}
           timeFilter={timeFilter}

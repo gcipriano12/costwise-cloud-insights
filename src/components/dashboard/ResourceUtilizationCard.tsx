@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import * as ProgressPrimitive from "@radix-ui/react-progress";
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
@@ -19,6 +20,7 @@ interface ResourceUtilizationCardProps {
 }
 
 export function ResourceUtilizationCard({ resources }: ResourceUtilizationCardProps) {
+  const { t } = useTranslation();
   const { isDark } = useTheme();
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 5;
@@ -100,7 +102,7 @@ export function ResourceUtilizationCard({ resources }: ResourceUtilizationCardPr
       <CardHeader className="pb-2 flex-shrink-0">
         <CardTitle className="flex items-center text-lg font-medium">
           <Activity className="mr-2 h-5 w-5 text-amber-500" />
-          Utilização de Recursos
+          {t('resourceUtilization.title')}
         </CardTitle>
       </CardHeader>
       <CardContent className="flex-grow pb-3 flex flex-col">
@@ -108,7 +110,7 @@ export function ResourceUtilizationCard({ resources }: ResourceUtilizationCardPr
           <div className="text-center mb-4">
             <div className={`text-3xl font-bold ${getAverageUtilizationColor()}`}>{averageUtilization}%</div>
             <div className="text-sm text-muted-foreground">
-              Utilização média dos recursos
+              {t('resourceUtilization.averageUtilization')}
             </div>
             <div className="mt-2">
               <CustomProgressBar value={averageUtilization} warningThreshold={85} className="h-2" />

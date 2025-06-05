@@ -27,7 +27,79 @@
     "support": "Support",
     "logout": "Logout",
     "noNotifications": "No notifications",
-    "markAllAsRead": "Mark all as read"
+    "markAllAsRead": "Mark all as read",
+    "cloudCostManagementDashboard": "Cloud cost management dashboard"
+  },
+  "spendSummary": {
+    "title": "Spend Summary",
+    "totalSpend": "Total Spend",
+    "vsPreviousPeriod": "vs previous period",
+    "monthlyAverage": "Monthly Average",
+    "averageMobile": "Average",
+    "highestSpend": "Highest Spend",
+    "highestMobile": "Highest",
+    "annualProjection": "Annual Projection",
+    "projectionMobile": "Projection",
+    "currentYear": "Current year",
+    "budgetLimit": "Budget Limit",
+    "budgetMobile": "Budget",
+    "consumed": "Consumed",
+    "providerDistribution": "Provider Distribution",
+    "percentOfTotal": "% of total",
+    "highlights": "Highlights",
+    "nextMonthForecast": "Next Month Forecast",
+    "estimatedWaste": "Estimated Waste",
+    "realizedSavings": "Realized Savings",
+    "ofTotal": "of total"
+  },
+  "spendingForecast": {
+    "title": "Spending Forecast",
+    "forecastExceedsBudget": "Forecast exceeds budget",
+    "budget": "Budget",
+    "actualSpend": "Actual spend",
+    "forecast": "Forecast",
+    "actualSpendChart": "Actual Spend",
+    "forecastChart": "Forecast"
+  },
+  "spendingTeams": {
+    "title": "Spending by Team"
+  },
+  "regionHeatmap": {
+    "title": "Cost Heatmap by Region"
+  },
+  "newServices": {
+    "title": "New Services"
+  },
+  "environmentComparison": {
+    "title": "Environment Comparison",
+    "efficiency": "Efficiency:"
+  },
+  "finOpsCompliance": {
+    "title": "FinOps Compliance",
+    "practicesInCompliance": "practices in compliance"
+  },
+  "resourceUtilization": {
+    "title": "Resource Utilization",
+    "averageUtilization": "Average resource utilization"
+  },
+  "savingsOpportunities": {
+    "title": "Savings Opportunities",
+    "opportunities": "Opportunities",
+    "noOpportunitiesFound": "No savings opportunities found.",
+    "effortLow": "Low",
+    "effortMedium": "Medium", 
+    "effortHigh": "High",
+    "contribution": "Contribution",
+    "implement": "Implement",
+    "perMonth": "/month"
+  },
+  "topServices": {
+    "title": "Top Services"
+  },
+  
+  "categoryDistribution": {
+    "title": "Category Distribution",
+    "percentOfTotal": "% of total"
   },
   "categories": {
     "inform": "Inform",
@@ -40,7 +112,11 @@
     "tarifacao": "Pricing",
     "planejamento": "Planning",
     "governanca": "Governance",
-    "noKpisForCategory": "No KPIs available for this category"
+    "noKpisForCategory": "No KPIs available for this category",
+    "servicesAndForecasts": "Services and Forecasts",
+    "trendsAndUtilization": "Trends and Utilization", 
+    "indicatorsAndEvents": "Indicators and Events",
+    "comparisonsAndReferences": "Comparisons and References"
   },
   "benchmarks": {
     "title": "Cost Benchmarks",
@@ -325,7 +401,18 @@
       "tagline": "Cloud cost optimization made simple and effective",
       "product": "Product",
       "company": "Company", 
-      "legal": "Legal"
+      "legal": "Legal",
+      "features": "Features",
+      "pricing": "Pricing",
+      "integrations": "Integrations",
+      "changelog": "Changelog",
+      "about": "About",
+      "careers": "Careers",
+      "blog": "Blog",
+      "privacyPolicy": "Privacy Policy",
+      "termsOfService": "Terms of Service",
+      "security": "Security",
+      "gdpr": "GDPR"
     }
   },
   "login": {

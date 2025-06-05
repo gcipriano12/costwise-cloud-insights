@@ -27,7 +27,96 @@
     "support": "Suporte",
     "logout": "Sair",
     "noNotifications": "Nenhuma notificação",
-    "markAllAsRead": "Marcar todas como lidas"
+    "markAllAsRead": "Marcar todas como lidas",
+    "cloudCostManagementDashboard": "Painel de gerenciamento de custos na nuvem"
+  },
+  "spendSummary": {
+    "title": "Resumo de Gastos",
+    "totalSpend": "Gasto Total",
+    "vsPreviousPeriod": "vs período anterior",
+    "monthlyAverage": "Média Mensal",
+    "averageMobile": "Média",
+    "highestSpend": "Maior Gasto",
+    "highestMobile": "Maior",
+    "annualProjection": "Projeção Anual",
+    "projectionMobile": "Projeção",
+    "currentYear": "Ano corrente",
+    "budgetLimit": "Limite Orçamentário",
+    "budgetMobile": "Orçamento",
+    "consumed": "Consumido",
+    "providerDistribution": "Distribuição por Provedor",
+    "percentOfTotal": "% do total",
+    "highlights": "Highlights",
+    "nextMonthForecast": "Previsão Próximo Mês",
+    "estimatedWaste": "Desperdício Estimado",
+    "realizedSavings": "Economias Realizadas",
+    "ofTotal": "do total"
+  },
+  "spendingForecast": {
+    "title": "Previsão de Gastos",
+    "forecastExceedsBudget": "Previsão acima do orçamento",
+    "budget": "Orçamento",
+    "actualSpend": "Gasto real",
+    "forecast": "Previsão",
+    "actualSpendChart": "Gasto Real",
+    "forecastChart": "Previsão"
+  },
+  "spendingTeams": {
+    "title": "Gastos por Equipe"
+  },
+  "regionHeatmap": {
+    "title": "Heatmap de Custos por Região"
+  },
+  "newServices": {
+    "title": "Novos Serviços"
+  },
+  "environmentComparison": {
+    "title": "Comparação de Ambientes",
+    "efficiency": "Eficiência:"
+  },
+  "finOpsCompliance": {
+    "title": "Conformidade FinOps",
+    "practicesInCompliance": "práticas em conformidade"
+  },
+  "resourceUtilization": {
+    "title": "Utilização de Recursos",
+    "averageUtilization": "Utilização média dos recursos"
+  },
+  "savingsOpportunities": {
+    "title": "Oportunidades de Economia",
+    "opportunities": "Oportunidades",
+    "noOpportunitiesFound": "Nenhuma oportunidade de economia encontrada.",
+    "effortLow": "Baixo",
+    "effortMedium": "Médio", 
+    "effortHigh": "Alto",
+    "contribution": "Contribuição",
+    "implement": "Implementar",
+    "perMonth": "/mês"
+  },
+  "topServices": {
+    "title": "Top Serviços"
+  },
+  
+  "categoryDistribution": {
+    "title": "Distribuição por Categoria",
+    "percentOfTotal": "% do total"
+  },
+  
+  "sections": {
+    "servicesAndForecasts": "Serviços e Previsões",
+    "trendsAndUtilization": "Tendências e Utilização", 
+    "indicatorsAndEvents": "Indicadores e Eventos",
+    "comparisonsAndReferences": "Comparativos e Referências",
+    "eficiencia": "Eficiência",
+    "tarifacao": "Tarifação",
+    "planejamento": "Planejamento",
+    "governanca": "Governança",
+    "kpis": "KPIs"
+  },
+  
+  "environmentComparison": {
+    "title": "Comparação de Ambientes",
+    "efficiency": "Eficiência:"
   },
   "categories": {
     "inform": "Informar",
@@ -231,7 +320,7 @@
       "getStarted": "Começar Agora",
       "watchDemo": "Assistir Demo",
       "title": "Comece a Otimizar Seus Custos na Nuvem Hoje",
-      "subtitle": "Junte-se a milhares de empresas que confiam no X Cost para gerenciar seus gastos na nuvem"
+      "subtitle": "Junte-se a milhares de empresas que confiam no Cost para gerenciar seus gastos na nuvem"
     },
     "hero": {
       "title": "Otimize Seus Custos na Nuvem com Precisão",
@@ -249,7 +338,7 @@
     },
     "features": {
       "title": "Recursos Principais",
-      "subtitle": "Descubra como o X Cost ajuda você a gerenciar e otimizar seus gastos na nuvem de forma eficaz.",
+      "subtitle": "Descubra como o Cost ajuda você a gerenciar e otimizar seus gastos na nuvem de forma eficaz.",
       "analytics": {
         "title": "Análise de Custos",
         "description": "Insights profundos sobre seus gastos na nuvem em todos os provedores com análise de tendências e previsões."
@@ -302,7 +391,7 @@
     "testimonials": {
       "title": "O Que Nossos Clientes Dizem",
       "subtitle": "Ouça empresas que transformaram seu gerenciamento de custos na nuvem",
-      "quote1": "O X Cost nos ajudou a reduzir nossos gastos na nuvem em 34% em apenas três meses, melhorando a utilização de recursos.",
+      "quote1": "O Cost nos ajudou a reduzir nossos gastos na nuvem em 34% em apenas três meses, melhorando a utilização de recursos.",
       "quote2": "O recurso de detecção de anomalias nos salvou de uma surpresa enorme na fatura do último trimestre. Vale cada centavo."
     },
     "faq": {
@@ -318,14 +407,25 @@
       "a4": "Absolutamente. Usamos criptografia e práticas de segurança padrão da indústria. Nunca armazenamos suas credenciais de nuvem e acessamos apenas os dados de faturamento necessários para análise."
     },
     "footer": {
-      "copyright": "© 2025 X Cost. Todos os direitos reservados.",
+      "copyright": "© 2025 Cost. Todos os direitos reservados.",
       "privacy": "Política de Privacidade",
       "terms": "Termos de Serviço",
       "contact": "Fale Conosco",
       "tagline": "Otimização de custos na nuvem de forma simples e eficaz",
       "product": "Produto",
       "company": "Empresa", 
-      "legal": "Jurídico"
+      "legal": "Jurídico",
+      "features": "Funcionalidades",
+      "pricing": "Preços",
+      "integrations": "Integrações",
+      "changelog": "Changelog",
+      "about": "Sobre",
+      "careers": "Carreiras",
+      "blog": "Blog",
+      "privacyPolicy": "Política de Privacidade",
+      "termsOfService": "Termos de Serviço",
+      "security": "Segurança",
+      "gdpr": "GDPR"
     }
   },
   "login": {
@@ -344,7 +444,7 @@
     "signUp": "Cadastre-se",
     "success": {
       "title": "Login bem-sucedido",
-      "description": "Bem-vindo de volta ao X Cost!"
+      "description": "Bem-vindo de volta ao Cost!"
     },
     "error": {
       "title": "Falha no login",
@@ -354,7 +454,7 @@
   "signup": {
     "backToHome": "Voltar para início",
     "title": "Criar uma conta",
-    "subtitle": "Digite seus dados para começar a usar o X Cost",
+    "subtitle": "Digite seus dados para começar a usar o Cost",
     "form": {
       "name": "Nome Completo",
       "email": "E-mail",
@@ -367,7 +467,7 @@
     "login": "Entrar",
     "success": {
       "title": "Conta criada",
-      "description": "Bem-vindo ao X Cost!"
+      "description": "Bem-vindo ao Cost!"
     },
     "error": {
       "title": "Falha no cadastro",

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ResponsiveContainer, Treemap, Tooltip } from 'recharts';
 import { MapPin } from 'lucide-react';
@@ -29,6 +30,7 @@ const PROVIDER_COLORS: { [key: string]: string } = {
 };
 
 export function RegionHeatmapCard({ data, currency }: RegionHeatmapCardProps) {
+  const { t } = useTranslation();
   const { isDark } = useTheme();
   // Os dados já vêm como top 5 regiões achatadas da ComparisonSection.
   // A propriedade 'fill' será adicionada ao preparar os dados para o Treemap.
@@ -150,7 +152,7 @@ export function RegionHeatmapCard({ data, currency }: RegionHeatmapCardProps) {
       <CardHeader className="pb-2 flex-shrink-0">
         <CardTitle className="flex items-center text-base font-semibold">
           <MapPin className="h-5 w-5 mr-2 text-green-500" />
-          Heatmap de Custos por Região
+          {t('regionHeatmap.title')}
         </CardTitle>
       </CardHeader>
       <CardContent className="flex-grow px-4 pt-2 pb-3 overflow-auto">

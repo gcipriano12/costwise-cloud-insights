@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { TrendingUp, TrendingDown, BarChart2, ArrowUpRight } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
@@ -24,12 +25,13 @@ interface ServiceData {
   trend: number;
 }
 
-interface TopServicesProps {
+interface TopServicesCardProps {
   services: ServiceData[];
   currency: string;
 }
 
-export function TopServicesCard({ services, currency }: TopServicesProps) {
+export function TopServicesCard({ services, currency }: TopServicesCardProps) {
+  const { t } = useTranslation();
   const { isDark } = useTheme();
   
   const formatCurrency = (value: number) => {
@@ -67,7 +69,7 @@ export function TopServicesCard({ services, currency }: TopServicesProps) {
       <CardHeader className="pb-2">
         <CardTitle className="flex items-center text-lg font-medium">
           <BarChart2 className={cn("mr-2 h-5 w-5", isDark ? "text-blue-400" : "text-XCost-blue")} />
-          Top Serviços
+          {t('topServices.title')}
         </CardTitle>
       </CardHeader>
       <CardContent className="p-0">
@@ -78,10 +80,10 @@ export function TopServicesCard({ services, currency }: TopServicesProps) {
               isDark ? "bg-slate-800" : "bg-gray-50"
             )}>
             <TableRow>
-                <TableHead className="font-medium text-xs">Serviço</TableHead>
-                <TableHead className="font-medium text-xs">Provedor</TableHead>
-                <TableHead className="text-right font-medium text-xs">Gasto Atual</TableHead>
-                <TableHead className="text-right font-medium text-xs">Variação</TableHead>
+                <TableHead className="font-medium text-xs">{t('topServices.service')}</TableHead>
+                <TableHead className="font-medium text-xs">{t('topServices.provider')}</TableHead>
+                <TableHead className="text-right font-medium text-xs">{t('topServices.currentSpend')}</TableHead>
+                <TableHead className="text-right font-medium text-xs">{t('topServices.variation')}</TableHead>
                 <TableHead className="w-24"></TableHead>
             </TableRow>
           </TableHeader>
@@ -146,7 +148,7 @@ export function TopServicesCard({ services, currency }: TopServicesProps) {
                           isDark ? "text-blue-400" : "text-XCost-blue"
                         )}
                       >
-                        <span className="mr-1">Detalhes</span>
+                        <span className="mr-1">{t('topServices.details')}</span>
                         <ArrowUpRight className="h-3 w-3" />
                     </Button>
                   </TableCell>
