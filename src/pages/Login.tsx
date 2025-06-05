@@ -15,7 +15,7 @@ const Login = () => {
   const { login, loading, isAuthenticated } = useAuth();
   
   const [formData, setFormData] = useState({
-    email: '',
+    username: '',
     password: ''
   });
   const [showPassword, setShowPassword] = useState(false);
@@ -29,7 +29,7 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await login(formData.email, formData.password);
+      await login(formData.username, formData.password);
       navigate('/dashboard');
     } catch (error) {
       // Error handling is done in the useAuth hook
@@ -68,14 +68,14 @@ const Login = () => {
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="email">{t('login.form.email')}</Label>
+                <Label htmlFor="username">Username</Label>
                 <Input
-                  id="email"
-                  name="email"
-                  type="email"
-                  value={formData.email}
+                  id="username"
+                  name="username"
+                  type="text"
+                  value={formData.username}
                   onChange={handleInputChange}
-                  placeholder="your@email.com"
+                  placeholder="admin"
                   required
                   disabled={loading}
                 />
