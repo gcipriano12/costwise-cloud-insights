@@ -10,12 +10,37 @@
     "lightMode": "Modo Claro",
     "darkMode": "Modo Escuro",
     "switchToLightMode": "Mudar para Modo Claro",
-    "switchToDarkMode": "Mudar para Modo Escuro"
+    "switchToDarkMode": "Mudar para Modo Escuro",
+    "budgets": "Orçamentos",
+    "financialPlans": "Planos Financeiros",
+    "resources": "Recursos",
+    "dataExplorer": "Explorador de Dados",
+    "myCommitments": "Meus Compromissos",
+    "commitmentsLog": "Log de Compromissos",
+    "reports": "Relatórios",
+    "governance": "Governança",
+    "new": "Novo"
   },
   "categories": {
     "inform": "Informar",
     "optimize": "Otimizar",
     "operate": "Operar"
+  },
+  "sections": {
+    "kpis": "Indicadores Chave de Performance",
+    "eficiencia": "Eficiência",
+    "tarifacao": "Tarifação",
+    "planejamento": "Planejamento",
+    "governanca": "Governança",
+    "noKpisForCategory": "Nenhum KPI disponível para esta categoria"
+  },
+  "benchmarks": {
+    "title": "Benchmarks de Custo",
+    "top": "Top",
+    "bottom": "Bottom",
+    "best": "Melhor",
+    "you": "Você",
+    "average": "Média"
   },
   "timeFilter": {
     "last7days": "Últimos 7 dias",
