@@ -8,11 +8,13 @@ import type {
   CategoryDistribution,
   TopService,
   Anomaly,
-  SavingsOpportunities,
+  SavingsOpportunities
+} from './useDashboardData';
+import type {
   TrendData,
   ServiceCost,
   RegionCost
-} from './useDashboardData';
+} from '../types/api';
 
 export const useXCostData = () => {
   const [loading, setLoading] = useState(false);
@@ -75,7 +77,7 @@ export const useXCostData = () => {
       }));
       setProviderDistribution(providerDist);
 
-      // Criar resumo de gastos
+      // Criar resumo de gastos - corrigindo a lógica de soma
       const totalSpend = services.reduce((total, service) => total + service.cost, 0);
       const previousTotalSpend = services.reduce((total, service) => {
         const previousCost = service.cost - (service.cost * service.change_from_previous / 100);
