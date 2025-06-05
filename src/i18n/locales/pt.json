@@ -19,7 +19,15 @@
     "commitmentsLog": "Log de Compromissos",
     "reports": "Relatórios",
     "governance": "Governança",
-    "new": "Novo"
+    "new": "Novo",
+    "notifications": "Notificações",
+    "myAccount": "Minha Conta",
+    "profile": "Perfil",
+    "settings": "Configurações",
+    "support": "Suporte",
+    "logout": "Sair",
+    "noNotifications": "Nenhuma notificação",
+    "markAllAsRead": "Marcar todas como lidas"
   },
   "categories": {
     "inform": "Informar",
@@ -66,6 +74,11 @@
       "idleBalancers": "Load Balancers Ociosos",
       "oversizedDatabase": "Banco de Dados Superdimensionado",
       "unassociatedIPs": "IPs Não Associados"
+    },
+    "notificationTitles": {
+      "costAnomaly": "Nova anomalia de custo",
+      "budgetExceeded": "Orçamento excedido",
+      "savingsOpportunity": "Oportunidade de economia"
     },
     "anomalyDescriptions": {
       "vmCostIncrease": "Aumento significativo detectado nos custos de VMs no ambiente de produção",

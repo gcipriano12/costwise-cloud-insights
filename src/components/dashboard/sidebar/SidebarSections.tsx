@@ -33,7 +33,7 @@ export const SidebarSections = () => {
   
   // Seção Inform
   const informItems = [
-    { name: t('common.megabill'), href: '/', icon: <Globe className="h-5 w-5" /> },
+    { name: t('common.megabill'), href: '/megabill', icon: <Globe className="h-5 w-5" /> },
     { name: t('common.virtualTags'), href: '/virtual-tags', icon: <Tags className="h-5 w-5" /> },
     { name: t('common.dashboard'), href: '/dashboards', icon: <LayoutDashboard className="h-5 w-5" /> },
     { name: t('common.budgets'), href: '/budgets', icon: <LineChart className="h-5 w-5" /> },

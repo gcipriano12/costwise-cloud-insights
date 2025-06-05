@@ -12,7 +12,7 @@ interface User {
 interface AuthContextType {
   user: User | null;
   login: (username: string, password: string) => Promise<void>;
-  logout: () => void;
+  logout: () => Promise<void>;
   loading: boolean;
   isAuthenticated: boolean;
 }
@@ -61,13 +61,29 @@ export const useAuthProvider = () => {
     }
   };
 
-  const logout = () => {
-    localStorage.removeItem('access_token');
-    setUser(null);
-    toast({
-      title: "Logged out",
-      description: "You have been logged out successfully.",
-    });
+  const logout = async () => {
+    try {
+      // Tentar chamar o endpoint de logout da API se estiver disponível
+      const token = localStorage.getItem('access_token');
+      if (token) {
+        try {
+          await apiClient.post('/api/v1/auth/logout');
+        } catch (error) {
+          // Se o endpoint não existir ou falhar, apenas continue com o logout local
+          console.log('API logout endpoint not available or failed, proceeding with local logout');
+        }
+      }
+    } catch (error) {
+      console.log('Error during logout:', error);
+    } finally {
+      // Sempre fazer logout local
+      localStorage.removeItem('access_token');
+      setUser(null);
+      toast({
+        title: "Logged out",
+        description: "You have been logged out successfully.",
+      });
+    }
   };
 
   useEffect(() => {

@@ -211,7 +211,7 @@ const Landing = () => {
                     icon={<BarChart3 className="h-5 w-5" />} 
                     title={t('common.megabill')} 
                     description={t('landing.nav.dropdown.megabill', 'One dashboard to manage them all')}
-                    href="/dashboard" 
+                    href="/megabill" 
                   />
                   <DropdownItem 
                     icon={<Server className="h-5 w-5" />} 

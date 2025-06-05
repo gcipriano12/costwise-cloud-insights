@@ -38,7 +38,7 @@ const App = () => (
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Landing />} />
-              <Route path="/dashboard" element={<Index />} />
+              <Route path="/megabill" element={<Index />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/virtual-tags" element={<VirtualTags />} />

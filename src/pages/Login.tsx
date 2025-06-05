@@ -22,7 +22,7 @@ const Login = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate('/dashboard');
+      navigate('/megabill');
     }
   }, [isAuthenticated, navigate]);
 
@@ -30,7 +30,7 @@ const Login = () => {
     e.preventDefault();
     try {
       await login(formData.username, formData.password);
-      navigate('/dashboard');
+      navigate('/megabill');
     } catch (error) {
       // Error handling is done in the useAuth hook
     }

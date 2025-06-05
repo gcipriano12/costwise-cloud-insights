@@ -11,7 +11,7 @@ export const SidebarLogo = () => {
   const showText = (isMobile && openMobile) || (!isMobile && state !== "collapsed");
   
   return (
-    <Link to="/" className="flex items-center w-full justify-center cursor-pointer">
+    <Link to="/megabill" className="flex items-center w-full justify-center cursor-pointer">
       <div className={cn(
         "relative flex items-center justify-center bg-blue-500 rounded-sm",
         isMobile ? "w-5 h-5" : "w-6 h-6"

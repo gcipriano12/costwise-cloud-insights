@@ -19,7 +19,15 @@
     "commitmentsLog": "Commitments Log",
     "reports": "Reports",
     "governance": "Governance",
-    "new": "New"
+    "new": "New",
+    "notifications": "Notifications",
+    "myAccount": "My Account",
+    "profile": "Profile",
+    "settings": "Settings",
+    "support": "Support",
+    "logout": "Logout",
+    "noNotifications": "No notifications",
+    "markAllAsRead": "Mark all as read"
   },
   "categories": {
     "inform": "Inform",
@@ -66,6 +74,11 @@
       "idleBalancers": "Idle Load Balancers",
       "oversizedDatabase": "Oversized Database",
       "unassociatedIPs": "Unassociated IP Addresses"
+    },
+    "notificationTitles": {
+      "costAnomaly": "New cost anomaly",
+      "budgetExceeded": "Budget exceeded",
+      "savingsOpportunity": "Savings opportunity"
     },
     "anomalyDescriptions": {
       "vmCostIncrease": "Significant increase in VM costs detected in production environment",

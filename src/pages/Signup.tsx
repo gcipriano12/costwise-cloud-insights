@@ -64,7 +64,7 @@ const Signup = () => {
         description: t('signup.success.description', 'Welcome to X Cost!'),
       });
 
-      navigate('/dashboards');
+      navigate('/megabill');
     } catch (error) {
       console.error('Signup error:', error);
       toast({

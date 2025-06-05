@@ -32,9 +32,9 @@ export const SidebarMenuItemMobile: React.FC<SidebarMenuItemMobileProps> = ({ it
       onClick(); // Call the provided onClick handler if it exists
     }
     
-    // Navegar para a página inicial se for o item MegaBill
+    // Navegar para a página megabill se for o item MegaBill
     if (item.name === 'MegaBill') {
-      navigate('/');
+      navigate('/megabill');
     }
     
     if (isMobile && openMobile) {

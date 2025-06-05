@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { User } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { SidebarMenuItem, SidebarMenuButton, useSidebar } from '@/components/ui/sidebar';
 import {
   DropdownMenu,
@@ -11,15 +12,29 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
 import { useTranslation } from 'react-i18next';
+import { useAuth } from '@/hooks/useAuth';
 
 export const SidebarUserMenu = () => {
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const { state, isMobile, openMobile } = useSidebar();
   const { t } = useTranslation();
+  const { logout } = useAuth();
+  const navigate = useNavigate();
   
   // Determinar quando mostrar o texto: em desktop quando não está colapsado,
   // ou em mobile quando openMobile é true
   const showText = (isMobile && openMobile) || (!isMobile && state !== "collapsed");
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate('/');
+    } catch (error) {
+      console.error('Error during logout:', error);
+      // Ainda assim navegar para a página inicial
+      navigate('/');
+    }
+  };
 
   return (
     <SidebarMenuItem data-mobile-icons={isMobile} className="my-0.5 px-2">
@@ -44,7 +59,12 @@ export const SidebarUserMenu = () => {
           <DropdownMenuItem>{t('common.settings')}</DropdownMenuItem>
           <DropdownMenuItem>{t('common.support')}</DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem className="text-red-500">{t('common.logout')}</DropdownMenuItem>
+          <DropdownMenuItem 
+            className="text-red-500 cursor-pointer"
+            onClick={handleLogout}
+          >
+            {t('common.logout')}
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </SidebarMenuItem>
