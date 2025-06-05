@@ -126,10 +126,6 @@
   
   "kpis": {
     "target": "Target",
-    "units": {
-      "podsPerNode": "pods/node",
-      "currencyPerUnit": "R$/unit"
-    },
     "names": {
       "resourceUtilizationRate": "Resource Utilization Rate",
       "cloudWastePercentage": "Cloud Waste Percentage",

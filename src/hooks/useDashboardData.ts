@@ -450,7 +450,7 @@ export const useDashboardData = () => {
       { 
         name: t('kpis.names.containerDensity'), 
         value: 12, 
-        unit: t('kpis.units.podsPerNode'), 
+        unit: 'pods/nó', 
         trend: 3.8, 
         target: 15, 
         isGoodWhenHigher: true,

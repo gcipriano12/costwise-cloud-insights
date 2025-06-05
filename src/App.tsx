@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { AuthProvider } from "@/components/providers/AuthProvider";
+import { ProtectedRoute } from "@/components/ProtectedRoute";
 import Index from "./pages/Index";
 import Landing from "./pages/Landing";
 import Login from "./pages/Login";
@@ -38,23 +39,23 @@ const App = () => (
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Landing />} />
-              <Route path="/megabill" element={<Index />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
-              <Route path="/virtual-tags" element={<VirtualTags />} />
-              <Route path="/dashboards" element={<Dashboards />} />
-              <Route path="/budgets" element={<Budgets />} />
-              <Route path="/financial-plans" element={<FinancialPlans />} />
-              <Route path="/resources" element={<Resources />} />
-              <Route path="/data-explorer" element={<DataExplorer />} />
-              <Route path="/costguard" element={<CostGuard />} />
-              <Route path="/my-commitments" element={<MyCommitments />} />
-              <Route path="/commitments-log" element={<CommitmentsLog />} />
-              <Route path="/anomalies" element={<Anomalies />} />
-              <Route path="/reports" element={<Reports />} />
-              <Route path="/governance" element={<Governance />} />
-              <Route path="/analytics" element={<Analytics />} />
-              <Route path="/credentials" element={<Credentials />} />
+              <Route path="/megabill" element={<ProtectedRoute><Index /></ProtectedRoute>} />
+              <Route path="/virtual-tags" element={<ProtectedRoute><VirtualTags /></ProtectedRoute>} />
+              <Route path="/dashboards" element={<ProtectedRoute><Dashboards /></ProtectedRoute>} />
+              <Route path="/budgets" element={<ProtectedRoute><Budgets /></ProtectedRoute>} />
+              <Route path="/financial-plans" element={<ProtectedRoute><FinancialPlans /></ProtectedRoute>} />
+              <Route path="/resources" element={<ProtectedRoute><Resources /></ProtectedRoute>} />
+              <Route path="/data-explorer" element={<ProtectedRoute><DataExplorer /></ProtectedRoute>} />
+              <Route path="/costguard" element={<ProtectedRoute><CostGuard /></ProtectedRoute>} />
+              <Route path="/my-commitments" element={<ProtectedRoute><MyCommitments /></ProtectedRoute>} />
+              <Route path="/commitments-log" element={<ProtectedRoute><CommitmentsLog /></ProtectedRoute>} />
+              <Route path="/anomalies" element={<ProtectedRoute><Anomalies /></ProtectedRoute>} />
+              <Route path="/reports" element={<ProtectedRoute><Reports /></ProtectedRoute>} />
+              <Route path="/governance" element={<ProtectedRoute><Governance /></ProtectedRoute>} />
+              <Route path="/analytics" element={<ProtectedRoute><Analytics /></ProtectedRoute>} />
+              <Route path="/credentials" element={<ProtectedRoute><Credentials /></ProtectedRoute>} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>

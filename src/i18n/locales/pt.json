@@ -122,10 +122,6 @@
   
   "kpis": {
     "target": "Meta",
-    "units": {
-      "podsPerNode": "pods/nó",
-      "currencyPerUnit": "R$/unid"
-    },
     "names": {
       "resourceUtilizationRate": "Taxa de utilização de recursos",
       "cloudWastePercentage": "Percentual de desperdício na nuvem",

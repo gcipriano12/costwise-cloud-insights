@@ -87,12 +87,35 @@ export const useAuthProvider = () => {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem('access_token');
-    if (token) {
-      // Se existe token, considerar usuário logado
-      setUser({ username: 'admin' }); // Username padrão já que não temos endpoint /me
-    }
-    setLoading(false);
+    const validateToken = async () => {
+      console.log('🔐 Iniciando validação de token...');
+      const token = localStorage.getItem('access_token');
+      
+      if (!token) {
+        console.log('❌ Nenhum token encontrado');
+        setLoading(false);
+        return;
+      }
+
+      console.log('✅ Token encontrado, comprimento:', token.length);
+
+      // Verificação básica do formato do token
+      if (token.length < 10) {
+        console.log('❌ Token muito curto, removendo...');
+        localStorage.removeItem('access_token');
+        setUser(null);
+        setLoading(false);
+        return;
+      }
+
+      // Como não temos endpoint /me, vamos assumir que o token é válido
+      // se existe no localStorage. O interceptor da API vai lidar com tokens expirados
+      console.log('✅ Definindo usuário como autenticado');
+      setUser({ username: 'admin' });
+      setLoading(false);
+    };
+
+    validateToken();
   }, []);
 
   return {
