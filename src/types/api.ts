@@ -11,14 +11,6 @@ export interface LoginResponse {
   expires_in: number;
 }
 
-export interface User {
-  id: number;
-  username: string;
-  email: string;
-  is_active: boolean;
-  created_at: string;
-}
-
 // Tipos de credenciais AWS
 export interface AWSCredentials {
   id?: number;

@@ -1,8 +1,13 @@
 
 import { useState, useEffect, createContext, useContext } from 'react';
 import { apiClient } from '../api/client';
-import { User, LoginRequest, LoginResponse } from '../types/api';
+import { LoginRequest, LoginResponse } from '../types/api';
 import { useToast } from './use-toast';
+
+interface User {
+  username: string;
+  // Dados básicos do usuário extraídos do token ou login
+}
 
 interface AuthContextType {
   user: User | null;
@@ -36,7 +41,9 @@ export const useAuthProvider = () => {
       });
       
       localStorage.setItem('access_token', response.data.access_token);
-      await fetchUser();
+      
+      // Criar usuário básico a partir do login bem-sucedido
+      setUser({ username });
       
       toast({
         title: "Login successful",
@@ -54,18 +61,6 @@ export const useAuthProvider = () => {
     }
   };
 
-  const fetchUser = async () => {
-    try {
-      const response = await apiClient.get<User>('/api/v1/auth/me');
-      setUser(response.data);
-    } catch (error) {
-      setUser(null);
-      localStorage.removeItem('access_token');
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const logout = () => {
     localStorage.removeItem('access_token');
     setUser(null);
@@ -78,10 +73,10 @@ export const useAuthProvider = () => {
   useEffect(() => {
     const token = localStorage.getItem('access_token');
     if (token) {
-      fetchUser();
-    } else {
-      setLoading(false);
+      // Se existe token, considerar usuário logado
+      setUser({ username: 'admin' }); // Username padrão já que não temos endpoint /me
     }
+    setLoading(false);
   }, []);
 
   return {
