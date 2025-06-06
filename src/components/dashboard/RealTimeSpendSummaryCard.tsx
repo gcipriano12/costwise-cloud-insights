@@ -122,9 +122,15 @@ function mapApiDataToSpendSummary(
   data: DashboardSummary, 
   getProviderColor: (provider: string) => string
 ) {
+  // Converter strings para números
+  const totalCost = parseFloat(data.metrics.total_cost);
+  const costChangePercentage = parseFloat(data.metrics.cost_change_percentage);
+  const monthlyAverage = parseFloat(data.metrics.monthly_average);
+  const annualProjection = parseFloat(data.metrics.annual_projection);
+
   // Calcular sparkline baseado nos dados históricos (simulado)
-  const baseValue = data.metrics.total_cost;
-  const changePercent = data.metrics.cost_change_percentage / 100;
+  const baseValue = totalCost;
+  const changePercent = costChangePercentage / 100;
   const sparklineData = [
     baseValue * (1 - changePercent * 1.5),
     baseValue * (1 - changePercent * 1.2),
@@ -135,18 +141,18 @@ function mapApiDataToSpendSummary(
   ];
 
   return {
-    totalSpend: data.metrics.total_cost,
-    currency: 'R$',
-    previousPeriodChange: data.metrics.cost_change_percentage,
+    totalSpend: totalCost,
+    currency: '$', // Voltando para dólar como padrão
+    previousPeriodChange: costChangePercentage,
     sparklineData: sparklineData,
     providerBreakdown: data.provider_distribution.map(provider => ({
       name: provider.provider_name,
-      value: provider.percentage,
+      value: Math.round(parseFloat(provider.percentage) * 10) / 10, // Arredondar para 1 casa decimal
       color: getProviderColor(provider.provider_name)
     })),
     wastedSpend: data.highlights.estimated_waste.amount,
-    budgetLimit: data.metrics.budget_consumption?.total_budget || data.metrics.total_cost * 1.2,
-    budgetConsumed: data.metrics.budget_consumption?.percentage || 75,
+    budgetLimit: data.metrics.budget_consumption?.total_budget || totalCost * 1.2,
+    budgetConsumed: data.metrics.budget_consumption?.consumption_percentage || 75,
     savingsRealized: data.highlights.savings_achieved.amount,
     // Dados adicionais para enriquecer o SpendSummaryCard
     topService: {
@@ -154,8 +160,8 @@ function mapApiDataToSpendSummary(
       provider: data.metrics.top_service.provider_name,
       cost: data.metrics.top_service.total_cost
     },
-    monthlyAverage: data.metrics.monthly_average,
-    annualProjection: data.metrics.annual_projection,
+    monthlyAverage: monthlyAverage,
+    annualProjection: annualProjection,
     nextMonthForecast: data.highlights.next_month_forecast
   };
 }

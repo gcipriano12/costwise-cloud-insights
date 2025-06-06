@@ -240,7 +240,7 @@ export function EfficiencyKPIsCard({ kpis }: EfficiencyKPIsCardProps) {
                     <div className="flex items-center mt-1">
                       <div className={`text-xl font-bold ${activeColor.text}`}>
                         {typeof kpi.value === 'number' 
-                          ? kpi.value.toLocaleString('pt-BR', {
+                          ? kpi.value.toLocaleString('en-US', {
                               minimumFractionDigits: kpi.value % 1 !== 0 ? 2 : 0,
                               maximumFractionDigits: 2
                             }) 
@@ -251,7 +251,7 @@ export function EfficiencyKPIsCard({ kpis }: EfficiencyKPIsCardProps) {
                     </div>
                     {kpi.target !== undefined && (
                       <div className="text-xs text-muted-foreground mt-1">
-                        {t('kpis.target')}: {kpi.target.toLocaleString('pt-BR', {
+                        {t('kpis.target')}: {kpi.target.toLocaleString('en-US', {
                           minimumFractionDigits: kpi.target % 1 !== 0 ? 2 : 0,
                           maximumFractionDigits: 2
                         })}{kpi.unit}

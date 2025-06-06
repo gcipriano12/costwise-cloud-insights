@@ -24,11 +24,17 @@ export function CategoryDistributionCard({ data, currency }: CategoryDistributio
   
   const formatCurrency = (value: number) => {
     if (value >= 1000000) {
-      return `${currency} ${(value / 1000000).toFixed(2)}M`;
+      return `${currency}${(value / 1000000).toLocaleString('en-US', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      })}M`;
     } else if (value >= 1000) {
-      return `${currency} ${(value / 1000).toFixed(2)}K`;
+      return `${currency}${(value / 1000).toLocaleString('en-US', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      })}K`;
     }
-    return `${currency} ${value.toLocaleString('pt-BR', {
+    return `${currency}${value.toLocaleString('en-US', {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2
     })}`;

@@ -80,17 +80,17 @@ export function SpendSummaryCard({
   
   const formatCurrency = (value: number) => {
     if (value >= 1000000) {
-      return `${currency} ${(value / 1000000).toLocaleString('pt-BR', {
+      return `${currency}${(value / 1000000).toLocaleString('en-US', {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
       })}M`;
     } else if (value >= 1000) {
-      return `${currency} ${(value / 1000).toLocaleString('pt-BR', {
+      return `${currency}${(value / 1000).toLocaleString('en-US', {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
       })}K`;
     }
-    return `${currency} ${value.toLocaleString('pt-BR', {
+    return `${currency}${value.toLocaleString('en-US', {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2
     })}`;
@@ -135,7 +135,7 @@ export function SpendSummaryCard({
         strokeWidth={0.5}
         paintOrder="stroke"
       >
-        {`${pieData[index].value}%`}
+        {`${pieData[index].value.toFixed(1)}%`}
       </text>
     );
   };
@@ -250,7 +250,7 @@ export function SpendSummaryCard({
               </p>
               <div className="flex items-baseline">
                 <span className={`${isMobile ? 'text-2xl' : 'text-4xl'} font-bold tracking-tight`}>
-                  {currency} {totalSpend.toLocaleString('pt-BR', {
+                  {currency}{totalSpend.toLocaleString('en-US', {
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 2
                   })}
@@ -269,7 +269,7 @@ export function SpendSummaryCard({
                   <TrendingDown className={`${isMobile ? 'h-3 w-3' : 'h-4 w-4'} mr-1 flex-shrink-0`} />
                 )}
                 <span>
-                  {isIncrease ? '+' : '-'}{changeAbs}% {t('spendSummary.vsPreviousPeriod')}
+                  {isIncrease ? '+' : '-'}{changeAbs.toFixed(1)}% {t('spendSummary.vsPreviousPeriod')}
                 </span>
               </div>
             </div>
@@ -278,32 +278,34 @@ export function SpendSummaryCard({
               "grid grid-cols-3 gap-3 pt-3 border-t",
               isDark ? "border-slate-700" : "border-gray-100"
             )}>
-              <div>
+              <div className="text-center">
                 <p className="text-xs text-muted-foreground mb-1">
                   {isMobile ? t('spendSummary.averageMobile') : t('spendSummary.monthlyAverage')}
                 </p>
                 <div className={`${isMobile ? 'text-sm' : 'text-lg'} font-semibold`}>
                   {formatCurrency(calculatedMonthlyAverage)}
                 </div>
+                <div className="text-xs text-muted-foreground">
+                  {t('spendSummary.lastSixMonths')}
+                </div>
               </div>
               
-              <div>
+              <div className="text-center">
                 <p className="text-xs text-muted-foreground mb-1">
                   {isMobile ? t('spendSummary.highestMobile') : t('spendSummary.highestSpend')}
                 </p>
-                <div className="flex items-center mt-0.5">
+                <div className={`${isMobile ? 'text-sm' : 'text-lg'} font-semibold`}>
+                  {formatCurrency(calculatedTopService.cost)}
+                </div>
+                <div className="mt-0.5 flex justify-center">
                   <Badge className={cn(
-                    "mr-1 text-xs py-0",
+                    "text-xs py-0",
                     isDark ? "bg-amber-900 text-amber-100 border-0" : "bg-amber-50 text-amber-700 border-amber-200"
                   )}>{calculatedTopService.provider}</Badge>
-                  <span className="font-medium text-xs">{calculatedTopService.name}</span>
-                </div>
-                <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-semibold mt-0.5`}>
-                  {formatCurrency(calculatedTopService.cost)}
                 </div>
               </div>
               
-              <div>
+              <div className="text-center">
                 <p className="text-xs text-muted-foreground mb-1">
                   {isMobile ? t('spendSummary.projectionMobile') : t('spendSummary.annualProjection')}
                 </p>

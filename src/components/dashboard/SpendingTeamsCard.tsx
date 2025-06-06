@@ -23,11 +23,20 @@ export function SpendingTeamsCard({ categories, currency }: SpendingTeamsCardPro
   
   const formatCurrency = (value: number) => {
     if (value >= 1000000) {
-      return `${currency} ${(value / 1000000).toFixed(1)}M`;
+      return `${currency}${(value / 1000000).toLocaleString('en-US', {
+        minimumFractionDigits: 1,
+        maximumFractionDigits: 1
+      })}M`;
     } else if (value >= 1000) {
-      return `${currency} ${(value / 1000).toFixed(0)}K`;
+      return `${currency}${(value / 1000).toLocaleString('en-US', {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+      })}K`;
     }
-    return `${currency} ${value}`;
+    return `${currency}${value.toLocaleString('en-US', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    })}`;
   };
   
   // Cores padrão caso a propriedade color não esteja preenchida
@@ -36,7 +45,7 @@ export function SpendingTeamsCard({ categories, currency }: SpendingTeamsCardPro
   return (
     <Card className="h-full flex flex-col">
       <CardHeader className="pb-2 flex-shrink-0">
-        <CardTitle className="flex items-center text-lg font-medium">
+        <CardTitle className="flex items-center justify-center text-lg font-medium">
           <BarChart3 className="mr-2 h-5 w-5 text-XCost-blue" />
           {t('spendingTeams.title')}
         </CardTitle>
@@ -81,7 +90,7 @@ export function SpendingTeamsCard({ categories, currency }: SpendingTeamsCardPro
                 axisLine={{ stroke: isDark ? "#333333" : "#e0e0e0" }}
               />
               <Tooltip 
-                formatter={(value: number) => [`${currency} ${value.toLocaleString('pt-BR', {
+                formatter={(value: number) => [`${currency}${value.toLocaleString('en-US', {
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2
                 })}`, 'Valor']}

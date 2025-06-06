@@ -54,9 +54,9 @@ export function CostBenchmarksCard({ benchmarks, currency }: CostBenchmarksCardP
               <div className="relative pt-5 pb-1">
                 {/* Valor do seu custo */}
                 <div className="absolute top-0 left-0 w-full flex justify-between text-xs font-medium">
-                  <div className="text-green-500">{t('benchmarks.best')}: {currency} {benchmark.bestInClass.toLocaleString('pt-BR', {minimumFractionDigits: benchmark.bestInClass < 1 ? 3 : 1})}</div>
-                  <div>{t('benchmarks.you')}: {currency} {benchmark.yourCost.toLocaleString('pt-BR', {minimumFractionDigits: benchmark.yourCost < 1 ? 3 : 1})}</div>
-                  <div className="text-amber-500">{t('benchmarks.average')}: {currency} {benchmark.industryAverage.toLocaleString('pt-BR', {minimumFractionDigits: benchmark.industryAverage < 1 ? 3 : 1})}</div>
+                  <div className="text-green-500">{t('benchmarks.best')}: {currency}{benchmark.bestInClass.toLocaleString('en-US', {minimumFractionDigits: benchmark.bestInClass < 1 ? 3 : 2, maximumFractionDigits: benchmark.bestInClass < 1 ? 3 : 2})}</div>
+                  <div>{t('benchmarks.you')}: {currency}{benchmark.yourCost.toLocaleString('en-US', {minimumFractionDigits: benchmark.yourCost < 1 ? 3 : 2, maximumFractionDigits: benchmark.yourCost < 1 ? 3 : 2})}</div>
+                  <div className="text-amber-500">{t('benchmarks.average')}: {currency}{benchmark.industryAverage.toLocaleString('en-US', {minimumFractionDigits: benchmark.industryAverage < 1 ? 3 : 2, maximumFractionDigits: benchmark.industryAverage < 1 ? 3 : 2})}</div>
                 </div>
                 
                 {/* Barra de fundo */}

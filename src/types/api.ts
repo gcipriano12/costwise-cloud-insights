@@ -73,28 +73,30 @@ export interface APIError {
   status_code: number;
 }
 
-// Tipos para Dashboard Summary
+// Tipos para Dashboard Summary - Atualizado para corresponder à API real
 export interface DashboardSummary {
   metrics: {
-    total_cost: number;
-    cost_change_percentage: number;
-    monthly_average: number;
+    total_cost: string; // API retorna como string
+    cost_change_percentage: string; // API retorna como string
+    monthly_average: string; // API retorna como string
     top_service: {
       service_name: string;
       provider_name: string;
       total_cost: number;
     };
-    annual_projection: number;
+    annual_projection: string; // API retorna como string
     budget_consumption: {
-      percentage: number;
-      consumed: number;
       total_budget: number;
-    } | null;
+      current_spend: number;
+      consumption_percentage: number;
+      remaining_budget: number;
+    };
   };
   provider_distribution: {
     provider_name: string;
-    total_cost: number;
-    percentage: number;
+    total_cost: string; // API retorna como string
+    percentage: string; // API retorna como string
+    cost_change: number | null;
   }[];
   highlights: {
     next_month_forecast: {
@@ -104,6 +106,7 @@ export interface DashboardSummary {
     estimated_waste: {
       amount: number;
       percentage: number;
+      total_cost: number;
     };
     savings_achieved: {
       amount: number;
@@ -112,8 +115,8 @@ export interface DashboardSummary {
   };
   generated_at: string;
   period: {
-    days: number;
     start_date: string;
     end_date: string;
+    days: number;
   };
 }

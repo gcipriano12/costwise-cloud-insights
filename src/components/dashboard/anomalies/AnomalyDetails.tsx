@@ -33,8 +33,8 @@ export const AnomalyDetails: React.FC<AnomalyDetailsProps> = ({ anomaly }) => {
   };
 
   const formatCurrency = (value: number) => {
-    // Assuming currency is USD for now, can be made dynamic later
-    return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value);
+    // Using USD formatting consistently throughout the application
+    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value);
   };
 
   return (

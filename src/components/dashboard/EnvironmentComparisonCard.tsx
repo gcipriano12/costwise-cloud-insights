@@ -92,7 +92,7 @@ export function EnvironmentComparisonCard({ environments, currency }: Environmen
                 <div className="flex justify-between items-center">
                   <span className="text-sm font-medium truncate max-w-[40%]">{env.name}</span>
                   <span className="text-base font-bold truncate max-w-[55%] text-right">
-                    {currency} {env.cost.toLocaleString('pt-BR', {minimumFractionDigits: 1, maximumFractionDigits: 1})}
+                    {currency}{env.cost.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}
                   </span>
                 </div>
                 <CustomProgressBar 
@@ -101,9 +101,9 @@ export function EnvironmentComparisonCard({ environments, currency }: Environmen
                 />
                 <div className="flex justify-between items-center text-xs text-muted-foreground mt-1">
                   <div className="flex items-center truncate max-w-[70%]">
-                    <span className="whitespace-nowrap">{currency} {env.previousPeriodCost.toLocaleString('pt-BR', {minimumFractionDigits: 1, maximumFractionDigits: 1})}</span>
+                    <span className="whitespace-nowrap">{currency}{env.previousPeriodCost.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span>
                     <ArrowRight className="h-3 w-3 mx-1 flex-shrink-0" />
-                    <span className="whitespace-nowrap">{currency} {env.cost.toLocaleString('pt-BR', {minimumFractionDigits: 1, maximumFractionDigits: 1})}</span>
+                    <span className="whitespace-nowrap">{currency}{env.cost.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span>
                   </div>
                   <div className={`whitespace-nowrap ${getChangeColor(isIncrease)}`}>
                     {isIncrease ? '+' : ''}{changePercentage.toFixed(1)}%

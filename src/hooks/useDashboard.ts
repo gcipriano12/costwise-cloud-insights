@@ -136,9 +136,11 @@ export const useDashboard = ({
 // Hook para formatação de valores
 export const useDashboardFormatters = () => {
   const formatCurrency = useCallback((value: number): string => {
-    return new Intl.NumberFormat('pt-BR', { 
+    return new Intl.NumberFormat('en-US', { 
       style: 'currency', 
-      currency: 'BRL' 
+      currency: 'USD',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
     }).format(value);
   }, []);
 
@@ -148,9 +150,15 @@ export const useDashboardFormatters = () => {
 
   const formatCompactCurrency = useCallback((value: number): string => {
     if (value >= 1_000_000) {
-      return `R$ ${(value / 1_000_000).toFixed(1)}M`;
+      return `$${(value / 1_000_000).toLocaleString('en-US', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      })}M`;
     } else if (value >= 1_000) {
-      return `R$ ${(value / 1_000).toFixed(1)}K`;
+      return `$${(value / 1_000).toLocaleString('en-US', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      })}K`;
     }
     return formatCurrency(value);
   }, [formatCurrency]);
