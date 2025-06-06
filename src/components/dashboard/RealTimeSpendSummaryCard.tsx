@@ -142,12 +142,12 @@ function mapApiDataToSpendSummary(
 
   return {
     totalSpend: totalCost,
-    currency: 'R$', // Usando moeda brasileira
+    currency: '$', // Voltando para dólar como padrão
     previousPeriodChange: costChangePercentage,
     sparklineData: sparklineData,
     providerBreakdown: data.provider_distribution.map(provider => ({
       name: provider.provider_name,
-      value: parseFloat(provider.percentage),
+      value: Math.round(parseFloat(provider.percentage) * 10) / 10, // Arredondar para 1 casa decimal
       color: getProviderColor(provider.provider_name)
     })),
     wastedSpend: data.highlights.estimated_waste.amount,

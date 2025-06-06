@@ -132,12 +132,12 @@ export const useXCostData = (options: UseXCostDataOptions = {}) => {
 
       const summary: SpendSummary = {
         totalSpend,
-        currency: 'R$',
+        currency: '$', // Voltando para dólar como padrão
         previousPeriodChange: changePercentage,
         sparklineData,
         providerBreakdown: providerDist.map(p => ({
           name: p.name,
-          value: totalSpend > 0 ? (p.value / totalSpend) * 100 : 0,
+          value: totalSpend > 0 ? Math.round((p.value / totalSpend) * 1000) / 10 : 0, // Arredondar para 1 casa decimal
           color: p.color
         }))
       };

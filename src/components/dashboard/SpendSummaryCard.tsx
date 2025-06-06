@@ -135,7 +135,7 @@ export function SpendSummaryCard({
         strokeWidth={0.5}
         paintOrder="stroke"
       >
-        {`${pieData[index].value}%`}
+        {`${pieData[index].value.toFixed(1)}%`}
       </text>
     );
   };
@@ -181,7 +181,7 @@ export function SpendSummaryCard({
             "text-xs mt-1",
             isDark ? "text-slate-400" : "text-muted-foreground"
           )}>
-            {data.value}{t('spendSummary.percentOfTotal')}
+            {data.value.toFixed(1)}{t('spendSummary.percentOfTotal')}
           </p>
         </div>
       );
