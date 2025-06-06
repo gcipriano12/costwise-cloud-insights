@@ -10,6 +10,7 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip as RechartsTo
 import { useTheme } from '@/hooks/useTheme';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { getProviderColor } from '@/utils/providerColors';
 
 interface ProviderBreakdown {
   name: string;
@@ -33,6 +34,10 @@ interface SpendSummaryProps {
     provider: string;
     cost: number;
   };
+  topProvider?: {
+    name: string;
+    cost: number;
+  };
   monthlyAverage?: number;
   annualProjection?: number;
   nextMonthForecast?: {
@@ -47,16 +52,17 @@ export function SpendSummaryCard({
   previousPeriodChange, 
   sparklineData,
   providerBreakdown = [
-    { name: 'AWS', value: 58, color: '#F5A623' },
-    { name: 'Azure', value: 22, color: '#0078D4' },
-    { name: 'GCP', value: 12, color: '#4285F4' },
-    { name: 'Oracle Cloud', value: 8, color: '#f80404' }
+    { name: 'AWS', value: 58, color: getProviderColor('AWS') },
+    { name: 'Azure', value: 22, color: getProviderColor('Azure') },
+    { name: 'GCP', value: 12, color: getProviderColor('GCP') },
+    { name: 'Oracle Cloud', value: 8, color: getProviderColor('Oracle Cloud') }
   ],
   wastedSpend = totalSpend * 0.15,
   budgetLimit = totalSpend * 1.2,
   budgetConsumed = 75,
   savingsRealized = totalSpend * 0.08,
   topService,
+  topProvider,
   monthlyAverage,
   annualProjection,
   nextMonthForecast
@@ -71,10 +77,9 @@ export function SpendSummaryCard({
   // Use API data when available, fallback to calculated values
   const calculatedMonthlyAverage = monthlyAverage || totalSpend / 6;
   const calculatedProjectedNextMonth = nextMonthForecast?.amount || totalSpend * (1 + (previousPeriodChange / 100));
-  const calculatedTopService = topService || {
-    name: "EC2",
-    cost: totalSpend * 0.25,
-    provider: "AWS"
+  const calculatedTopProvider = topProvider || {
+    name: "AWS",
+    cost: totalSpend * 0.25
   };
   const calculatedAnnualProjection = annualProjection || totalSpend * 12;
   
@@ -295,13 +300,15 @@ export function SpendSummaryCard({
                   {isMobile ? t('spendSummary.highestMobile') : t('spendSummary.highestSpend')}
                 </p>
                 <div className={`${isMobile ? 'text-sm' : 'text-lg'} font-semibold`}>
-                  {formatCurrency(calculatedTopService.cost)}
+                  {formatCurrency(calculatedTopProvider.cost)}
                 </div>
                 <div className="mt-0.5 flex justify-center">
-                  <Badge className={cn(
-                    "text-xs py-0",
-                    isDark ? "bg-amber-900 text-amber-100 border-0" : "bg-amber-50 text-amber-700 border-amber-200"
-                  )}>{calculatedTopService.provider}</Badge>
+                  <Badge 
+                    className="text-xs py-0 text-white border-0"
+                    style={{ backgroundColor: getProviderColor(calculatedTopProvider.name) }}
+                  >
+                    {calculatedTopProvider.name}
+                  </Badge>
                 </div>
               </div>
               

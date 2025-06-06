@@ -3,6 +3,7 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import { useCredentials } from './useCredentials';
 import { useAnalytics } from './useAnalytics';
 import { timeFilterToDays } from '@/utils/timeFrame';
+import { getProviderFromRegion, getProviderColor } from '@/utils/providerColors';
 import type { 
   SpendSummary,
   ProviderDistribution,
@@ -106,11 +107,27 @@ export const useXCostData = (options: UseXCostDataOptions = {}) => {
       }));
       setTopServices(convertedTopServices);
 
-      // Criar distribuição por provedor baseada nos custos por região
-      const providerDist: ProviderDistribution[] = safeRegions.map(region => ({
-        name: region.region,
-        value: region.cost,
-        color: getColorForProvider(region.region)
+      // Agrupar custos por provedor baseado nas regiões
+      const providerCosts = new Map<string, number>();
+      safeRegions.forEach(region => {
+        const provider = getProviderFromRegion(region.region);
+        const currentCost = providerCosts.get(provider) || 0;
+        providerCosts.set(provider, currentCost + region.cost);
+      });
+
+      // Encontrar o provedor com maior custo total
+      let highestSpendProvider = { name: 'AWS', cost: 0 };
+      for (const [provider, cost] of providerCosts.entries()) {
+        if (cost > highestSpendProvider.cost) {
+          highestSpendProvider = { name: provider, cost };
+        }
+      }
+
+      // Criar distribuição por provedor baseada nos custos agrupados
+      const providerDist: ProviderDistribution[] = Array.from(providerCosts.entries()).map(([provider, cost]) => ({
+        name: provider,
+        value: cost,
+        color: getProviderColor(provider)
       }));
       setProviderDistribution(providerDist);
 
@@ -138,8 +155,13 @@ export const useXCostData = (options: UseXCostDataOptions = {}) => {
         providerBreakdown: providerDist.map(p => ({
           name: p.name,
           value: totalSpend > 0 ? Math.round((p.value / totalSpend) * 1000) / 10 : 0, // Arredondar para 1 casa decimal
-          color: p.color
-        }))
+          color: getProviderColor(p.name)
+        })),
+        // Adicionar dados do provedor com maior gasto para exibir em "Highest Spend"
+        topProvider: {
+          name: highestSpendProvider.name,
+          cost: highestSpendProvider.cost
+        }
       };
       setSpendSummary(summary);
 
@@ -151,14 +173,6 @@ export const useXCostData = (options: UseXCostDataOptions = {}) => {
       isLoadingRef.current = false;
       setLoading(false);
     }
-  };
-
-  // Função auxiliar para obter cores dos provedores
-  const getColorForProvider = (region: string): string => {
-    if (region.includes('us-') || region.includes('sa-')) return '#FF9900'; // AWS
-    if (region.includes('East') || region.includes('Brazil')) return '#0078D4'; // Azure
-    if (region.includes('central')) return '#4285F4'; // GCP
-    return '#F80000'; // Oracle Cloud
   };
 
   // Carregar dados automaticamente se houver credenciais

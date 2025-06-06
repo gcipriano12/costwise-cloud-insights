@@ -17,6 +17,10 @@ export type SpendSummary = {
   budgetLimit?: number;
   budgetConsumed?: number;
   savingsRealized?: number;
+  topProvider?: {
+    name: string;
+    cost: number;
+  };
 };
 
 export type ProviderDistribution = {

@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { useTranslation } from 'react-i18next';
 import { cn } from '@/lib/utils';
 import { useTheme } from '@/hooks/useTheme';
+import { getProviderColor } from '@/utils/providerColors';
 
 interface RealTimeSpendSummaryCardProps {
   periodDays?: number;
@@ -27,7 +28,7 @@ export function RealTimeSpendSummaryCard({
     autoRefresh: false, // Desabilitar auto-refresh automático
     refreshInterval: 5 * 60 * 1000 // 5 minutos (não usado quando autoRefresh = false)
   });
-  const { formatRelativeTime, getProviderColor } = useDashboardFormatters();
+  const { formatRelativeTime } = useDashboardFormatters();
   const { t } = useTranslation();
   const { isDark } = useTheme();
 
@@ -76,7 +77,7 @@ export function RealTimeSpendSummaryCard({
   }
 
   // Mapear dados da API para o formato esperado pelo SpendSummaryCard
-  const mappedData = mapApiDataToSpendSummary(data, getProviderColor);
+  const mappedData = mapApiDataToSpendSummary(data);
 
   return (
     <div className="space-y-2">
@@ -109,6 +110,7 @@ export function RealTimeSpendSummaryCard({
         budgetConsumed={mappedData.budgetConsumed}
         savingsRealized={mappedData.savingsRealized}
         topService={mappedData.topService}
+        topProvider={mappedData.topProvider}
         monthlyAverage={mappedData.monthlyAverage}
         annualProjection={mappedData.annualProjection}
         nextMonthForecast={mappedData.nextMonthForecast}
@@ -118,10 +120,7 @@ export function RealTimeSpendSummaryCard({
 }
 
 // Função para mapear dados da API para o formato do SpendSummaryCard
-function mapApiDataToSpendSummary(
-  data: DashboardSummary, 
-  getProviderColor: (provider: string) => string
-) {
+function mapApiDataToSpendSummary(data: DashboardSummary) {
   // Converter strings para números
   const totalCost = parseFloat(data.metrics.total_cost);
   const costChangePercentage = parseFloat(data.metrics.cost_change_percentage);
@@ -140,16 +139,31 @@ function mapApiDataToSpendSummary(
     baseValue
   ];
 
+  // Map provider breakdown data
+  const providerBreakdown = data.provider_distribution.map(provider => ({
+    name: provider.provider_name,
+    value: Math.round(parseFloat(provider.percentage) * 10) / 10, // Arredondar para 1 casa decimal
+    color: getProviderColor(provider.provider_name)
+  }));
+
+  // Calculate top provider based on total cost
+  const topProviderData = data.provider_distribution.reduce((top, current) => {
+    const currentCost = (parseFloat(current.percentage) / 100) * totalCost;
+    const topCost = (parseFloat(top.percentage) / 100) * totalCost;
+    return currentCost > topCost ? current : top;
+  });
+
+  const topProvider = {
+    name: topProviderData.provider_name,
+    cost: (parseFloat(topProviderData.percentage) / 100) * totalCost
+  };
+
   return {
     totalSpend: totalCost,
     currency: '$', // Voltando para dólar como padrão
     previousPeriodChange: costChangePercentage,
     sparklineData: sparklineData,
-    providerBreakdown: data.provider_distribution.map(provider => ({
-      name: provider.provider_name,
-      value: Math.round(parseFloat(provider.percentage) * 10) / 10, // Arredondar para 1 casa decimal
-      color: getProviderColor(provider.provider_name)
-    })),
+    providerBreakdown: providerBreakdown,
     wastedSpend: data.highlights.estimated_waste.amount,
     budgetLimit: data.metrics.budget_consumption?.total_budget || totalCost * 1.2,
     budgetConsumed: data.metrics.budget_consumption?.consumption_percentage || 75,
@@ -160,6 +174,7 @@ function mapApiDataToSpendSummary(
       provider: data.metrics.top_service.provider_name,
       cost: data.metrics.top_service.total_cost
     },
+    topProvider: topProvider, // Novo campo com o provedor com maior gasto total
     monthlyAverage: monthlyAverage,
     annualProjection: annualProjection,
     nextMonthForecast: data.highlights.next_month_forecast
