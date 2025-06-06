@@ -4,6 +4,7 @@ import { SpendingTeamsCard } from '../SpendingTeamsCard';
 import { ResourceUtilizationCard } from '../ResourceUtilizationCard';
 import { FinOpsComplianceCard } from '../FinOpsComplianceCard';
 import { ChartLine } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 interface TrendsSectionProps {
   spendingCategoriesData: {
@@ -32,11 +33,13 @@ export function TrendsSection({
   complianceData, 
   currency 
 }: TrendsSectionProps) {
+  const { t } = useTranslation();
+  
   return (
     <div className="mb-6">
       <div className="flex items-center mb-4">
         <ChartLine className="h-5 w-5 mr-2 text-amber-600" />
-        <h2 className="text-lg font-semibold">Tendências e Utilização</h2>
+        <h2 className="text-lg font-semibold">{t('sections.trendsAndUtilization')}</h2>
       </div>
       
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">

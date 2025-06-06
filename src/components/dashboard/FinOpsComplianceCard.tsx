@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import * as ProgressPrimitive from "@radix-ui/react-progress";
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
@@ -24,6 +25,7 @@ interface FinOpsComplianceCardProps {
 }
 
 export function FinOpsComplianceCard({ items }: FinOpsComplianceCardProps) {
+  const { t } = useTranslation();
   const { isDark } = useTheme();
   const compliantCount = items.filter(item => item.status === 'compliant').length;
   const compliancePercentage = Math.round((compliantCount / items.length) * 100);
@@ -78,7 +80,7 @@ export function FinOpsComplianceCard({ items }: FinOpsComplianceCardProps) {
             "mr-2 h-5 w-5",
             isDark ? "text-green-400" : "text-XCost-green"
           )} />
-          Conformidade FinOps
+          {t('finOpsCompliance.title')}
         </CardTitle>
       </CardHeader>
       <CardContent className="flex-grow pb-3 flex flex-col">
@@ -86,7 +88,7 @@ export function FinOpsComplianceCard({ items }: FinOpsComplianceCardProps) {
           <div className="text-center mb-4">
             <div className={`text-3xl font-bold ${getComplianceColor()}`}>{compliancePercentage}%</div>
             <div className="text-sm text-muted-foreground">
-              {compliantCount} de {items.length} práticas em conformidade
+              {compliantCount} de {items.length} {t('finOpsCompliance.practicesInCompliance')}
             </div>
             <div className="mt-2">
               <CustomProgressBar value={compliancePercentage} />

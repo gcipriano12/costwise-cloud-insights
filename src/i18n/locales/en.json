@@ -27,7 +27,84 @@
     "support": "Support",
     "logout": "Logout",
     "noNotifications": "No notifications",
-    "markAllAsRead": "Mark all as read"
+    "markAllAsRead": "Mark all as read",
+    "cloudCostManagementDashboard": "Cloud cost management dashboard"
+  },
+  "spendSummary": {
+    "title": "Spend Summary",
+    "totalSpend": "Total Spend",
+    "vsPreviousPeriod": "vs previous period",
+    "monthlyAverage": "Monthly Average",
+    "averageMobile": "Average",
+    "highestSpend": "Highest Spend",
+    "highestMobile": "Highest",
+    "annualProjection": "Annual Projection",
+    "projectionMobile": "Projection",
+    "currentYear": "Current year",
+    "budgetLimit": "Budget Limit",
+    "budgetMobile": "Budget",
+    "consumed": "Consumed",
+    "providerDistribution": "Provider Distribution",
+    "percentOfTotal": "% of total",
+    "highlights": "Highlights",
+    "nextMonthForecast": "Next Month Forecast",
+    "estimatedWaste": "Estimated Waste",
+    "realizedSavings": "Realized Savings",
+    "ofTotal": "of total"
+  },
+  "spendingForecast": {
+    "title": "Spending Forecast",
+    "forecastExceedsBudget": "Forecast exceeds budget",
+    "budget": "Budget",
+    "actualSpend": "Actual spend",
+    "forecast": "Forecast",
+    "actualSpendChart": "Actual Spend",
+    "forecastChart": "Forecast"
+  },
+  "spendingTeams": {
+    "title": "Spending by Team"
+  },
+  "regionHeatmap": {
+    "title": "Cost Heatmap by Region"
+  },
+  "newServices": {
+    "title": "New Services"
+  },
+  "environmentComparison": {
+    "title": "Environment Comparison",
+    "efficiency": "Efficiency:"
+  },
+  "finOpsCompliance": {
+    "title": "FinOps Compliance",
+    "practicesInCompliance": "practices in compliance"
+  },
+  "resourceUtilization": {
+    "title": "Resource Utilization",
+    "averageUtilization": "Average resource utilization"
+  },
+  "savingsOpportunities": {
+    "title": "Savings Opportunities",
+    "opportunities": "Opportunities",
+    "noOpportunitiesFound": "No savings opportunities found.",
+    "effortLow": "Low",
+    "effortMedium": "Medium", 
+    "effortHigh": "High",
+    "contribution": "Contribution",
+    "implement": "Implement",
+    "perMonth": "/month"
+  },
+  "topServices": {
+    "title": "Top Services",
+    "service": "Service",
+    "provider": "Provider",
+    "currentSpend": "Current Spend",
+    "variation": "Variation",
+    "details": "Details"
+  },
+  
+  "categoryDistribution": {
+    "title": "Category Distribution",
+    "percentOfTotal": "% of total"
   },
   "categories": {
     "inform": "Inform",
@@ -40,7 +117,75 @@
     "tarifacao": "Pricing",
     "planejamento": "Planning",
     "governanca": "Governance",
-    "noKpisForCategory": "No KPIs available for this category"
+    "noKpisForCategory": "No KPIs available for this category",
+    "servicesAndForecasts": "Services and Forecasts",
+    "trendsAndUtilization": "Trends and Utilization", 
+    "indicatorsAndEvents": "Indicators and Events",
+    "comparisonsAndReferences": "Comparisons and References"
+  },
+  
+  "kpis": {
+    "target": "Target",
+    "names": {
+      "resourceUtilizationRate": "Resource Utilization Rate",
+      "cloudWastePercentage": "Cloud Waste Percentage",
+      "powerScheduleAdherence": "Power Schedule Adherence Rate",
+      "legacyResourcesPercentage": "Legacy Resources Percentage",
+      "reservedInstancesCoverage": "Reserved Instances Coverage",
+      "costEfficiencyPerService": "Cost Efficiency per Service",
+      "containerDensity": "Container Density",
+      "costPerWorkload": "Cost per Workload",
+      "effectiveSavingsRate": "Effective Savings Rate (ESR)",
+      "commitmentDiscountWaste": "Commitment Discount Waste",
+      "computeCoveredByCommitments": "Compute Covered by Commitments",
+      "costPerVcpuGpuHour": "Cost per vCPU/GPU Hour",
+      "budgetVsForecastVariation": "Budget vs. Forecast Variation",
+      "cloudSpendVariation": "Cloud Spend Variation",
+      "forecastAccuracyRate": "Forecast Accuracy Rate",
+      "unallocatedCostPercentage": "Unallocated Cost Percentage",
+      "tagPolicyComplianceRate": "Tag Policy Compliance Rate",
+      "anomalyDetectionSavings": "Anomaly Detection Savings"
+    },
+    "descriptions": {
+      "resourceUtilizationRate": "How much of CPU, memory, GPU, etc. you actually use relative to what you provisioned. Keeps over-provisioning visible.",
+      "cloudWastePercentage": "Portion spent on idle VMs, detached volumes, zombie snapshots. Drives shutdown/termination actions.",
+      "powerScheduleAdherence": "Whether start/stop automation works as planned for non-production workloads (nights/weekends).",
+      "legacyResourcesPercentage": "How many instances are still on old, less efficient families. Useful before migration waves.",
+      "reservedInstancesCoverage": "Percentage of instances covered by long-term commitments like RIs or Savings Plans.",
+      "costEfficiencyPerService": "Cost normalized per unit of service delivered (transaction, request, etc).",
+      "containerDensity": "Average number of pods/containers per node in Kubernetes clusters. Indicates packing efficiency.",
+      "costPerWorkload": "Average cost per application or workload, helps identify applications with disproportionate spending.",
+      "effectiveSavingsRate": "Net savings compared to pure on-demand pricing — unifies RI/SP/CUD coverage and utilization into a single number.",
+      "commitmentDiscountWaste": "How much of purchased RI/SP/CUD capacity remains unused — highlights over-commitment.",
+      "computeCoveredByCommitments": "Depth of rate coverage; low values signal on-demand instance leakage.",
+      "costPerVcpuGpuHour": "Normalizes cost to a technical unit, ideal for cross-provider price comparisons.",
+      "budgetVsForecastVariation": "How close your rolling forecast is to year-to-date budget. Adjusted variance proves planning discipline.",
+      "cloudSpendVariation": "The classic signal of over/under-budget spending; combines with detailed root cause analysis.",
+      "forecastAccuracyRate": "Predictive accuracy for capacity or values; guides forecast model adjustments.",
+      "unallocatedCostPercentage": "How much spending still lacks a tag or owner — keeps chargeback transparent.",
+      "tagPolicyComplianceRate": "Health of your tagging discipline; low values compromise all other KPIs.",
+      "anomalyDetectionSavings": "Savings achieved by detecting spending spikes early with alerts."
+    },
+    "formulas": {
+      "resourceUtilizationRate": "(Consumed Capacity ÷ Allocated Capacity) × 100",
+      "cloudWastePercentage": "(Idle Resource Cost ÷ Total Cloud Spend) × 100",
+      "powerScheduleAdherence": "(Planned Runtime Hours ÷ Actual Runtime Hours) × 100",
+      "legacyResourcesPercentage": "(Legacy Instance Count ÷ Total Instances) × 100",
+      "reservedInstancesCoverage": "(Reserved Hours ÷ Total Instance Hours) × 100",
+      "costEfficiencyPerService": "Total Service Cost ÷ Number of Units Processed",
+      "containerDensity": "Total Running Pods ÷ Total Cluster Nodes",
+      "costPerWorkload": "Total Infrastructure Cost ÷ Number of Workloads",
+      "effectiveSavingsRate": "(Savings from All Discount Instruments ÷ Equivalent On-Demand Spend)",
+      "commitmentDiscountWaste": "(Unused Commitment Cost ÷ Total Commitment Cost) × 100",
+      "computeCoveredByCommitments": "(Compute Spend with Commitment Discount ÷ Total Compute Spend) × 100",
+      "costPerVcpuGpuHour": "(Compute Cost per Hour ÷ Number of vCPUs or GPUs)",
+      "budgetVsForecastVariation": "((Budgeted - Forecasted) ÷ Budgeted) × 100",
+      "cloudSpendVariation": "((Budgeted - Actual) ÷ Budgeted) × 100",
+      "forecastAccuracyRate": "100 - abs((Forecast - Actual) ÷ Forecast) × 100",
+      "unallocatedCostPercentage": "(Unallocated Costs ÷ Total Cloud Spend) × 100",
+      "tagPolicyComplianceRate": "(Properly Tagged Resources ÷ Total Resources) × 100",
+      "anomalyDetectionSavings": "Sum of (Predicted Spike Cost - Cost at Shutdown)"
+    }
   },
   "benchmarks": {
     "title": "Cost Benchmarks",
@@ -325,7 +470,18 @@
       "tagline": "Cloud cost optimization made simple and effective",
       "product": "Product",
       "company": "Company", 
-      "legal": "Legal"
+      "legal": "Legal",
+      "features": "Features",
+      "pricing": "Pricing",
+      "integrations": "Integrations",
+      "changelog": "Changelog",
+      "about": "About",
+      "careers": "Careers",
+      "blog": "Blog",
+      "privacyPolicy": "Privacy Policy",
+      "termsOfService": "Terms of Service",
+      "security": "Security",
+      "gdpr": "GDPR"
     }
   },
   "login": {
@@ -333,6 +489,7 @@
     "title": "Welcome back",
     "subtitle": "Enter your credentials to access your account",
     "form": {
+      "username": "Username",
       "email": "Email",
       "password": "Password",
       "login": "Login",

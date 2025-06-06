@@ -4,6 +4,7 @@ import { ResponsiveContainer, Treemap, Tooltip } from 'recharts';
 import { PieChart, BarChart3, Disc } from 'lucide-react';
 import { useTheme } from '@/hooks/useTheme';
 import { cn } from '@/lib/utils';
+import { useTranslation } from 'react-i18next';
 
 interface CategoryData {
   name: string;
@@ -18,6 +19,7 @@ interface CategoryDistributionProps {
 
 export function CategoryDistributionCard({ data, currency }: CategoryDistributionProps) {
   const { isDark } = useTheme();
+  const { t } = useTranslation();
   const total = data.reduce((sum, category) => sum + category.value, 0);
   
   const formatCurrency = (value: number) => {
@@ -26,7 +28,10 @@ export function CategoryDistributionCard({ data, currency }: CategoryDistributio
     } else if (value >= 1000) {
       return `${currency} ${(value / 1000).toFixed(2)}K`;
     }
-    return `${currency} ${value.toLocaleString()}`;
+    return `${currency} ${value.toLocaleString('pt-BR', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    })}`;
   };
   
   const formatPercentage = (value: number) => {
@@ -64,7 +69,7 @@ export function CategoryDistributionCard({ data, currency }: CategoryDistributio
             "text-xs mt-1 font-medium",
             isDark ? "text-slate-400" : "text-muted-foreground"
           )}>
-            {data.percentage}% do total
+            {data.percentage}% {t('categoryDistribution.percentOfTotal')}
           </p>
         </div>
       );
@@ -138,7 +143,7 @@ export function CategoryDistributionCard({ data, currency }: CategoryDistributio
         <div className="flex items-center">
           <CardTitle className="flex items-center text-lg font-medium whitespace-nowrap">
             <Disc className="mr-2 h-5 w-5 text-XCost-blue" />
-            Distribuição por Categoria
+            {t('categoryDistribution.title')}
           </CardTitle>
         </div>
       </CardHeader>

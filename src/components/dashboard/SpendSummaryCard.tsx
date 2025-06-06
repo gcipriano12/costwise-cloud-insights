@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import * as ProgressPrimitive from "@radix-ui/react-progress";
 import { TrendingUp, TrendingDown, DollarSign, Calendar, AlertCircle, BarChart3, ArrowRight, Disc, Target, AlertTriangle, Coins, PieChart as PieChartIcon, Sparkles, Cloud } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -26,6 +27,18 @@ interface SpendSummaryProps {
   budgetLimit?: number;
   budgetConsumed?: number;
   savingsRealized?: number;
+  // Novos campos opcionais para dados da API
+  topService?: {
+    name: string;
+    provider: string;
+    cost: number;
+  };
+  monthlyAverage?: number;
+  annualProjection?: number;
+  nextMonthForecast?: {
+    amount: number;
+    change_percentage: number;
+  };
 }
 
 export function SpendSummaryCard({ 
@@ -42,30 +55,45 @@ export function SpendSummaryCard({
   wastedSpend = totalSpend * 0.15,
   budgetLimit = totalSpend * 1.2,
   budgetConsumed = 75,
-  savingsRealized = totalSpend * 0.08
+  savingsRealized = totalSpend * 0.08,
+  topService,
+  monthlyAverage,
+  annualProjection,
+  nextMonthForecast
 }: SpendSummaryProps) {
+  const { t } = useTranslation();
   const { isDark } = useTheme();
   const isMobile = useIsMobile();
   const isIncrease = previousPeriodChange > 0;
   const changeAbs = Math.abs(previousPeriodChange);
   const [activeIndex, setActiveIndex] = React.useState<number | null>(null);
   
-  const monthlyAverage = totalSpend / 6;
-  const projectedNextMonth = totalSpend * (1 + (previousPeriodChange / 100));
-  const topService = {
+  // Use API data when available, fallback to calculated values
+  const calculatedMonthlyAverage = monthlyAverage || totalSpend / 6;
+  const calculatedProjectedNextMonth = nextMonthForecast?.amount || totalSpend * (1 + (previousPeriodChange / 100));
+  const calculatedTopService = topService || {
     name: "EC2",
     cost: totalSpend * 0.25,
     provider: "AWS"
   };
-  const forecastYTD = totalSpend * 12;
+  const calculatedAnnualProjection = annualProjection || totalSpend * 12;
   
   const formatCurrency = (value: number) => {
     if (value >= 1000000) {
-      return `${currency} ${(value / 1000000).toFixed(2)}M`;
+      return `${currency} ${(value / 1000000).toLocaleString('pt-BR', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      })}M`;
     } else if (value >= 1000) {
-      return `${currency} ${(value / 1000).toFixed(2)}K`;
+      return `${currency} ${(value / 1000).toLocaleString('pt-BR', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      })}K`;
     }
-    return `${currency} ${value.toLocaleString()}`;
+    return `${currency} ${value.toLocaleString('pt-BR', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    })}`;
   };
 
   const getBudgetStatusColor = () => {
@@ -153,7 +181,7 @@ export function SpendSummaryCard({
             "text-xs mt-1",
             isDark ? "text-slate-400" : "text-muted-foreground"
           )}>
-            {data.value}% do total
+            {data.value}{t('spendSummary.percentOfTotal')}
           </p>
         </div>
       );
@@ -210,7 +238,7 @@ export function SpendSummaryCard({
       <CardHeader className="pb-2">
         <CardTitle className="flex items-center text-lg font-medium">
           <DollarSign className="mr-2 h-5 w-5 text-XCost-blue" />
-          Resumo de Gastos
+          {t('spendSummary.title')}
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -218,11 +246,11 @@ export function SpendSummaryCard({
           <div className="col-span-12 md:col-span-4 space-y-3">
           <div>
               <p className={`text-sm text-muted-foreground mb-${isMobile ? '0' : '1'}`}>
-                Gasto Total
+                {t('spendSummary.totalSpend')}
               </p>
               <div className="flex items-baseline">
                 <span className={`${isMobile ? 'text-2xl' : 'text-4xl'} font-bold tracking-tight`}>
-                  {currency} {totalSpend.toLocaleString(undefined, {
+                  {currency} {totalSpend.toLocaleString('pt-BR', {
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 2
                   })}
@@ -241,7 +269,7 @@ export function SpendSummaryCard({
                   <TrendingDown className={`${isMobile ? 'h-3 w-3' : 'h-4 w-4'} mr-1 flex-shrink-0`} />
                 )}
                 <span>
-                  {isIncrease ? '+' : '-'}{changeAbs}% vs período anterior
+                  {isIncrease ? '+' : '-'}{changeAbs}% {t('spendSummary.vsPreviousPeriod')}
                 </span>
               </div>
             </div>
@@ -252,38 +280,38 @@ export function SpendSummaryCard({
             )}>
               <div>
                 <p className="text-xs text-muted-foreground mb-1">
-                  {isMobile ? "Média" : "Média Mensal"}
+                  {isMobile ? t('spendSummary.averageMobile') : t('spendSummary.monthlyAverage')}
                 </p>
                 <div className={`${isMobile ? 'text-sm' : 'text-lg'} font-semibold`}>
-                  {formatCurrency(monthlyAverage)}
+                  {formatCurrency(calculatedMonthlyAverage)}
                 </div>
               </div>
               
               <div>
                 <p className="text-xs text-muted-foreground mb-1">
-                  {isMobile ? "Maior" : "Maior Gasto"}
+                  {isMobile ? t('spendSummary.highestMobile') : t('spendSummary.highestSpend')}
                 </p>
                 <div className="flex items-center mt-0.5">
                   <Badge className={cn(
                     "mr-1 text-xs py-0",
                     isDark ? "bg-amber-900 text-amber-100 border-0" : "bg-amber-50 text-amber-700 border-amber-200"
-                  )}>{topService.provider}</Badge>
-                  <span className="font-medium text-xs">{topService.name}</span>
+                  )}>{calculatedTopService.provider}</Badge>
+                  <span className="font-medium text-xs">{calculatedTopService.name}</span>
                 </div>
                 <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-semibold mt-0.5`}>
-                  {formatCurrency(topService.cost)}
+                  {formatCurrency(calculatedTopService.cost)}
                 </div>
               </div>
               
               <div>
                 <p className="text-xs text-muted-foreground mb-1">
-                  {isMobile ? "Projeção" : "Projeção Anual"}
+                  {isMobile ? t('spendSummary.projectionMobile') : t('spendSummary.annualProjection')}
                 </p>
                 <div className={`${isMobile ? 'text-sm' : 'text-lg'} font-semibold`}>
-                  {formatCurrency(forecastYTD)}
+                  {formatCurrency(calculatedAnnualProjection)}
                 </div>
                 <div className="text-xs text-muted-foreground">
-                  Ano corrente
+                  {t('spendSummary.currentYear')}
                 </div>
               </div>
             </div>
@@ -294,7 +322,7 @@ export function SpendSummaryCard({
             )}>
               <div className="flex justify-between items-center">
                 <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
-                  {isMobile ? "Orçamento" : "Limite Orçamentário"}
+                  {isMobile ? t('spendSummary.budgetMobile') : t('spendSummary.budgetLimit')}
                 </p>
                 <span className={`text-xs font-medium ${getBudgetStatusColor()}`}>{budgetConsumed}%</span>
               </div>
@@ -302,7 +330,7 @@ export function SpendSummaryCard({
                 <CustomProgressBar value={budgetConsumed} />
               </div>
               <div className="flex justify-between text-xs mt-1 text-muted-foreground">
-                <span>Consumido</span>
+                <span>{t('spendSummary.consumed')}</span>
                 <span>{formatCurrency(budgetLimit)}</span>
               </div>
             </div>
@@ -310,7 +338,7 @@ export function SpendSummaryCard({
           
           <div className="col-span-12 md:col-span-4">
             <div className="flex items-center mb-2">
-              <p className="text-sm text-muted-foreground">Distribuição por Provedor</p>
+              <p className="text-sm text-muted-foreground">{t('spendSummary.providerDistribution')}</p>
             </div>
 
             <div className="h-64 w-full">
@@ -361,7 +389,7 @@ export function SpendSummaryCard({
           
           <div className="col-span-12 md:col-span-4 space-y-3">
             <div className="flex items-center mb-2">
-              <p className="text-sm text-muted-foreground">Highlights</p>
+              <p className="text-sm text-muted-foreground">{t('spendSummary.highlights')}</p>
             </div>
             
             <div className={cn(
@@ -374,20 +402,23 @@ export function SpendSummaryCard({
                   isDark ? "text-blue-400" : "text-XCost-blue"
                 )} />
                 <div>
-                  <p className="text-xs text-muted-foreground">Previsão Próximo Mês</p>
+                  <p className="text-xs text-muted-foreground">{t('spendSummary.nextMonthForecast')}</p>
                   <div className="flex items-center">
                     <span className={cn(
                       "text-lg font-bold",
                       isDark ? "text-blue-400" : "text-XCost-blue"
-                    )}>{formatCurrency(projectedNextMonth)}</span>
+                    )}>{formatCurrency(calculatedProjectedNextMonth)}</span>
                     <ArrowRight className="h-3 w-3 mx-1 text-muted-foreground" />
                     <span className={cn(
                       "text-xs",
-                      isIncrease 
+                      (nextMonthForecast?.change_percentage || previousPeriodChange) > 0 
                         ? isDark ? "text-red-400" : "text-XCost-red" 
                         : isDark ? "text-green-400" : "text-XCost-green"
                     )}>
-                      {isIncrease ? '+' : ''}{previousPeriodChange}%
+                      {(() => {
+                        const changeValue = nextMonthForecast?.change_percentage ?? previousPeriodChange;
+                        return `${changeValue > 0 ? '+' : ''}${changeValue.toFixed(1)}%`;
+                      })()}
                     </span>
                   </div>
                 </div>
@@ -404,7 +435,7 @@ export function SpendSummaryCard({
                   isDark ? "text-red-400" : "text-XCost-red"
                 )} />
                 <div>
-                  <p className="text-xs text-muted-foreground">Desperdício Estimado</p>
+                  <p className="text-xs text-muted-foreground">{t('spendSummary.estimatedWaste')}</p>
                   <div className="flex items-center">
                     <span className={cn(
                       "text-lg font-bold",
@@ -414,7 +445,7 @@ export function SpendSummaryCard({
                       "text-xs ml-2",
                       isDark ? "text-red-400" : "text-XCost-red"
                     )}>
-                      ({Math.round((wastedSpend/totalSpend)*100)}% do total)
+                      ({Math.round((wastedSpend/totalSpend)*100)}% {t('spendSummary.ofTotal')})
                     </span>
                   </div>
                 </div>
@@ -431,7 +462,7 @@ export function SpendSummaryCard({
                   isDark ? "text-green-400" : "text-XCost-green"
                 )} />
                 <div>
-                  <p className="text-xs text-muted-foreground">Economias Realizadas</p>
+                  <p className="text-xs text-muted-foreground">{t('spendSummary.realizedSavings')}</p>
                   <div className="flex items-center">
                     <span className={cn(
                       "text-lg font-bold",
@@ -441,7 +472,7 @@ export function SpendSummaryCard({
                       "text-xs ml-2",
                       isDark ? "text-green-400" : "text-XCost-green"
                     )}>
-                      ({Math.round((savingsRealized/totalSpend)*100)}% do total)
+                      ({Math.round((savingsRealized/totalSpend)*100)}% {t('spendSummary.ofTotal')})
                     </span>
                   </div>
                 </div>

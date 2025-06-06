@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import * as ProgressPrimitive from "@radix-ui/react-progress";
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { GitCompare, ArrowRight } from 'lucide-react';
@@ -19,6 +20,7 @@ interface EnvironmentComparisonCardProps {
 }
 
 export function EnvironmentComparisonCard({ environments, currency }: EnvironmentComparisonCardProps) {
+  const { t } = useTranslation();
   const { isDark } = useTheme();
   // Find the environment with the highest cost for scaling
   const maxCost = Math.max(...environments.map(env => env.cost));
@@ -44,9 +46,9 @@ export function EnvironmentComparisonCard({ environments, currency }: Environmen
   >(({ className, value, environmentName, ...props }, ref) => {
     // Cor baseada no ambiente para diferenciar visualmente
     const getEnvironmentColor = () => {
-      if (environmentName === 'Produção') return isDark ? "bg-blue-500" : "bg-blue-500";
-      if (environmentName === 'Homologação') return isDark ? "bg-purple-500" : "bg-purple-500";
-      if (environmentName === 'Desenvolvimento') return isDark ? "bg-amber-500" : "bg-amber-500";
+      if (environmentName === t('mockData.environments.production')) return isDark ? "bg-blue-500" : "bg-blue-500";
+      if (environmentName === t('mockData.environments.staging')) return isDark ? "bg-purple-500" : "bg-purple-500";
+      if (environmentName === t('mockData.environments.development')) return isDark ? "bg-amber-500" : "bg-amber-500";
       return isDark ? "bg-slate-500" : "bg-gray-500";
     };
     
@@ -77,7 +79,7 @@ export function EnvironmentComparisonCard({ environments, currency }: Environmen
             "h-5 w-5 mr-2", 
             isDark ? "text-blue-400" : "text-blue-500"
           )} />
-          Comparação de Ambientes
+          {t('environmentComparison.title')}
         </CardTitle>
       </CardHeader>
       <CardContent className="flex-grow px-4 pt-2 pb-3 overflow-auto">
@@ -108,7 +110,7 @@ export function EnvironmentComparisonCard({ environments, currency }: Environmen
                   </div>
                 </div>
                 <div className="flex justify-between items-center text-xs mt-0.5">
-                  <span>Eficiência:</span>
+                  <span>{t('environmentComparison.efficiency')}</span>
                   <span className={getEfficiencyColor(env.efficiency)}>
                     {env.efficiency}%
                   </span>

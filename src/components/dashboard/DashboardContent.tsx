@@ -85,6 +85,7 @@ export const DashboardContent: React.FC<DashboardContentProps> = ({
     )}>
       <div className="w-full">
         <SummarySection
+          timeFilter={timeFilter}
           spendSummaryData={spendSummaryData}
           providerDistributionData={providerDistributionData}
           categoryDistributionData={categoryDistributionData}

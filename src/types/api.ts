@@ -1,4 +1,3 @@
-
 // Tipos de autenticação
 export interface LoginRequest {
   username: string;
@@ -72,4 +71,49 @@ export interface MonthlyBreakdown {
 export interface APIError {
   detail: string;
   status_code: number;
+}
+
+// Tipos para Dashboard Summary
+export interface DashboardSummary {
+  metrics: {
+    total_cost: number;
+    cost_change_percentage: number;
+    monthly_average: number;
+    top_service: {
+      service_name: string;
+      provider_name: string;
+      total_cost: number;
+    };
+    annual_projection: number;
+    budget_consumption: {
+      percentage: number;
+      consumed: number;
+      total_budget: number;
+    } | null;
+  };
+  provider_distribution: {
+    provider_name: string;
+    total_cost: number;
+    percentage: number;
+  }[];
+  highlights: {
+    next_month_forecast: {
+      amount: number;
+      change_percentage: number;
+    };
+    estimated_waste: {
+      amount: number;
+      percentage: number;
+    };
+    savings_achieved: {
+      amount: number;
+      percentage: number;
+    };
+  };
+  generated_at: string;
+  period: {
+    days: number;
+    start_date: string;
+    end_date: string;
+  };
 }

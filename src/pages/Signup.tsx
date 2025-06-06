@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next';
 import { ThemeToggle } from '@/components/theme/ThemeToggle';
 import { useToast } from '@/components/ui/use-toast';
 import { Eye, EyeOff, ArrowLeft } from 'lucide-react';
+import { Logo } from '@/components/ui/logo';
 
 const signupSchema = z.object({
   name: z.string().min(2, {
@@ -96,9 +97,7 @@ const Signup = () => {
           <Card className="w-full max-w-md shadow-lg">
             <CardHeader className="space-y-1">
               <div className="flex justify-center mb-6">
-                <div className="text-3xl font-bold bg-gradient-to-r from-blue-500 to-indigo-600 text-transparent bg-clip-text">
-                  X Cost
-                </div>
+                <Logo size="lg" />
               </div>
               <CardTitle className="text-2xl text-center">
                 {t('signup.title', 'Create an account')}

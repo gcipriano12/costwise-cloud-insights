@@ -5,6 +5,7 @@ import { NewServicesCard } from '../NewServicesCard';
 import { RegionHeatmapCard } from '../RegionHeatmapCard';
 import { Card, CardHeader, CardTitle } from '@/components/ui/card';
 import { BarChart } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 // Definindo a interface para os dados das regiões aninhadas como vêm do hook
 interface NestedRegionData {
@@ -86,11 +87,13 @@ export function ComparisonSection({
     .sort((a, b) => b.value - a.value)
     .slice(0, 5);
 
+  const { t } = useTranslation();
+
   return (
     <div className="mb-6">
       <div className="flex items-center mb-4">
         <BarChart className="h-5 w-5 mr-2 text-purple-600" />
-        <h2 className="text-lg font-semibold">Comparativos e Referências</h2>
+        <h2 className="text-lg font-semibold">{t('sections.comparisonsAndReferences')}</h2>
       </div>
       
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-stretch">
