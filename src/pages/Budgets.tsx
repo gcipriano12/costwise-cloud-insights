@@ -1,106 +1,193 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import Dashboard from '@/components/dashboard/Dashboard';
 import { PageHeader } from '@/components/layout/PageHeader';
-import { LineChart, Plus, Search, AlertTriangle, CheckCircle, AlertCircle } from 'lucide-react';
+import { LineChart, Plus, Search, AlertTriangle, CheckCircle, AlertCircle, Edit, Trash2, Eye, Power, PowerOff, RefreshCw, Filter } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Progress } from '@/components/ui/progress';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Badge } from '@/components/ui/badge';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 import { cn } from '@/lib/utils';
 import { useTheme } from '@/hooks/useTheme';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Label } from '@/components/ui/label';
-import { Select } from '@/components/ui/select';
+import { useBudgets, BudgetResponse, BudgetCreate, BudgetUpdate } from '@/hooks/useBudgets';
+import { BudgetFormDialog } from '@/components/dashboard/BudgetFormDialog';
+import { BudgetDetailsDialog } from '@/components/dashboard/BudgetDetailsDialog';
 
-// Mock budget data
-const mockBudgets = [
-  {
-    id: '1',
-    name: 'Engineering Team Q2',
-    scope: 'Engineering',
-    allocated: 50000,
-    used: 34500,
-    percentUsed: 69,
-    status: 'normal' // normal, warning, critical
-  },
-  {
-    id: '2',
-    name: 'Data Platform',
-    scope: 'Data Team',
-    allocated: 35000,
-    used: 28000,
-    percentUsed: 80,
-    status: 'warning'
-  },
-  {
-    id: '3',
-    name: 'Production AWS',
-    scope: 'Infrastructure',
-    allocated: 75000,
-    used: 72000,
-    percentUsed: 96,
-    status: 'critical'
-  },
-  {
-    id: '4',
-    name: 'Dev/Test Environments',
-    scope: 'Engineering',
-    allocated: 15000,
-    used: 8000,
-    percentUsed: 53,
-    status: 'normal'
-  },
-  {
-    id: '5',
-    name: 'Marketing Cloud Services',
-    scope: 'Marketing',
-    allocated: 12000,
-    used: 11500,
-    percentUsed: 95.8,
-    status: 'critical'
-  }
-];
-
-const formatCurrency = (amount: number) => {
+const formatCurrency = (amount: string | number) => {
+  const value = typeof amount === 'string' ? parseFloat(amount) : amount;
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0
-  }).format(amount);
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  }).format(value);
 };
 
-const BudgetStatusIcon = ({ status }: { status: string }) => {
-  if (status === 'normal') {
-    return <CheckCircle className="h-5 w-5 text-green-500" />;
-  } else if (status === 'warning') {
-    return <AlertCircle className="h-5 w-5 text-amber-500" />;
-  } else {
-    return <AlertTriangle className="h-5 w-5 text-red-500" />;
-  }
+const formatDate = (dateString: string) => {
+  return new Date(dateString).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric'
+  });
 };
 
-const BudgetProgressBar = ({ percentUsed, status }: { percentUsed: number, status: string }) => {
-  let progressColor = "bg-green-500";
-  
-  if (status === 'warning') {
-    progressColor = "bg-amber-500";
-  } else if (status === 'critical') {
-    progressColor = "bg-red-500";
+const getStatusInfo = (budget: BudgetResponse, isActive: boolean = true) => {
+  if (!isActive) {
+    return {
+      status: 'inactive',
+      color: 'text-gray-500',
+      bgColor: 'bg-gray-50',
+      icon: <AlertCircle className="h-4 w-4" />
+    };
   }
+
+  // For active budgets, we'll show based on basic info
+  // Real consumption status will be shown in details dialog
+  return {
+    status: 'active',
+    color: 'text-green-500',
+    bgColor: 'bg-green-50',
+    icon: <CheckCircle className="h-4 w-4" />
+  };
+};
+
+const BudgetStatusBadge = ({ budget }: { budget: BudgetResponse }) => {
+  const statusInfo = getStatusInfo(budget, budget.is_active);
   
   return (
-    <div className="w-full">
-      <Progress value={percentUsed} className="h-2" progressColor={progressColor} />
-      <span className="text-xs text-muted-foreground mt-1 inline-block">{percentUsed}% used</span>
-    </div>
+    <Badge 
+      variant="outline" 
+      className={cn("text-xs", statusInfo.color, statusInfo.bgColor)}
+    >
+      {statusInfo.icon}
+      <span className="ml-1">
+        {budget.is_active ? 'Active' : 'Inactive'}
+      </span>
+    </Badge>
   );
 };
 
 const Budgets = () => {
   const { isDark } = useTheme();
-  const [open, setOpen] = React.useState(false);
+  
+  // API Integration
+  const [filters, setFilters] = useState({
+    provider_name: '',
+    service_name: '',
+    is_active: undefined as boolean | undefined
+  });
+  
+  const {
+    budgets,
+    totalCount,
+    totalBudgetAmount,
+    totalConsumption,
+    overallConsumptionPercentage,
+    loading,
+    error,
+    createBudget,
+    updateBudget,
+    deleteBudget,
+    getBudgetConsumption,
+    getBudgetAlerts,
+    activateBudget,
+    deactivateBudget,
+    refreshBudgets
+  } = useBudgets(filters);
+
+  // UI State
+  const [searchQuery, setSearchQuery] = useState('');
+  const [createDialogOpen, setCreateDialogOpen] = useState(false);
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
+  const [detailsDialogOpen, setDetailsDialogOpen] = useState(false);
+  const [selectedBudget, setSelectedBudget] = useState<BudgetResponse | null>(null);
+
+  // Filter and search budgets
+  const filteredBudgets = useMemo(() => {
+    return budgets.filter(budget => {
+      const matchesSearch = searchQuery === '' || 
+        budget.budget_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        budget.provider_name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        budget.service_name?.toLowerCase().includes(searchQuery.toLowerCase());
+      
+      return matchesSearch;
+    });
+  }, [budgets, searchQuery]);
+
+  const handleCreateBudget = async (data: BudgetCreate) => {
+    await createBudget(data);
+  };
+
+  const handleUpdateBudget = async (data: BudgetUpdate) => {
+    if (selectedBudget) {
+      await updateBudget(selectedBudget.id, data);
+      setSelectedBudget(null);
+    }
+  };
+
+  const handleDeleteBudget = async (budget: BudgetResponse) => {
+    if (confirm(`Are you sure you want to delete "${budget.budget_name}"?`)) {
+      await deleteBudget(budget.id);
+    }
+  };
+
+  const handleToggleBudgetStatus = async (budget: BudgetResponse) => {
+    if (budget.is_active) {
+      await deactivateBudget(budget.id);
+    } else {
+      await activateBudget(budget.id);
+    }
+  };
+
+  const handleViewDetails = (budget: BudgetResponse) => {
+    setSelectedBudget(budget);
+    setDetailsDialogOpen(true);
+  };
+
+  const handleEditBudget = (budget: BudgetResponse) => {
+    setSelectedBudget(budget);
+    setEditDialogOpen(true);
+  };
+
+  const handleFilterChange = (key: string, value: any) => {
+    setFilters(prev => ({
+      ...prev,
+      [key]: value === 'all' ? undefined : value
+    }));
+  };
+
+  const overallProgress = parseFloat(overallConsumptionPercentage) || 0;
+
+  // Debug: verificar estado de autenticação
+  console.log('🔍 [Budgets] Debug auth state:', {
+    loading,
+    error,
+    budgetsCount: budgets.length,
+    totalCount,
+    token: localStorage.getItem('access_token') ? 'Present' : 'Missing'
+  });
+
+  if (loading) {
+    return (
+      <Dashboard>
+        <div className="flex-1 w-full">
+          <PageHeader 
+            icon={LineChart} 
+            title="Budgets" 
+            description="Define and monitor cloud budget allocations."
+            color="text-[#0080af]"
+          />
+          <div className="p-4 flex items-center justify-center h-64">
+            <RefreshCw className="h-8 w-8 animate-spin text-muted-foreground" />
+          </div>
+        </div>
+      </Dashboard>
+    );
+  }
 
   return (
     <Dashboard>
@@ -111,103 +198,119 @@ const Budgets = () => {
           description="Define and monitor cloud budget allocations."
           color="text-[#0080af]"
           actions={
-            <Dialog open={open} onOpenChange={setOpen}>
-              <DialogTrigger asChild>
-                <Button>
-                  <Plus className="mr-2 h-4 w-4" />
-                  New Budget
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="sm:max-w-[600px]">
-                <DialogHeader>
-                  <DialogTitle>Create New Budget</DialogTitle>
-                  <DialogDescription>
-                    Define a budget and set up alerts for cost monitoring.
-                  </DialogDescription>
-                </DialogHeader>
-                
-                <div className="grid gap-4 py-4">
-                  <div className="grid gap-2">
-                    <Label htmlFor="name">Budget Name</Label>
-                    <Input id="name" placeholder="Enter budget name" />
-                  </div>
-                  
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="grid gap-2">
-                      <Label htmlFor="amount">Budget Amount</Label>
-                      <div className="relative">
-                        <span className="absolute left-3 top-2.5 text-muted-foreground">$</span>
-                        <Input id="amount" placeholder="Amount" className="pl-7" />
-                      </div>
-                    </div>
-                    <div className="grid gap-2">
-                      <Label htmlFor="period">Period</Label>
-                      <Select />
-                    </div>
-                  </div>
-                  
-                  <div className="grid gap-2">
-                    <Label htmlFor="scope">Budget Scope</Label>
-                    <Select />
-                  </div>
-                  
-                  <div className="grid gap-2">
-                    <Label>Alert Thresholds</Label>
-                    <div className="flex flex-wrap gap-2">
-                      {[70, 90, 100].map((threshold) => (
-                        <div
-                          key={threshold}
-                          className={cn(
-                            "flex items-center gap-2 border rounded-md px-3 py-1.5",
-                            isDark ? "border-slate-700" : "border-slate-200"
-                          )}
-                        >
-                          <input
-                            type="checkbox"
-                            id={`threshold-${threshold}`}
-                            defaultChecked={threshold !== 100}
-                          />
-                          <label htmlFor={`threshold-${threshold}`} className="text-sm">
-                            {threshold}% of budget
-                          </label>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  
-                  <div className="grid gap-2">
-                    <Label htmlFor="notifications">Notification Recipients</Label>
-                    <Input id="notifications" placeholder="email@example.com, email2@example.com" />
-                    <p className="text-xs text-muted-foreground">Separate multiple email addresses with commas</p>
-                  </div>
-                </div>
-                
-                <DialogFooter>
-                  <Button variant="outline" onClick={() => setOpen(false)}>
-                    Cancel
-                  </Button>
-                  <Button type="submit" onClick={() => setOpen(false)}>
-                    Create Budget
-                  </Button>
-                </DialogFooter>
-              </DialogContent>
-            </Dialog>
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={refreshBudgets}
+                disabled={loading}
+              >
+                <RefreshCw className={cn("mr-2 h-4 w-4", loading && "animate-spin")} />
+                Refresh
+              </Button>
+              <Button onClick={() => setCreateDialogOpen(true)}>
+                <Plus className="mr-2 h-4 w-4" />
+                New Budget
+              </Button>
+            </div>
           }
         />
         
-        <div className="p-4">
+        {error && (
+          <div className="p-4">
+            <Alert variant="destructive">
+              <AlertTriangle className="h-4 w-4" />
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          </div>
+        )}
+        
+        <div className="p-4 space-y-6">
+          {/* Overall Budget Summary */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <Card>
+              <CardHeader className="pb-2">
+                <CardTitle className="text-sm font-medium text-muted-foreground">Total Budgets</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">{totalCount}</div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader className="pb-2">
+                <CardTitle className="text-sm font-medium text-muted-foreground">Total Budget Amount</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">{formatCurrency(totalBudgetAmount)}</div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader className="pb-2">
+                <CardTitle className="text-sm font-medium text-muted-foreground">Total Consumption</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">{formatCurrency(totalConsumption)}</div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader className="pb-2">
+                <CardTitle className="text-sm font-medium text-muted-foreground">Overall Progress</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-2">
+                  <div className="text-2xl font-bold">{overallProgress.toFixed(1)}%</div>
+                  <Progress 
+                    value={overallProgress} 
+                    className="h-2"
+                  />
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Budgets Table */}
           <Card>
             <CardHeader className="pb-2">
-              <div className="flex flex-wrap justify-between items-center">
-                <CardTitle className="text-lg font-medium">Current Budgets</CardTitle>
+              <div className="flex flex-wrap justify-between items-center gap-4">
+                <CardTitle className="text-lg font-medium">Budget Management</CardTitle>
                 <div className="flex gap-2">
                   <div className="relative">
                     <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                     <Input
                       placeholder="Search budgets..."
                       className="w-[250px] pl-9"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
                     />
                   </div>
+                  <Select 
+                    value={filters.provider_name || 'all'} 
+                    onValueChange={(value) => handleFilterChange('provider_name', value)}
+                  >
+                    <SelectTrigger className="w-[140px]">
+                      <SelectValue placeholder="Provider" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All Providers</SelectItem>
+                      <SelectItem value="AWS">AWS</SelectItem>
+                      <SelectItem value="Azure">Azure</SelectItem>
+                      <SelectItem value="GCP">GCP</SelectItem>
+                      <SelectItem value="Oracle Cloud">Oracle Cloud</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <Select 
+                    value={filters.is_active === undefined ? 'all' : filters.is_active.toString()} 
+                    onValueChange={(value) => handleFilterChange('is_active', value === 'all' ? undefined : value === 'true')}
+                  >
+                    <SelectTrigger className="w-[120px]">
+                      <SelectValue placeholder="Status" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All Status</SelectItem>
+                      <SelectItem value="true">Active</SelectItem>
+                      <SelectItem value="false">Inactive</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
             </CardHeader>
@@ -219,50 +322,110 @@ const Budgets = () => {
                     <TableRow>
                       <TableHead>Status</TableHead>
                       <TableHead>Budget Name</TableHead>
-                      <TableHead>Scope</TableHead>
-                      <TableHead>Allocated</TableHead>
-                      <TableHead>Used</TableHead>
-                      <TableHead className="w-[200px]">Progress</TableHead>
+                      <TableHead>Provider</TableHead>
+                      <TableHead>Service</TableHead>
+                      <TableHead>Budget Amount</TableHead>
+                      <TableHead>Period</TableHead>
+                      <TableHead>Created</TableHead>
                       <TableHead className="text-right">Actions</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {mockBudgets.map((budget) => (
-                      <TableRow key={budget.id}>
-                        <TableCell>
-                          <BudgetStatusIcon status={budget.status} />
-                        </TableCell>
-                        <TableCell className="font-medium">{budget.name}</TableCell>
-                        <TableCell>{budget.scope}</TableCell>
-                        <TableCell>{formatCurrency(budget.allocated)}</TableCell>
-                        <TableCell>{formatCurrency(budget.used)}</TableCell>
-                        <TableCell>
-                          <BudgetProgressBar
-                            percentUsed={budget.percentUsed}
-                            status={budget.status}
-                          />
-                        </TableCell>
-                        <TableCell className="text-right">
-                          <Button variant="ghost" size="sm">View</Button>
+                    {filteredBudgets.length === 0 ? (
+                      <TableRow>
+                        <TableCell colSpan={8} className="text-center py-8 text-muted-foreground">
+                          {searchQuery || filters.provider_name || filters.service_name || filters.is_active !== undefined
+                            ? "No budgets found matching the current filters."
+                            : "No budgets created yet. Create your first budget to get started."
+                          }
                         </TableCell>
                       </TableRow>
-                    ))}
+                    ) : (
+                      filteredBudgets.map((budget) => (
+                        <TableRow key={budget.id}>
+                          <TableCell>
+                            <BudgetStatusBadge budget={budget} />
+                          </TableCell>
+                          <TableCell className="font-medium">{budget.budget_name}</TableCell>
+                          <TableCell>{budget.provider_name || 'All'}</TableCell>
+                          <TableCell>{budget.service_name || 'All'}</TableCell>
+                          <TableCell>{formatCurrency(budget.budget_amount)}</TableCell>
+                          <TableCell className="capitalize">{budget.budget_period}</TableCell>
+                          <TableCell>{formatDate(budget.created_at)}</TableCell>
+                          <TableCell className="text-right">
+                            <DropdownMenu>
+                              <DropdownMenuTrigger asChild>
+                                <Button variant="ghost" size="sm">
+                                  Actions
+                                </Button>
+                              </DropdownMenuTrigger>
+                              <DropdownMenuContent align="end">
+                                <DropdownMenuItem onClick={() => handleViewDetails(budget)}>
+                                  <Eye className="mr-2 h-4 w-4" />
+                                  View Details
+                                </DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => handleEditBudget(budget)}>
+                                  <Edit className="mr-2 h-4 w-4" />
+                                  Edit
+                                </DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => handleToggleBudgetStatus(budget)}>
+                                  {budget.is_active ? (
+                                    <>
+                                      <PowerOff className="mr-2 h-4 w-4" />
+                                      Deactivate
+                                    </>
+                                  ) : (
+                                    <>
+                                      <Power className="mr-2 h-4 w-4" />
+                                      Activate
+                                    </>
+                                  )}
+                                </DropdownMenuItem>
+                                <DropdownMenuItem 
+                                  onClick={() => handleDeleteBudget(budget)}
+                                  className="text-destructive"
+                                >
+                                  <Trash2 className="mr-2 h-4 w-4" />
+                                  Delete
+                                </DropdownMenuItem>
+                              </DropdownMenuContent>
+                            </DropdownMenu>
+                          </TableCell>
+                        </TableRow>
+                      ))
+                    )}
                   </TableBody>
                 </Table>
-              </div>
-              
-              <div className="mt-6">
-                <h3 className="font-medium mb-3">Budget vs. Actual Spending</h3>
-                <div className={cn(
-                  "h-64 rounded-md flex items-center justify-center border",
-                  isDark ? "border-slate-700" : "border-slate-200"
-                )}>
-                  <p className="text-muted-foreground">Budget trend chart will appear here</p>
-                </div>
               </div>
             </CardContent>
           </Card>
         </div>
+
+        {/* Dialog Components */}
+        <BudgetFormDialog
+          open={createDialogOpen}
+          onOpenChange={setCreateDialogOpen}
+          onSubmit={handleCreateBudget}
+          mode="create"
+        />
+
+        <BudgetFormDialog
+          open={editDialogOpen}
+          onOpenChange={setEditDialogOpen}
+          onSubmit={handleUpdateBudget}
+          mode="edit"
+          budget={selectedBudget || undefined}
+        />
+
+        <BudgetDetailsDialog
+          open={detailsDialogOpen}
+          onOpenChange={setDetailsDialogOpen}
+          budget={selectedBudget}
+          onGetConsumption={getBudgetConsumption}
+          onGetAlerts={getBudgetAlerts}
+          onActivate={activateBudget}
+          onDeactivate={deactivateBudget}
+        />
       </div>
     </Dashboard>
   );
