@@ -135,7 +135,7 @@ export function SpendSummaryCard({
         strokeWidth={0.5}
         paintOrder="stroke"
       >
-        {`${pieData[index].value.toFixed(1)}%`}
+        {`${pieData[index].value}%`}
       </text>
     );
   };
