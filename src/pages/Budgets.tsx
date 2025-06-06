@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import Dashboard from '@/components/dashboard/Dashboard';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { LineChart, Plus, Search, AlertTriangle, CheckCircle, AlertCircle, Edit, Trash2, Eye, Power, PowerOff, RefreshCw, Filter } from 'lucide-react';
@@ -16,6 +17,7 @@ import { useTheme } from '@/hooks/useTheme';
 import { useBudgets, BudgetResponse, BudgetCreate, BudgetUpdate } from '@/hooks/useBudgets';
 import { BudgetFormDialog } from '@/components/dashboard/BudgetFormDialog';
 import { BudgetDetailsDialog } from '@/components/dashboard/BudgetDetailsDialog';
+import { getProviderColor } from '@/utils/providerColors';
 
 const formatCurrency = (amount: string | number) => {
   const value = typeof amount === 'string' ? parseFloat(amount) : amount;
@@ -56,6 +58,7 @@ const getStatusInfo = (budget: BudgetResponse, isActive: boolean = true) => {
 };
 
 const BudgetStatusBadge = ({ budget }: { budget: BudgetResponse }) => {
+  const { t } = useTranslation();
   const statusInfo = getStatusInfo(budget, budget.is_active);
   
   return (
@@ -65,13 +68,29 @@ const BudgetStatusBadge = ({ budget }: { budget: BudgetResponse }) => {
     >
       {statusInfo.icon}
       <span className="ml-1">
-        {budget.is_active ? 'Active' : 'Inactive'}
+        {budget.is_active ? t('budgets.status.active') : t('budgets.status.inactive')}
       </span>
     </Badge>
   );
 };
 
+const ProviderDisplay = ({ provider }: { provider: string | null }) => {
+  const { t } = useTranslation();
+  const displayProvider = provider || t('common.all');
+  const providerColor = getProviderColor(displayProvider);
+  
+  return (
+    <Badge 
+      className="text-white border-0 font-medium"
+      style={{ backgroundColor: providerColor }}
+    >
+      {displayProvider}
+    </Badge>
+  );
+};
+
 const Budgets = () => {
+  const { t } = useTranslation();
   const { isDark } = useTheme();
   
   // API Integration
@@ -130,7 +149,7 @@ const Budgets = () => {
   };
 
   const handleDeleteBudget = async (budget: BudgetResponse) => {
-    if (confirm(`Are you sure you want to delete "${budget.budget_name}"?`)) {
+    if (confirm(t('budgets.deleteConfirm', { budgetName: budget.budget_name }))) {
       await deleteBudget(budget.id);
     }
   };
@@ -180,6 +199,7 @@ const Budgets = () => {
             title="Budgets" 
             description="Define and monitor cloud budget allocations."
             color="text-[#0080af]"
+            showTimeFilter={false}
           />
           <div className="p-4 flex items-center justify-center h-64">
             <RefreshCw className="h-8 w-8 animate-spin text-muted-foreground" />
@@ -194,9 +214,10 @@ const Budgets = () => {
       <div className="flex-1 w-full">
         <PageHeader 
           icon={LineChart} 
-          title="Budgets" 
-          description="Define and monitor cloud budget allocations."
+          title={t('budgets.page.title')}
+          description={t('budgets.page.description')}
           color="text-[#0080af]"
+          showTimeFilter={false}
           actions={
             <div className="flex gap-2">
               <Button
@@ -206,11 +227,11 @@ const Budgets = () => {
                 disabled={loading}
               >
                 <RefreshCw className={cn("mr-2 h-4 w-4", loading && "animate-spin")} />
-                Refresh
+                {t('budgets.page.refresh')}
               </Button>
               <Button onClick={() => setCreateDialogOpen(true)}>
                 <Plus className="mr-2 h-4 w-4" />
-                New Budget
+                {t('budgets.page.newBudget')}
               </Button>
             </div>
           }
@@ -230,7 +251,7 @@ const Budgets = () => {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <Card>
               <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-medium text-muted-foreground">Total Budgets</CardTitle>
+                <CardTitle className="text-sm font-medium text-muted-foreground">{t('budgets.summary.totalBudgets')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">{totalCount}</div>
@@ -238,7 +259,7 @@ const Budgets = () => {
             </Card>
             <Card>
               <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-medium text-muted-foreground">Total Budget Amount</CardTitle>
+                <CardTitle className="text-sm font-medium text-muted-foreground">{t('budgets.summary.totalBudgetAmount')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">{formatCurrency(totalBudgetAmount)}</div>
@@ -246,7 +267,7 @@ const Budgets = () => {
             </Card>
             <Card>
               <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-medium text-muted-foreground">Total Consumption</CardTitle>
+                <CardTitle className="text-sm font-medium text-muted-foreground">{t('budgets.summary.totalConsumption')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">{formatCurrency(totalConsumption)}</div>
@@ -254,7 +275,7 @@ const Budgets = () => {
             </Card>
             <Card>
               <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-medium text-muted-foreground">Overall Progress</CardTitle>
+                <CardTitle className="text-sm font-medium text-muted-foreground">{t('budgets.summary.overallProgress')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-2">
@@ -272,12 +293,12 @@ const Budgets = () => {
           <Card>
             <CardHeader className="pb-2">
               <div className="flex flex-wrap justify-between items-center gap-4">
-                <CardTitle className="text-lg font-medium">Budget Management</CardTitle>
+                <CardTitle className="text-lg font-medium">{t('budgets.table.title')}</CardTitle>
                 <div className="flex gap-2">
                   <div className="relative">
                     <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                     <Input
-                      placeholder="Search budgets..."
+                      placeholder={t('budgets.table.search')}
                       className="w-[250px] pl-9"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
@@ -287,11 +308,11 @@ const Budgets = () => {
                     value={filters.provider_name || 'all'} 
                     onValueChange={(value) => handleFilterChange('provider_name', value)}
                   >
-                    <SelectTrigger className="w-[140px]">
+                    <SelectTrigger className="w-[200px]">
                       <SelectValue placeholder="Provider" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="all">All Providers</SelectItem>
+                      <SelectItem value="all">{t('budgets.table.filters.allProviders')}</SelectItem>
                       <SelectItem value="AWS">AWS</SelectItem>
                       <SelectItem value="Azure">Azure</SelectItem>
                       <SelectItem value="GCP">GCP</SelectItem>
@@ -302,13 +323,13 @@ const Budgets = () => {
                     value={filters.is_active === undefined ? 'all' : filters.is_active.toString()} 
                     onValueChange={(value) => handleFilterChange('is_active', value === 'all' ? undefined : value === 'true')}
                   >
-                    <SelectTrigger className="w-[120px]">
+                    <SelectTrigger className="w-[160px]">
                       <SelectValue placeholder="Status" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="all">All Status</SelectItem>
-                      <SelectItem value="true">Active</SelectItem>
-                      <SelectItem value="false">Inactive</SelectItem>
+                      <SelectItem value="all">{t('budgets.table.filters.allStatus')}</SelectItem>
+                      <SelectItem value="true">{t('budgets.table.filters.active')}</SelectItem>
+                      <SelectItem value="false">{t('budgets.table.filters.inactive')}</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -320,14 +341,14 @@ const Budgets = () => {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Status</TableHead>
-                      <TableHead>Budget Name</TableHead>
-                      <TableHead>Provider</TableHead>
-                      <TableHead>Service</TableHead>
-                      <TableHead>Budget Amount</TableHead>
-                      <TableHead>Period</TableHead>
-                      <TableHead>Created</TableHead>
-                      <TableHead className="text-right">Actions</TableHead>
+                      <TableHead className="text-center">{t('budgets.table.columns.status')}</TableHead>
+                      <TableHead className="text-center">{t('budgets.table.columns.budgetName')}</TableHead>
+                      <TableHead className="text-center">{t('budgets.table.columns.provider')}</TableHead>
+                      <TableHead className="text-center">{t('budgets.table.columns.service')}</TableHead>
+                      <TableHead className="text-center">{t('budgets.table.columns.budgetAmount')}</TableHead>
+                      <TableHead className="text-center">{t('budgets.table.columns.period')}</TableHead>
+                      <TableHead className="text-center">{t('budgets.table.columns.created')}</TableHead>
+                      <TableHead className="text-center">{t('budgets.table.columns.actions')}</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -335,49 +356,51 @@ const Budgets = () => {
                       <TableRow>
                         <TableCell colSpan={8} className="text-center py-8 text-muted-foreground">
                           {searchQuery || filters.provider_name || filters.service_name || filters.is_active !== undefined
-                            ? "No budgets found matching the current filters."
-                            : "No budgets created yet. Create your first budget to get started."
+                            ? t('budgets.table.noResults')
+                            : t('budgets.table.noData')
                           }
                         </TableCell>
                       </TableRow>
                     ) : (
                       filteredBudgets.map((budget) => (
                         <TableRow key={budget.id}>
-                          <TableCell>
+                          <TableCell className="text-center">
                             <BudgetStatusBadge budget={budget} />
                           </TableCell>
-                          <TableCell className="font-medium">{budget.budget_name}</TableCell>
-                          <TableCell>{budget.provider_name || 'All'}</TableCell>
-                          <TableCell>{budget.service_name || 'All'}</TableCell>
-                          <TableCell>{formatCurrency(budget.budget_amount)}</TableCell>
-                          <TableCell className="capitalize">{budget.budget_period}</TableCell>
-                          <TableCell>{formatDate(budget.created_at)}</TableCell>
-                          <TableCell className="text-right">
+                          <TableCell className="text-center font-medium">{budget.budget_name}</TableCell>
+                          <TableCell className="text-center">
+                            <ProviderDisplay provider={budget.provider_name} />
+                          </TableCell>
+                          <TableCell className="text-center">{budget.service_name || t('common.all')}</TableCell>
+                          <TableCell className="text-center">{formatCurrency(budget.budget_amount)}</TableCell>
+                          <TableCell className="text-center">{t(`budgets.table.periods.${budget.budget_period}`)}</TableCell>
+                          <TableCell className="text-center">{formatDate(budget.created_at)}</TableCell>
+                          <TableCell className="text-center">
                             <DropdownMenu>
                               <DropdownMenuTrigger asChild>
-                                <Button variant="ghost" size="sm">
-                                  Actions
+                                <Button variant="outline" size="sm">
+                                  {t('budgets.table.manageButton')}
                                 </Button>
                               </DropdownMenuTrigger>
                               <DropdownMenuContent align="end">
                                 <DropdownMenuItem onClick={() => handleViewDetails(budget)}>
                                   <Eye className="mr-2 h-4 w-4" />
-                                  View Details
+                                  {t('budgets.table.actions.viewDetails')}
                                 </DropdownMenuItem>
                                 <DropdownMenuItem onClick={() => handleEditBudget(budget)}>
                                   <Edit className="mr-2 h-4 w-4" />
-                                  Edit
+                                  {t('budgets.table.actions.edit')}
                                 </DropdownMenuItem>
                                 <DropdownMenuItem onClick={() => handleToggleBudgetStatus(budget)}>
                                   {budget.is_active ? (
                                     <>
                                       <PowerOff className="mr-2 h-4 w-4" />
-                                      Deactivate
+                                      {t('budgets.table.actions.deactivate')}
                                     </>
                                   ) : (
                                     <>
                                       <Power className="mr-2 h-4 w-4" />
-                                      Activate
+                                      {t('budgets.table.actions.activate')}
                                     </>
                                   )}
                                 </DropdownMenuItem>
@@ -386,7 +409,7 @@ const Budgets = () => {
                                   className="text-destructive"
                                 >
                                   <Trash2 className="mr-2 h-4 w-4" />
-                                  Delete
+                                  {t('budgets.table.actions.delete')}
                                 </DropdownMenuItem>
                               </DropdownMenuContent>
                             </DropdownMenu>

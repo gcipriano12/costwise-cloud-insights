@@ -28,7 +28,8 @@
     "logout": "Logout",
     "noNotifications": "No notifications",
     "markAllAsRead": "Mark all as read",
-    "cloudCostManagementDashboard": "Cloud cost management dashboard"
+    "cloudCostManagementDashboard": "Cloud cost management dashboard",
+    "all": "All"
   },
   "spendSummary": {
     "title": "Spend Summary",
@@ -529,6 +530,161 @@
     "error": {
       "title": "Signup failed",
       "description": "There was a problem creating your account. Please try again."
+    }
+  },
+  "budgets": {
+    "page": {
+      "title": "Budgets",
+      "description": "Define and monitor cloud budget allocations.",
+      "newBudget": "New Budget",
+      "refresh": "Refresh"
+    },
+    "summary": {
+      "totalBudgets": "Total Budgets",
+      "totalBudgetAmount": "Total Budget Amount",
+      "totalConsumption": "Total Consumption",
+      "overallProgress": "Overall Progress"
+    },
+    "table": {
+      "title": "Budget Management",
+      "search": "Search budgets...",
+      "filters": {
+        "allProviders": "All Providers",
+        "allStatus": "All Status",
+        "active": "Active",
+        "inactive": "Inactive"
+      },
+      "columns": {
+        "status": "Status",
+        "budgetName": "Budget Name", 
+        "provider": "Provider",
+        "service": "Service",
+        "budgetAmount": "Budget Amount",
+        "period": "Period",
+        "created": "Created",
+        "actions": "Actions"
+      },
+      "noResults": "No budgets found matching the current filters.",
+      "noData": "No budgets created yet. Create your first budget to get started.",
+      "manageButton": "Manage",
+      "periods": {
+        "monthly": "Monthly",
+        "annual": "Annual"
+      },
+      "actions": {
+        "viewDetails": "View Details",
+        "edit": "Edit",
+        "activate": "Activate",
+        "deactivate": "Deactivate",
+        "delete": "Delete"
+      }
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "form": {
+      "createTitle": "Create New Budget",
+      "editTitle": "Edit Budget",
+      "createDescription": "Define a budget and set up alerts for cost monitoring.",
+      "editDescription": "Update budget settings and configuration.",
+      "sections": {
+        "basicInfo": "Basic Information",
+        "scopeConfig": "Scope Configuration", 
+        "advancedSettings": "Advanced Settings"
+      },
+      "fields": {
+        "budgetName": "Budget Name",
+        "budgetNamePlaceholder": "e.g., Engineering Team Q2, Production AWS",
+        "budgetAmount": "Budget Amount",
+        "budgetAmountPlaceholder": "0.00",
+        "period": "Period",
+        "alertThreshold": "Alert Threshold (%)",
+        "alertThresholdHelp": "Alert when budget consumption reaches this percentage",
+        "cloudProvider": "Cloud Provider",
+        "allProviders": "All Providers",
+        "service": "Service",
+        "servicePlaceholder": "e.g., EC2, S3, Virtual Machines (optional)",
+        "activeBudget": "Active Budget",
+        "activeBudgetHelp": "Whether this budget should actively monitor costs",
+        "tags": "Tags (JSON)",
+        "tagsPlaceholder": "{\"department\": \"engineering\", \"team\": \"platform\"}",
+        "tagsHelp": "Optional JSON object for additional metadata and filtering"
+      },
+      "periods": {
+        "monthly": "Monthly",
+        "annual": "Annual"
+      },
+      "providers": {
+        "aws": "AWS",
+        "azure": "Azure",
+        "gcp": "Google Cloud Platform",
+        "oracleCloud": "Oracle Cloud"
+      },
+      "buttons": {
+        "cancel": "Cancel",
+        "create": "Create Budget",
+        "update": "Update Budget"
+      },
+      "validation": {
+        "budgetNameRequired": "Budget name is required",
+        "budgetAmountInvalid": "Budget amount must be greater than 0",
+        "alertThresholdInvalid": "Alert threshold must be between 0 and 100",
+        "tagsInvalidJson": "Tags must be valid JSON format"
+      }
+    },
+    "deleteConfirm": "Are you sure you want to delete \"{budgetName}\"?",
+    "details": {
+      "title": "Complete budget details and consumption",
+      "budgetAmount": "Budget Amount",
+      "period": "Period",
+      "alertThreshold": "Alert Threshold",
+      "budgetStatus": "Budget Status",
+      "provider": "Provider",
+      "service": "Service",
+      "created": "Created",
+      "budgetId": "Budget ID",
+      "currentConsumption": "Current Consumption",
+      "budgetProgress": "Budget Progress",
+      "currentSpend": "Current Spend",
+      "remainingBudget": "Remaining Budget",
+      "daysRemaining": "Days Remaining",
+      "projectedTotal": "Projected Total",
+      "currentPeriod": "Current Period",
+      "from": "From",
+      "to": "To",
+      "allProviders": "All Providers",
+      "allServices": "All Services",
+      "status": {
+        "underBudget": "Under budget",
+        "warning": "Warning",
+        "overBudget": "Over budget"
+      },
+      "buttons": {
+        "activate": "Activate",
+        "deactivate": "Deactivate"
+      },
+      "alerts": {
+        "title": "Active Alerts",
+        "noActiveAlerts": "No active alerts",
+        "lastChecked": "Last checked",
+        "types": {
+          "threshold_exceeded": "Threshold Exceeded",
+          "projected_overspend": "Projected Overspend"
+        },
+        "severity": {
+          "critical": "critical",
+          "warning": "warning"
+        }
+      },
+      "loading": {
+        "consumption": "Loading consumption data...",
+        "alerts": "Loading alerts..."
+      },
+      "noData": {
+        "consumption": "No consumption data available",
+        "alerts": "No active alerts"
+      }
     }
   }
 }

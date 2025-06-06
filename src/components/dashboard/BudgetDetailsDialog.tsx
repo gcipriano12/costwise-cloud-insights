@@ -154,7 +154,7 @@ export function BudgetDetailsDialog({
             {budget.budget_name}
           </DialogTitle>
           <DialogDescription>
-            Detalhes completos e consumo do budget
+            {t('budgets.details.title')}
           </DialogDescription>
         </DialogHeader>
 
@@ -165,7 +165,7 @@ export function BudgetDetailsDialog({
               <CardContent className="p-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-muted-foreground">Budget Amount</p>
+                    <p className="text-sm text-muted-foreground">{t('budgets.details.budgetAmount')}</p>
                     <p className="text-2xl font-bold">{formatCurrency(budget.budget_amount)}</p>
                   </div>
                   <DollarSign className="h-8 w-8 text-blue-600" />
@@ -177,8 +177,8 @@ export function BudgetDetailsDialog({
               <CardContent className="p-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-muted-foreground">Period</p>
-                    <p className="text-lg font-semibold capitalize">{budget.budget_period}</p>
+                    <p className="text-sm text-muted-foreground">{t('budgets.details.period')}</p>
+                    <p className="text-lg font-semibold capitalize">{t(`budgets.table.periods.${budget.budget_period}`)}</p>
                   </div>
                   <Calendar className="h-8 w-8 text-green-600" />
                 </div>
@@ -189,7 +189,7 @@ export function BudgetDetailsDialog({
               <CardContent className="p-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-muted-foreground">Alert Threshold</p>
+                    <p className="text-sm text-muted-foreground">{t('budgets.details.alertThreshold')}</p>
                     <p className="text-lg font-semibold">{budget.alert_threshold}%</p>
                   </div>
                   <AlertTriangle className="h-8 w-8 text-amber-600" />
@@ -202,10 +202,10 @@ export function BudgetDetailsDialog({
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center justify-between">
-                <span>Budget Status</span>
+                <span>{t('budgets.details.budgetStatus')}</span>
                 <div className="flex items-center gap-2">
                   <Badge variant={budget.is_active ? "default" : "secondary"}>
-                    {budget.is_active ? "Active" : "Inactive"}
+                    {budget.is_active ? t('budgets.status.active') : t('budgets.status.inactive')}
                   </Badge>
                   <Button
                     size="sm"
@@ -217,12 +217,12 @@ export function BudgetDetailsDialog({
                     {budget.is_active ? (
                       <>
                         <PowerOff className="h-4 w-4" />
-                        Deactivate
+                        {t('budgets.details.buttons.deactivate')}
                       </>
                     ) : (
                       <>
                         <Power className="h-4 w-4" />
-                        Activate
+                        {t('budgets.details.buttons.activate')}
                       </>
                     )}
                   </Button>
@@ -232,19 +232,19 @@ export function BudgetDetailsDialog({
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <p className="text-sm text-muted-foreground mb-1">Provider</p>
-                  <p className="font-medium">{budget.provider_name || 'All Providers'}</p>
+                  <p className="text-sm text-muted-foreground mb-1">{t('budgets.details.provider')}</p>
+                  <p className="font-medium">{budget.provider_name || t('budgets.details.allProviders')}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-muted-foreground mb-1">Service</p>
-                  <p className="font-medium">{budget.service_name || 'All Services'}</p>
+                  <p className="text-sm text-muted-foreground mb-1">{t('budgets.details.service')}</p>
+                  <p className="font-medium">{budget.service_name || t('budgets.details.allServices')}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-muted-foreground mb-1">Created</p>
+                  <p className="text-sm text-muted-foreground mb-1">{t('budgets.details.created')}</p>
                   <p className="font-medium">{formatDate(budget.created_at)}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-muted-foreground mb-1">Budget ID</p>
+                  <p className="text-sm text-muted-foreground mb-1">{t('budgets.details.budgetId')}</p>
                   <p className="font-medium">#{budget.id}</p>
                 </div>
               </div>
@@ -256,17 +256,22 @@ export function BudgetDetailsDialog({
             <Card>
               <CardContent className="p-8 text-center">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
-                <p className="text-sm text-muted-foreground mt-2">Loading consumption data...</p>
+                <p className="text-sm text-muted-foreground mt-2">{t('budgets.details.loading.consumption')}</p>
               </CardContent>
             </Card>
           ) : consumption ? (
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  Current Consumption
+                  {t('budgets.details.currentConsumption')}
                   <Badge className={cn("text-xs", getStatusColor(consumption.status))}>
                     {getStatusIcon(consumption.status)}
-                    <span className="ml-1 capitalize">{consumption.status.replace('_', ' ')}</span>
+                    <span className="ml-1 capitalize">
+                      {consumption.status === 'under_budget' && t('budgets.details.status.underBudget')}
+                      {consumption.status === 'warning' && t('budgets.details.status.warning')}
+                      {consumption.status === 'over_budget' && t('budgets.details.status.overBudget')}
+                      {!['under_budget', 'warning', 'over_budget'].includes(consumption.status) && consumption.status.replace('_', ' ')}
+                    </span>
                   </Badge>
                 </CardTitle>
               </CardHeader>
@@ -275,7 +280,7 @@ export function BudgetDetailsDialog({
                   {/* Progress Bar */}
                   <div>
                     <div className="flex justify-between items-center mb-2">
-                      <span className="text-sm font-medium">Budget Progress</span>
+                      <span className="text-sm font-medium">{t('budgets.details.budgetProgress')}</span>
                       <span className="text-sm text-muted-foreground">
                         {parseFloat(consumption.consumption_percentage).toFixed(1)}%
                       </span>
@@ -290,23 +295,23 @@ export function BudgetDetailsDialog({
                   {/* Consumption Details */}
                   <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                     <div>
-                      <p className="text-sm text-muted-foreground">Current Spend</p>
+                      <p className="text-sm text-muted-foreground">{t('budgets.details.currentSpend')}</p>
                       <p className="text-lg font-bold text-blue-600">
                         {formatCurrency(consumption.current_consumption)}
                       </p>
                     </div>
                     <div>
-                      <p className="text-sm text-muted-foreground">Remaining Budget</p>
+                      <p className="text-sm text-muted-foreground">{t('budgets.details.remainingBudget')}</p>
                       <p className="text-lg font-bold text-green-600">
                         {formatCurrency(consumption.remaining_budget)}
                       </p>
                     </div>
                     <div>
-                      <p className="text-sm text-muted-foreground">Days Remaining</p>
+                      <p className="text-sm text-muted-foreground">{t('budgets.details.daysRemaining')}</p>
                       <p className="text-lg font-bold">{consumption.days_remaining}</p>
                     </div>
                     <div>
-                      <p className="text-sm text-muted-foreground">Projected Total</p>
+                      <p className="text-sm text-muted-foreground">{t('budgets.details.projectedTotal')}</p>
                       <p className="text-lg font-bold text-amber-600">
                         {consumption.projected_consumption 
                           ? formatCurrency(consumption.projected_consumption)
@@ -318,10 +323,10 @@ export function BudgetDetailsDialog({
 
                   {/* Period Info */}
                   <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
-                    <p className="text-sm font-medium mb-2">Current Period</p>
+                    <p className="text-sm font-medium mb-2">{t('budgets.details.currentPeriod')}</p>
                     <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                      <span>From: {formatDate(consumption.period_start)}</span>
-                      <span>To: {formatDate(consumption.period_end)}</span>
+                      <span>{t('budgets.details.from')}: {formatDate(consumption.period_start)}</span>
+                      <span>{t('budgets.details.to')}: {formatDate(consumption.period_end)}</span>
                     </div>
                   </div>
                 </div>
@@ -331,7 +336,7 @@ export function BudgetDetailsDialog({
             <Card>
               <CardContent className="p-8 text-center">
                 <AlertCircle className="h-8 w-8 text-amber-500 mx-auto mb-2" />
-                <p className="text-sm text-muted-foreground">No consumption data available</p>
+                <p className="text-sm text-muted-foreground">{t('budgets.details.noData.consumption')}</p>
               </CardContent>
             </Card>
           )}
@@ -341,7 +346,7 @@ export function BudgetDetailsDialog({
             <Card>
               <CardContent className="p-8 text-center">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
-                <p className="text-sm text-muted-foreground mt-2">Loading alerts...</p>
+                <p className="text-sm text-muted-foreground mt-2">{t('budgets.details.loading.alerts')}</p>
               </CardContent>
             </Card>
           ) : alerts && alerts.alert_count > 0 ? (
@@ -349,7 +354,7 @@ export function BudgetDetailsDialog({
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <AlertTriangle className="h-5 w-5 text-amber-600" />
-                  Active Alerts ({alerts.alert_count})
+                  {t('budgets.details.alerts.title')} ({alerts.alert_count})
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -372,7 +377,7 @@ export function BudgetDetailsDialog({
                         )}
                         <div className="flex-1">
                           <p className="font-medium capitalize">
-                            {alert.type.replace('_', ' ')} - {alert.severity}
+                            {t(`budgets.details.alerts.types.${alert.type}`) || alert.type.replace('_', ' ')} - {t(`budgets.details.alerts.severity.${alert.severity}`)}
                           </p>
                           <p className="text-sm mt-1">{alert.message}</p>
                         </div>
@@ -381,7 +386,7 @@ export function BudgetDetailsDialog({
                   ))}
                 </div>
                 <p className="text-xs text-muted-foreground mt-3">
-                  Last checked: {formatDate(alerts.last_check)}
+                  {t('budgets.details.alerts.lastChecked')}: {formatDate(alerts.last_check)}
                 </p>
               </CardContent>
             </Card>
@@ -389,7 +394,7 @@ export function BudgetDetailsDialog({
             <Card>
               <CardContent className="p-8 text-center">
                 <CheckCircle className="h-8 w-8 text-green-500 mx-auto mb-2" />
-                <p className="text-sm text-muted-foreground">No active alerts</p>
+                <p className="text-sm text-muted-foreground">{t('budgets.details.noData.alerts')}</p>
               </CardContent>
             </Card>
           )}

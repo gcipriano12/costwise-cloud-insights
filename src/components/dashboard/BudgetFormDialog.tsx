@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -35,19 +35,50 @@ export function BudgetFormDialog({
 
   // Form state
   const [formData, setFormData] = useState({
-    budget_name: budget?.budget_name || '',
-    provider_name: budget?.provider_name || null,
-    service_name: budget?.service_name || '',
-    budget_amount: budget?.budget_amount || '',
-    budget_period: budget?.budget_period || 'monthly',
-    alert_threshold: budget?.alert_threshold || '80.00',
-    is_active: budget?.is_active ?? true,
-    tags: budget?.tags || {}
+    budget_name: '',
+    provider_name: null,
+    service_name: '',
+    budget_amount: '',
+    budget_period: 'monthly',
+    alert_threshold: '80.00',
+    is_active: true,
+    tags: {}
   });
 
-  const [tagsText, setTagsText] = useState(
-    budget?.tags ? JSON.stringify(budget.tags, null, 2) : ''
-  );
+  const [tagsText, setTagsText] = useState('');
+
+  // Atualizar o estado do formulário quando o budget mudar ou o diálogo for aberto
+  useEffect(() => {
+    if (mode === 'edit' && budget && open) {
+      setFormData({
+        budget_name: budget.budget_name || '',
+        provider_name: budget.provider_name || null,
+        service_name: budget.service_name || '',
+        budget_amount: budget.budget_amount || '',
+        budget_period: budget.budget_period || 'monthly',
+        alert_threshold: budget.alert_threshold || '80.00',
+        is_active: budget.is_active ?? true,
+        tags: budget.tags || {}
+      });
+      
+      setTagsText(budget.tags ? JSON.stringify(budget.tags, null, 2) : '');
+      setError(null);
+    } else if (mode === 'create' && open) {
+      // Reset form for create mode
+      setFormData({
+        budget_name: '',
+        provider_name: null,
+        service_name: '',
+        budget_amount: '',
+        budget_period: 'monthly',
+        alert_threshold: '80.00',
+        is_active: true,
+        tags: {}
+      });
+      setTagsText('');
+      setError(null);
+    }
+  }, [budget, mode, open]);
 
   const handleInputChange = (field: string, value: string | boolean) => {
     setFormData(prev => ({
@@ -59,23 +90,23 @@ export function BudgetFormDialog({
 
   const validateForm = (): string | null => {
     if (!formData.budget_name.trim()) {
-      return 'Budget name is required';
+      return t('budgets.form.validation.budgetNameRequired');
     }
     
     if (!formData.budget_amount || parseFloat(formData.budget_amount) <= 0) {
-      return 'Budget amount must be greater than 0';
+      return t('budgets.form.validation.budgetAmountInvalid');
     }
 
     const threshold = parseFloat(formData.alert_threshold);
     if (isNaN(threshold) || threshold < 0 || threshold > 100) {
-      return 'Alert threshold must be between 0 and 100';
+      return t('budgets.form.validation.alertThresholdInvalid');
     }
 
     if (tagsText.trim()) {
       try {
         JSON.parse(tagsText);
       } catch {
-        return 'Tags must be valid JSON format';
+        return t('budgets.form.validation.tagsInvalidJson');
       }
     }
 
@@ -112,21 +143,6 @@ export function BudgetFormDialog({
 
       await onSubmit(submitData);
       onOpenChange(false);
-      
-      // Reset form
-      if (mode === 'create') {
-        setFormData({
-          budget_name: '',
-          provider_name: '',
-          service_name: '',
-          budget_amount: '',
-          budget_period: 'monthly',
-          alert_threshold: '80.00',
-          is_active: true,
-          tags: {}
-        });
-        setTagsText('');
-      }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
     } finally {
@@ -145,12 +161,12 @@ export function BudgetFormDialog({
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <DollarSign className="h-5 w-5 text-blue-600" />
-            {mode === 'create' ? 'Create New Budget' : 'Edit Budget'}
+            {mode === 'create' ? t('budgets.form.createTitle') : t('budgets.form.editTitle')}
           </DialogTitle>
           <DialogDescription>
             {mode === 'create' 
-              ? 'Define a budget and set up alerts for cost monitoring.'
-              : 'Update budget settings and configuration.'
+              ? t('budgets.form.createDescription')
+              : t('budgets.form.editDescription')
             }
           </DialogDescription>
         </DialogHeader>
@@ -169,23 +185,23 @@ export function BudgetFormDialog({
 
           {/* Basic Information */}
           <div className="space-y-4">
-            <h3 className="text-lg font-medium">Basic Information</h3>
+            <h3 className="text-lg font-medium">{t('budgets.form.sections.basicInfo')}</h3>
             
             <div className="grid gap-4">
               <div className="grid gap-2">
-                <Label htmlFor="budget_name">Budget Name *</Label>
+                <Label htmlFor="budget_name">{t('budgets.form.fields.budgetName')} *</Label>
                 <Input
                   id="budget_name"
                   value={formData.budget_name}
                   onChange={(e) => handleInputChange('budget_name', e.target.value)}
-                  placeholder="e.g., Engineering Team Q2, Production AWS"
+                  placeholder={t('budgets.form.fields.budgetNamePlaceholder')}
                   required
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div className="grid gap-2">
-                  <Label htmlFor="budget_amount">Budget Amount *</Label>
+                  <Label htmlFor="budget_amount">{t('budgets.form.fields.budgetAmount')} *</Label>
                   <div className="relative">
                     <span className="absolute left-3 top-2.5 text-muted-foreground">$</span>
                     <Input
@@ -195,7 +211,7 @@ export function BudgetFormDialog({
                       min="0"
                       value={formData.budget_amount}
                       onChange={(e) => handleInputChange('budget_amount', e.target.value)}
-                      placeholder="0.00"
+                      placeholder={t('budgets.form.fields.budgetAmountPlaceholder')}
                       className="pl-7"
                       required
                     />
@@ -203,7 +219,7 @@ export function BudgetFormDialog({
                 </div>
 
                 <div className="grid gap-2">
-                  <Label htmlFor="budget_period">Period</Label>
+                  <Label htmlFor="budget_period">{t('budgets.form.fields.period')}</Label>
                   <Select
                     value={formData.budget_period}
                     onValueChange={(value) => handleInputChange('budget_period', value)}
@@ -212,15 +228,15 @@ export function BudgetFormDialog({
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="monthly">Monthly</SelectItem>
-                      <SelectItem value="annual">Annual</SelectItem>
+                      <SelectItem value="monthly">{t('budgets.form.periods.monthly')}</SelectItem>
+                      <SelectItem value="annual">{t('budgets.form.periods.annual')}</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
               </div>
 
               <div className="grid gap-2">
-                <Label htmlFor="alert_threshold">Alert Threshold (%)</Label>
+                <Label htmlFor="alert_threshold">{t('budgets.form.fields.alertThreshold')}</Label>
                 <Input
                   id="alert_threshold"
                   type="number"
@@ -232,7 +248,7 @@ export function BudgetFormDialog({
                   placeholder="80.00"
                 />
                 <p className="text-xs text-muted-foreground">
-                  Alert when budget consumption reaches this percentage
+                  {t('budgets.form.fields.alertThresholdHelp')}
                 </p>
               </div>
             </div>
@@ -240,33 +256,34 @@ export function BudgetFormDialog({
 
           {/* Scope Configuration */}
           <div className="space-y-4">
-            <h3 className="text-lg font-medium">Scope Configuration</h3>              <div className="grid grid-cols-2 gap-4">
-                <div className="grid gap-2">
-                  <Label htmlFor="provider_name">Cloud Provider</Label>
-                  <Select
-                    value={formData.provider_name || "all_providers"}
-                    onValueChange={(value) => handleInputChange('provider_name', value === "all_providers" ? "" : value)}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="All Providers" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all_providers">All Providers</SelectItem>
-                      <SelectItem value="AWS">AWS</SelectItem>
-                      <SelectItem value="Azure">Azure</SelectItem>
-                      <SelectItem value="GCP">Google Cloud Platform</SelectItem>
-                      <SelectItem value="Oracle Cloud">Oracle Cloud</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+            <h3 className="text-lg font-medium">{t('budgets.form.sections.scopeConfig')}</h3>              
+            <div className="grid grid-cols-2 gap-4">
+              <div className="grid gap-2">
+                <Label htmlFor="provider_name">{t('budgets.form.fields.cloudProvider')}</Label>
+                <Select
+                  value={formData.provider_name || "all_providers"}
+                  onValueChange={(value) => handleInputChange('provider_name', value === "all_providers" ? "" : value)}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder={t('budgets.form.fields.allProviders')} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all_providers">{t('budgets.form.fields.allProviders')}</SelectItem>
+                    <SelectItem value="AWS">{t('budgets.form.providers.aws')}</SelectItem>
+                    <SelectItem value="Azure">{t('budgets.form.providers.azure')}</SelectItem>
+                    <SelectItem value="GCP">{t('budgets.form.providers.gcp')}</SelectItem>
+                    <SelectItem value="Oracle Cloud">{t('budgets.form.providers.oracleCloud')}</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
 
               <div className="grid gap-2">
-                <Label htmlFor="service_name">Service</Label>
+                <Label htmlFor="service_name">{t('budgets.form.fields.service')}</Label>
                 <Input
                   id="service_name"
                   value={formData.service_name}
                   onChange={(e) => handleInputChange('service_name', e.target.value)}
-                  placeholder="e.g., EC2, S3, Virtual Machines (optional)"
+                  placeholder={t('budgets.form.fields.servicePlaceholder')}
                 />
               </div>
             </div>
@@ -274,13 +291,13 @@ export function BudgetFormDialog({
 
           {/* Advanced Settings */}
           <div className="space-y-4">
-            <h3 className="text-lg font-medium">Advanced Settings</h3>
+            <h3 className="text-lg font-medium">{t('budgets.form.sections.advancedSettings')}</h3>
             
             <div className="flex items-center justify-between">
               <div className="space-y-0.5">
-                <Label htmlFor="is_active">Active Budget</Label>
+                <Label htmlFor="is_active">{t('budgets.form.fields.activeBudget')}</Label>
                 <p className="text-sm text-muted-foreground">
-                  Whether this budget should actively monitor costs
+                  {t('budgets.form.fields.activeBudgetHelp')}
                 </p>
               </div>
               <Switch
@@ -291,17 +308,17 @@ export function BudgetFormDialog({
             </div>
 
             <div className="grid gap-2">
-              <Label htmlFor="tags">Tags (JSON)</Label>
+              <Label htmlFor="tags">{t('budgets.form.fields.tags')}</Label>
               <Textarea
                 id="tags"
                 value={tagsText}
                 onChange={(e) => setTagsText(e.target.value)}
-                placeholder='{"department": "engineering", "team": "platform"}'
+                placeholder={t('budgets.form.fields.tagsPlaceholder')}
                 rows={4}
                 className="font-mono text-sm"
               />
               <p className="text-xs text-muted-foreground">
-                Optional JSON object for additional metadata and filtering
+                {t('budgets.form.fields.tagsHelp')}
               </p>
             </div>
           </div>
@@ -313,7 +330,7 @@ export function BudgetFormDialog({
               onClick={handleCancel}
               disabled={loading}
             >
-              Cancel
+              {t('budgets.form.buttons.cancel')}
             </Button>
             <Button 
               type="submit" 
@@ -321,7 +338,7 @@ export function BudgetFormDialog({
               className="flex items-center gap-2"
             >
               {loading && <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>}
-              {mode === 'create' ? 'Create Budget' : 'Update Budget'}
+              {mode === 'create' ? t('budgets.form.buttons.create') : t('budgets.form.buttons.update')}
             </Button>
           </DialogFooter>
         </form>

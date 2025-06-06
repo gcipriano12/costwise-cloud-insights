@@ -28,7 +28,8 @@
     "logout": "Sair",
     "noNotifications": "Nenhuma notificação",
     "markAllAsRead": "Marcar todas como lidas",
-    "cloudCostManagementDashboard": "Painel de gerenciamento de custos na nuvem"
+    "cloudCostManagementDashboard": "Painel de gerenciamento de custos na nuvem",
+    "all": "Todos"
   },
   "spendSummary": {
     "title": "Resumo de Gastos",
@@ -531,6 +532,161 @@
     "error": {
       "title": "Falha no cadastro",
       "description": "Houve um problema ao criar sua conta. Por favor, tente novamente."
+    }
+  },
+  "budgets": {
+    "page": {
+      "title": "Orçamentos",
+      "description": "Defina e monitore alocações de orçamento na nuvem.",
+      "newBudget": "Novo Orçamento",
+      "refresh": "Atualizar"
+    },
+    "summary": {
+      "totalBudgets": "Total de Orçamentos",
+      "totalBudgetAmount": "Valor Total do Orçamento",
+      "totalConsumption": "Consumo Total",
+      "overallProgress": "Progresso Geral"
+    },
+    "table": {
+      "title": "Gerenciamento de Orçamentos",
+      "search": "Buscar orçamentos...",
+      "filters": {
+        "allProviders": "Todos os Provedores",
+        "allStatus": "Todos os Status",
+        "active": "Ativo",
+        "inactive": "Inativo"
+      },
+      "columns": {
+        "status": "Status",
+        "budgetName": "Nome do Orçamento",
+        "provider": "Provedor",
+        "service": "Serviço",
+        "budgetAmount": "Valor do Orçamento",
+        "period": "Período",
+        "created": "Criado",
+        "actions": "Ações"
+      },
+      "noResults": "Nenhum orçamento encontrado para os filtros atuais.",
+      "noData": "Nenhum orçamento criado ainda. Crie seu primeiro orçamento para começar.",
+      "manageButton": "Gerenciar",
+      "periods": {
+        "monthly": "Mensal",
+        "annual": "Anual"
+      },
+      "actions": {
+        "viewDetails": "Ver Detalhes",
+        "edit": "Editar",
+        "activate": "Ativar",
+        "deactivate": "Desativar",
+        "delete": "Excluir"
+      }
+    },
+    "status": {
+      "active": "Ativo",
+      "inactive": "Inativo"
+    },
+    "form": {
+      "createTitle": "Criar Novo Orçamento",
+      "editTitle": "Editar Orçamento",
+      "createDescription": "Defina um orçamento e configure alertas para monitoramento de custos.",
+      "editDescription": "Atualize configurações e parâmetros do orçamento.",
+      "sections": {
+        "basicInfo": "Informações Básicas",
+        "scopeConfig": "Configuração de Escopo",
+        "advancedSettings": "Configurações Avançadas"
+      },
+      "fields": {
+        "budgetName": "Nome do Orçamento",
+        "budgetNamePlaceholder": "ex.: Time de Engenharia Q2, Produção AWS",
+        "budgetAmount": "Valor do Orçamento",
+        "budgetAmountPlaceholder": "0,00",
+        "period": "Período",
+        "alertThreshold": "Limite de Alerta (%)",
+        "alertThresholdHelp": "Alertar quando o consumo do orçamento atingir esta porcentagem",
+        "cloudProvider": "Provedor de Nuvem",
+        "allProviders": "Todos os Provedores",
+        "service": "Serviço",
+        "servicePlaceholder": "ex.: EC2, S3, Máquinas Virtuais (opcional)",
+        "activeBudget": "Orçamento Ativo",
+        "activeBudgetHelp": "Se este orçamento deve monitorar custos ativamente",
+        "tags": "Tags (JSON)",
+        "tagsPlaceholder": "{\"departamento\": \"engenharia\", \"equipe\": \"plataforma\"}",
+        "tagsHelp": "Objeto JSON opcional para metadados adicionais e filtragem"
+      },
+      "periods": {
+        "monthly": "Mensal",
+        "annual": "Anual"
+      },
+      "providers": {
+        "aws": "AWS",
+        "azure": "Azure",
+        "gcp": "Google Cloud Platform",
+        "oracleCloud": "Oracle Cloud"
+      },
+      "buttons": {
+        "cancel": "Cancelar",
+        "create": "Criar Orçamento",
+        "update": "Atualizar Orçamento"
+      },
+      "validation": {
+        "budgetNameRequired": "Nome do orçamento é obrigatório",
+        "budgetAmountInvalid": "Valor do orçamento deve ser maior que 0",
+        "alertThresholdInvalid": "Limite de alerta deve estar entre 0 e 100",
+        "tagsInvalidJson": "Tags devem estar em formato JSON válido"
+      }
+    },
+    "deleteConfirm": "Tem certeza que deseja excluir \"{budgetName}\"?",
+    "details": {
+      "title": "Detalhes completos e consumo do budget",
+      "budgetAmount": "Valor do Orçamento",
+      "period": "Período",
+      "alertThreshold": "Limite de Alerta",
+      "budgetStatus": "Status do Orçamento",
+      "provider": "Provedor",
+      "service": "Serviço",
+      "created": "Criado",
+      "budgetId": "ID do Orçamento",
+      "currentConsumption": "Consumo Atual",
+      "budgetProgress": "Progresso do Orçamento",
+      "currentSpend": "Gasto Atual",
+      "remainingBudget": "Orçamento Restante",
+      "daysRemaining": "Dias Restantes",
+      "projectedTotal": "Total Projetado",
+      "currentPeriod": "Período Atual",
+      "from": "De",
+      "to": "Para",
+      "allProviders": "Todos os Provedores",
+      "allServices": "Todos os Serviços",
+      "status": {
+        "underBudget": "Dentro do orçamento",
+        "warning": "Aviso",
+        "overBudget": "Acima do orçamento"
+      },
+      "buttons": {
+        "activate": "Ativar",
+        "deactivate": "Desativar"
+      },
+      "alerts": {
+        "title": "Alertas Ativos",
+        "noActiveAlerts": "Nenhum alerta ativo",
+        "lastChecked": "Última verificação",
+        "types": {
+          "threshold_exceeded": "Limite Excedido",
+          "projected_overspend": "Projeção de Extrapolação"
+        },
+        "severity": {
+          "critical": "crítico",
+          "warning": "aviso"
+        }
+      },
+      "loading": {
+        "consumption": "Carregando dados de consumo...",
+        "alerts": "Carregando alertas..."
+      },
+      "noData": {
+        "consumption": "Nenhum dado de consumo disponível",
+        "alerts": "Nenhum alerta ativo"
+      }
     }
   }
 }
