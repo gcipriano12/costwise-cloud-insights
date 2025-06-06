@@ -121,7 +121,10 @@ export function NewServicesCard({ services }: NewServicesCardProps) {
                   )}>{service.provider}</div>
                 </div>
                 <div className="text-right">
-                  <div className="text-base font-bold">{service.currency} {service.cost.toLocaleString()}</div>
+                  <div className="text-base font-bold">{service.currency} {service.cost.toLocaleString('pt-BR', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                  })}</div>
                   <div className={cn(
                     "text-xs",
                     isDark ? "text-slate-400" : "text-muted-foreground"

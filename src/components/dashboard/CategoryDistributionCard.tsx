@@ -28,7 +28,10 @@ export function CategoryDistributionCard({ data, currency }: CategoryDistributio
     } else if (value >= 1000) {
       return `${currency} ${(value / 1000).toFixed(2)}K`;
     }
-    return `${currency} ${value.toLocaleString()}`;
+    return `${currency} ${value.toLocaleString('pt-BR', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    })}`;
   };
   
   const formatPercentage = (value: number) => {

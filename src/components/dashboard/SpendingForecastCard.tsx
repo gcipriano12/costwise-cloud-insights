@@ -35,7 +35,10 @@ export function SpendingForecastCard({ data, currency }: SpendingForecastCardPro
     } else if (value >= 1000) {
       return `${currency} ${(value / 1000).toFixed(0)}K`;
     }
-    return `${currency} ${value.toLocaleString()}`;
+    return `${currency} ${value.toLocaleString('pt-BR', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    })}`;
   };
   
   // Formatador específico para o eixo Y que mantém espaçamento consistente

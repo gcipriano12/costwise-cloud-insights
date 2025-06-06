@@ -27,6 +27,18 @@ interface SpendSummaryProps {
   budgetLimit?: number;
   budgetConsumed?: number;
   savingsRealized?: number;
+  // Novos campos opcionais para dados da API
+  topService?: {
+    name: string;
+    provider: string;
+    cost: number;
+  };
+  monthlyAverage?: number;
+  annualProjection?: number;
+  nextMonthForecast?: {
+    amount: number;
+    change_percentage: number;
+  };
 }
 
 export function SpendSummaryCard({ 
@@ -43,7 +55,11 @@ export function SpendSummaryCard({
   wastedSpend = totalSpend * 0.15,
   budgetLimit = totalSpend * 1.2,
   budgetConsumed = 75,
-  savingsRealized = totalSpend * 0.08
+  savingsRealized = totalSpend * 0.08,
+  topService,
+  monthlyAverage,
+  annualProjection,
+  nextMonthForecast
 }: SpendSummaryProps) {
   const { t } = useTranslation();
   const { isDark } = useTheme();
@@ -52,22 +68,32 @@ export function SpendSummaryCard({
   const changeAbs = Math.abs(previousPeriodChange);
   const [activeIndex, setActiveIndex] = React.useState<number | null>(null);
   
-  const monthlyAverage = totalSpend / 6;
-  const projectedNextMonth = totalSpend * (1 + (previousPeriodChange / 100));
-  const topService = {
+  // Use API data when available, fallback to calculated values
+  const calculatedMonthlyAverage = monthlyAverage || totalSpend / 6;
+  const calculatedProjectedNextMonth = nextMonthForecast?.amount || totalSpend * (1 + (previousPeriodChange / 100));
+  const calculatedTopService = topService || {
     name: "EC2",
     cost: totalSpend * 0.25,
     provider: "AWS"
   };
-  const forecastYTD = totalSpend * 12;
+  const calculatedAnnualProjection = annualProjection || totalSpend * 12;
   
   const formatCurrency = (value: number) => {
     if (value >= 1000000) {
-      return `${currency} ${(value / 1000000).toFixed(2)}M`;
+      return `${currency} ${(value / 1000000).toLocaleString('pt-BR', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      })}M`;
     } else if (value >= 1000) {
-      return `${currency} ${(value / 1000).toFixed(2)}K`;
+      return `${currency} ${(value / 1000).toLocaleString('pt-BR', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      })}K`;
     }
-    return `${currency} ${value.toLocaleString()}`;
+    return `${currency} ${value.toLocaleString('pt-BR', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    })}`;
   };
 
   const getBudgetStatusColor = () => {
@@ -224,7 +250,7 @@ export function SpendSummaryCard({
               </p>
               <div className="flex items-baseline">
                 <span className={`${isMobile ? 'text-2xl' : 'text-4xl'} font-bold tracking-tight`}>
-                  {currency} {totalSpend.toLocaleString(undefined, {
+                  {currency} {totalSpend.toLocaleString('pt-BR', {
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 2
                   })}
@@ -257,7 +283,7 @@ export function SpendSummaryCard({
                   {isMobile ? t('spendSummary.averageMobile') : t('spendSummary.monthlyAverage')}
                 </p>
                 <div className={`${isMobile ? 'text-sm' : 'text-lg'} font-semibold`}>
-                  {formatCurrency(monthlyAverage)}
+                  {formatCurrency(calculatedMonthlyAverage)}
                 </div>
               </div>
               
@@ -269,11 +295,11 @@ export function SpendSummaryCard({
                   <Badge className={cn(
                     "mr-1 text-xs py-0",
                     isDark ? "bg-amber-900 text-amber-100 border-0" : "bg-amber-50 text-amber-700 border-amber-200"
-                  )}>{topService.provider}</Badge>
-                  <span className="font-medium text-xs">{topService.name}</span>
+                  )}>{calculatedTopService.provider}</Badge>
+                  <span className="font-medium text-xs">{calculatedTopService.name}</span>
                 </div>
                 <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-semibold mt-0.5`}>
-                  {formatCurrency(topService.cost)}
+                  {formatCurrency(calculatedTopService.cost)}
                 </div>
               </div>
               
@@ -282,7 +308,7 @@ export function SpendSummaryCard({
                   {isMobile ? t('spendSummary.projectionMobile') : t('spendSummary.annualProjection')}
                 </p>
                 <div className={`${isMobile ? 'text-sm' : 'text-lg'} font-semibold`}>
-                  {formatCurrency(forecastYTD)}
+                  {formatCurrency(calculatedAnnualProjection)}
                 </div>
                 <div className="text-xs text-muted-foreground">
                   {t('spendSummary.currentYear')}
@@ -381,15 +407,18 @@ export function SpendSummaryCard({
                     <span className={cn(
                       "text-lg font-bold",
                       isDark ? "text-blue-400" : "text-XCost-blue"
-                    )}>{formatCurrency(projectedNextMonth)}</span>
+                    )}>{formatCurrency(calculatedProjectedNextMonth)}</span>
                     <ArrowRight className="h-3 w-3 mx-1 text-muted-foreground" />
                     <span className={cn(
                       "text-xs",
-                      isIncrease 
+                      (nextMonthForecast?.change_percentage || previousPeriodChange) > 0 
                         ? isDark ? "text-red-400" : "text-XCost-red" 
                         : isDark ? "text-green-400" : "text-XCost-green"
                     )}>
-                      {isIncrease ? '+' : ''}{previousPeriodChange}%
+                      {(() => {
+                        const changeValue = nextMonthForecast?.change_percentage ?? previousPeriodChange;
+                        return `${changeValue > 0 ? '+' : ''}${changeValue.toFixed(1)}%`;
+                      })()}
                     </span>
                   </div>
                 </div>

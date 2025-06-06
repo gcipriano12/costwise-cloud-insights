@@ -174,7 +174,7 @@ export const useDashboardData = () => {
   const [timeFilter, setTimeFilter] = useState('30d');
   const { t } = useTranslation();
   
-  // Integração com X Cost API
+  // Integração com X Cost API - passar timeFilter
   const {
     spendSummary: apiSpendSummary,
     providerDistribution: apiProviderDistribution,
@@ -184,7 +184,7 @@ export const useDashboardData = () => {
     regionCosts: apiRegionCosts,
     loading: apiLoading,
     hasCredentials
-  } = useXCostData();
+  } = useXCostData({ timeFilter });
   
   // Mock data for the dashboard
   const mockDashboardData: DashboardData = {

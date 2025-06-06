@@ -40,7 +40,10 @@ export function TopServicesCard({ services, currency }: TopServicesCardProps) {
     } else if (value >= 1000) {
       return `${currency} ${(value / 1000).toFixed(2)}K`;
     }
-    return `${currency} ${value.toLocaleString()}`;
+    return `${currency} ${value.toLocaleString('pt-BR', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    })}`;
   };
 
   const getProviderColor = (provider: string) => {
@@ -115,7 +118,10 @@ export function TopServicesCard({ services, currency }: TopServicesCardProps) {
                           <TooltipContent className={cn(
                             isDark ? "bg-slate-800 border-slate-700 text-white" : "bg-white border-gray-200 text-slate-900"
                           )}>
-                            <p>{currency} {service.currentSpend.toLocaleString()}</p>
+                            <p>{currency} {service.currentSpend.toLocaleString('pt-BR', {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2
+                            })}</p>
                           </TooltipContent>
                         </Tooltip>
                       </TooltipProvider>

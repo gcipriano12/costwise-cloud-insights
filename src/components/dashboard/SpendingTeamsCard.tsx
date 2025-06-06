@@ -81,7 +81,10 @@ export function SpendingTeamsCard({ categories, currency }: SpendingTeamsCardPro
                 axisLine={{ stroke: isDark ? "#333333" : "#e0e0e0" }}
               />
               <Tooltip 
-                formatter={(value: number) => [`${currency} ${value.toLocaleString()}`, 'Valor']}
+                formatter={(value: number) => [`${currency} ${value.toLocaleString('pt-BR', {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2
+                })}`, 'Valor']}
                 labelFormatter={(label) => `Equipe: ${label}`}
                 contentStyle={{ 
                   backgroundColor: isDark ? '#1e293b' : 'white', 

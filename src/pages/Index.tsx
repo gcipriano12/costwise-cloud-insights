@@ -63,7 +63,7 @@ const Index = () => {
           onTimeFilterChange={setTimeFilter}
         />
         
-        <div className="p-4">
+        <div className="p-4 space-y-6">
           <DashboardContent
             timeFilter={timeFilter}
             onTimeFilterChange={setTimeFilter}

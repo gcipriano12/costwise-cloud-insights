@@ -1,4 +1,3 @@
-
 import axios from 'axios';
 
 const API_BASE_URL = 'http://localhost:8000';
@@ -34,3 +33,14 @@ apiClient.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+// Serviços de API
+export const dashboardService = {
+  getSummary: (periodDays?: number, credentialId?: string) => 
+    apiClient.get('/api/v1/dashboard/summary', { 
+      params: { 
+        period_days: periodDays || 30, 
+        credential_id: credentialId 
+      } 
+    })
+};
